@@ -1,7 +1,7 @@
 {
-  "name": "resourcecenter",
+  "name": "mern",
   "version": "1.0.0",
-  "description": "Resource Center for employees at our dope company",
+  "description": "Mern Demo",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -20,8 +20,9 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "if-env": "^1.0.4",
     "mongoose": "^5.9.18",
     "mongoose-unique-validator": "^2.0.3"
