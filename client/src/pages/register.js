@@ -10,48 +10,47 @@ export default class Register extends Component {
     this.state = {
       email: "",
       username: "",
-      password: ""
+      password: "",
+      currentUser: "",
     };
   }
   //   <<<<<<<<<<<<<FUNCTIONS>>>>>>>>>>>>>>>>>>>>>>>>>
 
   //   email input change
-  handleEmailChange = e => {
-    this.setState({ email: e.target.value });
-  };
-  //   username input change
-  handleUserNameChange = e => {
-    this.setState({ username: e.target.value });
-  };
-  //   password input change
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
   };
 
   //   handle form submit
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     e.preventDefault();
     let newUser = {
       email: this.state.email,
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
     };
     this.clearState();
     this.registerUser(newUser);
   };
 
   //   register user function that will be called in the handle form submit function
-  registerUser = newUser => {
+  registerUser = (newUser) => {
     API.registerUser(newUser)
-      .then(res => {
+      .then((res) => {
         let UserId = res.data;
         //   this is where we redirect to a new endpoint using the new userid, or atleast calling a function passing the new id
         console.log("response from registering new user: ", UserId);
-        alert(UserId);
+        this.setState({ currentUser: UserId });
+        this.props.handleUserLogin({
+          user: this.state.currentUser,
+          loggedIn: true,
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-        alert("invalid email form");
       });
   };
 
@@ -70,22 +69,23 @@ export default class Register extends Component {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  onChange={this.handleEmailChange}
+                  onChange={this.handleInputChange}
                   type="email"
+                  name="email"
                   placeholder="Enter email"
                   value={this.state.email}
                 />
                 <Form.Text className="text-muted">
                   We'll never share your email with anyone else.
-                  <p>{this.state.email}</p>
                 </Form.Text>
               </Form.Group>
 
               <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-                  onChange={this.handleUserNameChange}
+                  onChange={this.handleInputChange}
                   type="username"
+                  name="username"
                   placeholder="Enter Username"
                   value={this.state.username}
                 />
@@ -94,8 +94,9 @@ export default class Register extends Component {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  onChange={this.handlePasswordChange}
+                  onChange={this.handleInputChange}
                   type="password"
+                  name="password"
                   placeholder="Password"
                   value={this.state.password}
                 />

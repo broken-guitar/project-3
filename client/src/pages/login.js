@@ -8,7 +8,7 @@ export default class Loginpage extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
     };
   }
 
@@ -16,32 +16,30 @@ export default class Loginpage extends Component {
   componentDidMount() {
     this.setState({
       username: "",
-      password: ""
+      password: "",
     });
   }
-  //   username input change
-  handleUserNameChange = e => {
-    this.setState({ username: e.target.value });
-  };
-  //   password input change
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
   };
 
   //   login user function
 
-  userLogin = User => {
-    API.userLogin(User).then(res => {
+  userLogin = (User) => {
+    API.userLogin(User).then((res) => {
       console.log(res.data);
     });
   };
 
   //   handle form submit
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     e.preventDefault();
     let User = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
     };
     this.userLogin(User);
   };
@@ -61,19 +59,20 @@ export default class Loginpage extends Component {
               <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-                  onChange={this.handleUserNameChange}
+                  onChange={this.handleInputChange}
                   type="username"
+                  name="username"
                   placeholder="Enter Username"
                   value={this.state.username}
                 />
-                <p>{this.state.username}</p>
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  onChange={this.handlePasswordChange}
+                  onChange={this.handleInputChange}
                   type="password"
+                  name="password"
                   placeholder="Password"
                   value={this.state.password}
                 />

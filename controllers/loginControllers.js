@@ -5,12 +5,12 @@ module.exports = {
   createUser: function (req, res) {
     db.User.create(req.body)
       // only want to sent back id, not the rest of the info, even with PW hashed
-      .then(dbModel => {
+      .then((dbModel) => {
         res.json(dbModel._id);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("error: ", err.message);
-        res.json(err.message);
+        res.status(422).json(err);
       });
   },
 
@@ -31,16 +31,16 @@ module.exports = {
             res.json(user._id);
           } else if (!isMatch) {
             res.send({
-              message: "PASSWORD INCORRECT"
+              message: "PASSWORD INCORRECT",
             });
           }
         });
       } else {
         res.send({
-          message: "USERNAME DOES NOT EXIST"
+          message: "USERNAME DOES NOT EXIST",
         });
         console.log("That username doesn't exist");
       }
     });
-  }
+  },
 };
