@@ -4,12 +4,12 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 export default function navbar(props) {
   return (
     <Navbar sticky="top" bg="light" expand="lg">
-      <Navbar.Brand href="#home">Resource Center</Navbar.Brand>
+      <Navbar.Brand href="#home" onClick={() => props.handlePageChange("Home")}>Resource Center</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Recent</Nav.Link>
-          <Nav.Link href="#link">Favorites</Nav.Link>
+          <Nav.Link href="#recent" onClick={() => props.handlePageChange("Recent")} >Recent</Nav.Link>
+          <Nav.Link href="#favorite" onClick={() => props.handlePageChange("Favorites")}>Favorites</Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">
