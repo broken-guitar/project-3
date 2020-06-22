@@ -5,12 +5,14 @@ module.exports = {
   createUser: function (req, res) {
     db.User.create(req.body)
       // only want to sent back id, not the rest of the info, even with PW hashed
-      .then((dbModel) => {
-        res.json(dbModel._id);
+      .then(dbModel => {
+        res.cookie("id", dbModel._id);
+        // res.json(dbModel._id);
+        res.send("user created successfully, logging you in...");
       })
-      .catch((err) => {
-        console.log("error: ", err.message);
-        res.status(422).json(err);
+      .catch(err => {
+        console.log("error from create: ", err.message);
+        res.json(err.message);
       });
   },
 
@@ -28,19 +30,31 @@ module.exports = {
             throw err;
           } else if (isMatch) {
             // sending back MongoDB id of that logged in user to get custom things or make custom calls HERE WE CAN DO ANYTHING LIKE MAKE A CALL TO ANOTHER COLLECTION USING THIS ID AS A REFERENCE, OR WHATEVER
-            res.json(user._id);
+            res.cookie("id", user._id);
+            // res.json(user._id);
+            res.send("user log in attempted");
           } else if (!isMatch) {
             res.send({
-              message: "PASSWORD INCORRECT",
+              message: "PASSWORD INCORRECT"
             });
           }
         });
       } else {
         res.send({
-          message: "USERNAME DOES NOT EXIST",
+          message: "USERNAME DOES NOT EXIST"
         });
         console.log("That username doesn't exist");
       }
     });
   },
+
+  // check if user authenticated
+  checkUser: function (req, res) {
+    console.log("cookie", req.cookies.id, "body", req.body.id);
+    if (req.cookies.id === req.body.id) {
+      res.json({ loggedin: true });
+    } else {
+      res.json({ loggedin: false });
+    }
+  }
 };
