@@ -1,34 +1,42 @@
 import React, { Component } from "react";
 import "./App.css";
+import Cookies from "js-cookie";
 // import Navbar from "./components/navbar/navbar";
-import RegisterPage from "./pages/register";
-import LoginPage from "./pages/login";
+import LoginPage from "./pages/loginPage";
 import Dashboard from "./pages/dashboard";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  Redirect
 } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: "",
-      loggedIn: false,
+      loggedIn: false
     };
   }
 
   // handle user lop in
-  handleUserLogin = (user) => {
-    console.log("DID IT WORKS?!??", user);
-    this.setState({ currentUser: user.user, loggedIn: user.loggedIn });
+  handleUserLogin = boolean => {
+    console.log("DID IT WORKS?!??", boolean);
+    this.setState({ loggedIn: boolean });
+  };
+
+  // function to get the cookies from cookie storage if there is one associated with the session
+  getCookie = () => {
+    if (Cookies.get("id") === undefined) {
+      return " ";
+    } else {
+      return Cookies.get("id").slice(3, -1);
+    }
   };
 
   // render
   render() {
-    const user = this.state.currentUser;
+    const user = this.getCookie();
     const loggedIn = this.state.loggedIn;
     return (
       <div className="App">
@@ -44,7 +52,10 @@ class App extends Component {
               {loggedIn ? (
                 <Redirect to={"/dashboard/" + user} />
               ) : (
-                <RegisterPage handleUserLogin={this.handleUserLogin} />
+                <LoginPage
+                  handleUserLogin={this.handleUserLogin}
+                  getCookie={this.getCookie}
+                />
               )}
             </Route>
             <Route exact path="/loginPage" component={LoginPage} />
