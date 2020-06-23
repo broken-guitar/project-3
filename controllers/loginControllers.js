@@ -8,7 +8,7 @@ module.exports = {
       .then(dbModel => {
         res.cookie("id", dbModel._id);
         // res.json(dbModel._id);
-        res.send("user created successfully, logging you in...");
+        res.send("new user created successfully, logging you in...");
       })
       .catch(err => {
         console.log("error from create: ", err.message);

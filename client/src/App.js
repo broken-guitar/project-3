@@ -4,12 +4,7 @@ import Cookies from "js-cookie";
 // import Navbar from "./components/navbar/navbar";
 import LoginPage from "./pages/loginPage";
 import Dashboard from "./pages/dashboard";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -36,21 +31,15 @@ class App extends Component {
 
   // render
   render() {
-    const user = this.getCookie();
     const loggedIn = this.state.loggedIn;
     return (
       <div className="App">
         <Router>
           <Switch>
-            {/* <Route
-              path="/"
-              render={(props) => (
-                <RegisterPage handleUserLogin={this.handleUserLogin} />
-              )}
-            /> */}
             <Route exact path="/">
+              {/* checks to see if the user is logged in (only is logged in if there is a cookie) if so, render the dashboard page, if not, render the login page. essemtially gate keeps the app so only an authenticated user can access it */}
               {loggedIn ? (
-                <Redirect to={"/dashboard/" + user} />
+                <Dashboard getCookie={this.getCookie}></Dashboard>
               ) : (
                 <LoginPage
                   handleUserLogin={this.handleUserLogin}
@@ -58,8 +47,6 @@ class App extends Component {
                 />
               )}
             </Route>
-            <Route exact path="/loginPage" component={LoginPage} />
-            <Route exact path="/dashboard/:id" component={Dashboard} />
           </Switch>
         </Router>
       </div>
