@@ -14,5 +14,15 @@ export default {
   // check user authenticated by checking cookies
   checkUser: function (UserId) {
     return axios.post("/loginPage/login/checkUser", UserId);
+  },
+
+  // ---------------
+  // resources
+
+  getResources: function(UserId) {
+      return axios.post("/rsc/", UserId);
   }
+
+
+
 };
