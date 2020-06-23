@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Cookies from "js-cookie";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -52,7 +51,6 @@ export default class Login extends Component {
           let boolean = response.data.loggedin;
           this.props.handleUserLogin(boolean);
         });
-        // here i need to handle what to do after login is verified..using cookie that was sent that matches the ID
       })
       .catch(err => {
         console.log(err);
@@ -63,8 +61,8 @@ export default class Login extends Component {
   registerUser = newUser => {
     API.regUser(newUser)
       .then(res => {
-        // console.log(res);
-        let parsedId = { id: Cookies.get("id").slice(3, -1) };
+        console.log(res.data);
+        let parsedId = { id: this.props.getCookie() };
         //   this is where we redirect to a new endpoint using the new userid, or atleast calling a function passing the new id
         // console.log("response from registering new user: ", parsedId);
         API.checkUser(parsedId).then(response => {
