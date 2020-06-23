@@ -3,13 +3,13 @@ const resourceController = require("../../controllers/resourceController");
 
 // matches with "/rsc/"
 router.route("/:rscId")
-  .get(resourceController.findById)
-  .post(resourceController.create);
+  .get(resourceController.findById);
+  
 
-// Get all resources/documents that have an associated UserId
+// Get ALL resources/documents that belong to user
 //  - matches with "/rsc/:UserId"
 router.route("/:UserId") 
-
-  .get(resourceController.findByUserId);
+  .get(resourceController.findUsersResources)
+  .post(resourceController.create);
 
 module.exports = router;
