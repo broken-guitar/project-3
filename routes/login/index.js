@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const usersRoutes = require("./user");
+const usersRoutes = require("./user.route");
 
 // User Login Routes
 // matches: /loginPage/login
