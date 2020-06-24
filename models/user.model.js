@@ -5,9 +5,24 @@ const uniqueValidator = require("mongoose-unique-validator");
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
-  username: { type: String, required: true, index: { unique: true } },
-  email: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true }
+
+    username: {   type: String,
+                required: true,
+                index: { unique: true } },
+
+    email:    {   type: String,
+                required: true,
+                index: { unique: true } },
+
+    password: {   type: String, required: true },
+    
+    // 'resources' is an array of Resource ids of Resources that we want to associate with the User
+    resources: [{   type: Schema.Types.ObjectId, 
+                    ref: "Resources"    }],
+    // 'favorites' is an array of Resource ids for Resrouces the user favorited
+    favorites: [{
+                    type: Schema.Types.ObjectId,
+                    ref: "Resources"    }]
 });
 
 // this is the PRE HOOk. hashes the password before saving it to the database

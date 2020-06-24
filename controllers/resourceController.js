@@ -1,7 +1,9 @@
 const db = require("../models");
 
 module.exports = {
-    // find a specific resource by id
+    
+        
+    // find a specific RESOURCE by id
     findById: function(req, res) {
         db.Resource
             .findById(req.params.rscId)
@@ -10,15 +12,17 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     
-    // find all resources that belong to a user
+    // get all resource (as db objects) that belong to a USER
     findUsersResources: function(req, res) {
-        db.Resource
-            .find({UserId: req.params.UserId})
-            .then(dbModel => res.json(dbModel))
+        db.User
+            .findOne({_id: req.params.UserId}) // find the user by _id
+            .populate("resources")  // returns all Resources (as full objects) with the returned User
+                                    // for example: User.resources[0].title, etc...
+            .then(dbUserDotResources => res.json(dbUserDotResources)) 
             .catch(err => res.status(422).json(err));
     },
 
-    // create a new resource
+    // create a new RESOURCE
     create: function(req, res) {
         db.Resource
             .create(req.body)
@@ -26,4 +30,5 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     }
     
+
 }

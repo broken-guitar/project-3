@@ -4,11 +4,13 @@ const loginRoutes = require("./login");
 const resourceRoutes = require("./resource")
 
 // LOGIN ROUTES
-// matches "/loginPage"
+
+//  matches "/loginPage"
 router.use("/loginPage", loginRoutes);
 
 // RESOURCE ROUTES
-// matches "/"
+
+//  matches "/"
 router.use("/", resourceRoutes);
 
 // If no API routes are hit, send the React app
