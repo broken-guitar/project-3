@@ -44,8 +44,8 @@ export default class Login extends Component {
       .then(res => {
         // console.log(res);
         let parsedId = { id: this.props.getCookie() };
-        // console.log("js-cookie: ", parsedId);
-        console.log(res.data.message);
+        console.log("API.userLogin -> parsedId: ", parsedId);
+        // console.log("API.userLogin -> res.data.message: ", res.data.message);
         API.checkUser(parsedId).then(response => {
           // console.log("loggedIn? ", response.data.loggedin);
           let boolean = response.data.loggedin;
