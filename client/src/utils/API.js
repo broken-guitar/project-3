@@ -18,7 +18,6 @@ export default {
 
   // after logged in, just to get username
   getUsername: function (UserId) {
-    console.log("getUsername requested hit API call, userId: ", UserId);
     return axios.get("/API/getUser/" + UserId);
   },
 
@@ -27,6 +26,10 @@ export default {
 
   getResources: function(UserId) {
       return axios.post("/rsc/", UserId);
+  },
+
+  getAllResources: function() {
+    return axios.get("/rsc/getAll/Resources");
   }
 
 

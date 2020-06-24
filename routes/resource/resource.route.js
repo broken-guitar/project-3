@@ -1,6 +1,13 @@
 const router = require("express").Router();
 const resourceController = require("../../controllers/resourceController");
 
+
+// Get all resources in the DB
+// matches "/rsc/getAll/Resources"
+router.route("/getAll/Resources")
+  .get(resourceController.findAll);
+
+
 // Get a resource by id
 // -> matches "/rsc/:rscId"
 router.route("/:rscId")
@@ -12,5 +19,7 @@ router.route("/:rscId")
 router.route("/:UserId") 
   .get(resourceController.findUsersResources)
   .post(resourceController.create);
+
+
 
 module.exports = router;

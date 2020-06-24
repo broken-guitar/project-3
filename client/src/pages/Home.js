@@ -8,10 +8,21 @@ export default function Home(props) {
 
 
     return (
-        <>
+        <div>
+            <br />
             <h1 className="welcoming">Welcome, {props.userName}</h1>
-            <Categicon></Categicon>
+            <br />
+            <div className="category-container">
+                {props.categArr.map(cat => (
+                <Categicon
+                id={cat._id}
+                title={cat.title}
+                link={cat.link}
+                />
+                ))}
+            </div>
+            
             <Sectiontitle></Sectiontitle>
-        </>
+        </div>
     )
 }

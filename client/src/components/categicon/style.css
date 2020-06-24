@@ -1,0 +1,9 @@
+.cat-box {
+    display: inline-block;
+    margin: 10px;
+}
+
+.cat-box:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
