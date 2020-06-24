@@ -3,26 +3,49 @@ import Navbar from "../components/navbar/navbar";
 import Home from "../pages/Home";
 import Recent from "../pages/Recent";
 import Favorites from "../pages/Favorites";
+import API from "../utils/API";
 
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: "Home"
+      currentPage: "Home",
+      userId: "",
+      userName: ""
     };
   }
 
   componentDidMount() {
     console.log(this.props.getCookie());
+    this.setState({ userId: this.props.getCookie()});
+    this.getUsername(this.props.getCookie());
     // find all from the resource collection
   }
+
+
+  // get username of current logged in user
+  getUsername = (userId) => {
+    API.getUsername(userId)
+    .then(res => {
+      console.log("results from axios API call to get user: ", res);
+      let userName=res.data.username;
+      this.setState({ userName: userName })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+
+
   handlePageChange = page => {
     this.setState({ currentPage: page });
   };
 
   renderPage = () => {
     if (this.state.currentPage === "Home") {
-      return <Home />;
+      return <Home 
+      userName={this.state.userName}
+      />;
     } else if (this.state.currentPage === "Recent") {
       return <Recent />;
     } else {

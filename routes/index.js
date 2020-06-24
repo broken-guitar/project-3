@@ -1,12 +1,17 @@
 const path = require("path");
 const router = require("express").Router();
 const loginRoutes = require("./login");
-const resourceRoutes = require("./resource")
+const resourceRoutes = require("./resource");
+const userRoutes = require("./user");
 
 // LOGIN ROUTES
 
 //  matches "/loginPage"
 router.use("/loginPage", loginRoutes);
+
+// USER ROUTES
+// matches "/API"
+router.use("/API", userRoutes);
 
 // RESOURCE ROUTES
 

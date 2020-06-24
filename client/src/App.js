@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      loggedIn: false,
     };
   }
 
@@ -19,6 +19,8 @@ class App extends Component {
     console.log("DID IT WORKS?!??", boolean);
     this.setState({ loggedIn: boolean });
   };
+
+  
 
   // function to get the cookies from cookie storage if there is one associated with the session
   getCookie = () => {
@@ -39,7 +41,8 @@ class App extends Component {
             <Route exact path="/">
               {/* checks to see if the user is logged in (only is logged in if there is a cookie) if so, render the dashboard page, if not, render the login page. essemtially gate keeps the app so only an authenticated user can access it */}
               {loggedIn ? (
-                <Dashboard getCookie={this.getCookie}></Dashboard>
+                <Dashboard 
+                getCookie={this.getCookie}></Dashboard>
               ) : (
                 <LoginPage
                   handleUserLogin={this.handleUserLogin}
