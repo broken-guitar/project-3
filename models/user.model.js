@@ -25,34 +25,44 @@ const userSchema = new Schema({
                     ref: "Resources"    }]
 });
 
-// this is the PRE HOOk. hashes the password before saving it to the database
+// this is the PRE HOOK hashes the password before saving it to the database
+//  NOTE:   PRE hooks run before the defined method, in this case the defined method
+//          is "save", which is mongoose middleware that runs automatically on model.create() or
+//          can be called on model instances.
 userSchema.pre("save", function (next) {
   var user = this;
 
   // only hash the password if it has been modified (or is new)
   if (!user.isModified("password")) return next();
 
-  // generate a salt
+  // generate a salt (randomizes the encrypted password string each time)
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
     if (err) return next(err);
 
-    // hash the password using our new salt
+    // bcrypt.hash will encrypt the password using our new "salt",
+    // then returns the encrypted password as "hash" in the callback.
     bcrypt.hash(user.password, salt, function (err, hash) {
       if (err) return next(err);
 
       // override the cleartext password with the hashed one
       user.password = hash;
-      next();
+      next(); // because were in a hook, next() is used to move on to the next proper mongoose method
     });
   });
 });
 
 // adds a compare password method for logging back in to check against hashed password
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+    // bcrypt.compare( paswordToCheck, hashedPassword, callback());
+    //
+    // NOTE:  the encrypted password's SALT (like encryption key) is saved with the
+    // encrypted password string (HASH) to the db; bcrypt.compare reads the SALT
+    // from the saved HASH in order to decrypt it to compare with 
+    // the plain text submitted password; returns true/false if match
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
 };
 
 // email validator to make sure it is a valid email address syntax using Regex

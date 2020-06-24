@@ -12,7 +12,7 @@ const userSeed = [
     {
         username:   "user",
         email:      "user@email.com",
-        password:   "12345",
+        password:   "$2b$10$Bf75jH6DJPAqu.1QBSQoIeLleYTd06zwxe5YHcWPVz33zI1FJhr32", // hashed password
         resources:  []
     }
 ];
