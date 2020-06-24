@@ -17,7 +17,7 @@ const userSeed = [
     }
 ];
 
-const resourceSeed = [ck
+const resourceSeed = [
     {
         title:      "resource1",
         category:   "cat",
@@ -45,35 +45,36 @@ const resourceSeed = [ck
     }
 ]
 
-// add the resource seeds to the db
+// add the Resource seeds to the db
 db.Resource
     .remove({})
     .then(() => db.Resource.collection.insertMany(resourceSeed))
     .then(dbResources => {
         console.log(dbResources.result.n + " records inserted!")
-        // add the user seed(s) to the db
+        // add the User seed(s) to the db
         db.User
         .remove({})
         .then(() => db.User.collection.insertMany(userSeed))
         .then(dbUser => {
             console.log(dbUser.result.n + " records inserted!");
+            // get all the Resource _id so we can associate them with our demo User...
             db.Resource
                 .find({}, "_id")
                 .then(dbResourceIds => {
-                    // console.log("dbUser: ", dbUser.username)
+                    // ...now get the new User...
                     db.User
                         .findOne({}).limit(1).sort({createdAt: "desc"})
                         .then(User => {
-                            console.log("User: ", User);
+                            // ...and push each Resource _id to the User's "resources" array (save refs for model association)
                             for (e of dbResourceIds) {
                                 User.resources.push(e._id);
-                                console.log("_id: ", e._id);
+                                console.log("Resource id " + e._id + " pushed to demo " + User.username + "'s 'resources' array");
                             }
+                            // save the User to update the db
                             User.save(err => {
                                 if (err) return console.log(err);
                                 process.exit(0);
                             });
-                            
                         });
                     
                 })
@@ -91,8 +92,4 @@ db.Resource
         console.error(err);
         process.exit(1);
     });
-
-
-
-// get all the resource seeds and push their _ids to the 'resources' array of the user where username is "user"
 
