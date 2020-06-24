@@ -11,7 +11,8 @@ export default class Dashboard extends Component {
     this.state = {
       currentPage: "Home",
       userId: "",
-      userName: ""
+      userName: "",
+      categArr: []
     };
   }
 
@@ -19,6 +20,7 @@ export default class Dashboard extends Component {
     console.log(this.props.getCookie());
     this.setState({ userId: this.props.getCookie()});
     this.getUsername(this.props.getCookie());
+    this.getAllResources();
     // find all from the resource collection
   }
 
@@ -26,15 +28,26 @@ export default class Dashboard extends Component {
   // get username of current logged in user
   getUsername = (userId) => {
     API.getUsername(userId)
-    .then(res => {
+      .then(res => {
       console.log("results from axios API call to get user: ", res);
       let userName=res.data.username;
       this.setState({ userName: userName })
-    })
-    .catch(err => {
+      })
+      .catch(err => {
       console.log(err);
-    });
+      });
   };
+
+  // get all categories to set state to pass props to Home component.
+  getAllResources = () => {
+    API.getAllResources()
+      .then(res => {
+        this.setState({ categArr: res.data})
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
 
   handlePageChange = page => {
@@ -45,6 +58,7 @@ export default class Dashboard extends Component {
     if (this.state.currentPage === "Home") {
       return <Home 
       userName={this.state.userName}
+      categArr={this.state.categArr}
       />;
     } else if (this.state.currentPage === "Recent") {
       return <Recent />;

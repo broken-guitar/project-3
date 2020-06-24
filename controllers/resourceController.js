@@ -28,6 +28,15 @@ module.exports = {
             .create(req.body)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
+    },
+
+    // Find all resources in DB
+    findAll: function(req, res) {
+        db.Resource
+            .find({})
+            .then(dbResources => res.json(dbResources))
+            .catch(err => res.status(422).json(err));
+
     }
     
 
