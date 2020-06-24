@@ -56,5 +56,11 @@ module.exports = {
     } else {
       res.json({ loggedin: false });
     }
+  },
+
+  // get username
+  getUsername: function (req, res) {
+    console.log("getUser request: ", req.params.userId);
+    db.User.findById(req.params.userId).then(user => res.json(user)).catch(err => res.status(422).json(err));
   }
-};
+}

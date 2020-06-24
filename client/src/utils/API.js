@@ -16,6 +16,12 @@ export default {
     return axios.post("/loginPage/login/checkUser", UserId);
   },
 
+  // after logged in, just to get username
+  getUsername: function (UserId) {
+    console.log("getUsername requested hit API call, userId: ", UserId);
+    return axios.get("/API/getUser/" + UserId);
+  },
+
   // ---------------
   // resources
 
