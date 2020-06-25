@@ -5,24 +5,21 @@ const uniqueValidator = require("mongoose-unique-validator");
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
+  username: { type: String, required: true, index: { unique: true } },
 
-    username: {   type: String,
-                required: true,
-                index: { unique: true } },
+  email: { type: String, required: true, index: { unique: true } },
 
-    email:    {   type: String,
-                required: true,
-                index: { unique: true } },
+  password: { type: String, required: true },
 
-    password: {   type: String, required: true },
-    
-    // 'resources' is an array of Resource ids of Resources that we want to associate with the User
-    resources: [{   type: Schema.Types.ObjectId, 
-                    ref: "Resources"    }],
-    // 'favorites' is an array of Resource ids for Resrouces the user favorited
-    favorites: [{
-                    type: Schema.Types.ObjectId,
-                    ref: "Resources"    }]
+  // 'resources' is an array of Resource ids of Resources that we want to associate with the User
+  resources: [{ type: Schema.Types.ObjectId, ref: "Resources" }],
+  // 'favorites' is an array of Resource ids for Resrouces the user favorited
+  favorites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Resources"
+    }
+  ]
 });
 
 // this is the PRE HOOK hashes the password before saving it to the database
@@ -53,16 +50,13 @@ userSchema.pre("save", function (next) {
 
 // adds a compare password method for logging back in to check against hashed password
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
-    // bcrypt.compare( paswordToCheck, hashedPassword, callback());
-    //
-    // NOTE:  the encrypted password's SALT (like encryption key) is saved with the
-    // encrypted password string (HASH) to the db; bcrypt.compare reads the SALT
-    // from the saved HASH in order to decrypt it to compare with 
-    // the plain text submitted password; returns true/false if match
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+  // bcrypt.compare( paswordToCheck, hashedPassword, callback());
+  //
+
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
 };
 
 // email validator to make sure it is a valid email address syntax using Regex
