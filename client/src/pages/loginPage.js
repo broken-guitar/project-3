@@ -87,7 +87,7 @@ export default class Login extends Component {
     this.registerUser(User);
   };
 
-  //  modal functions register
+  //  modal functions register/login
 
   handleClose = () => this.setState({ setShow: false });
   handleShow = () => this.setState({ setShow: true });
