@@ -24,14 +24,15 @@ export default {
   // ---------------
   // resources
 
-  getResources: function(UserId) {
-      return axios.post("/rsc/", UserId);
+  getResources: function (UserId) {
+    return axios.post("/rsc/", UserId);
   },
 
-  getAllResources: function() {
+  getAllResources: function () {
     return axios.get("/rsc/getAll/Resources");
+  },
+
+  addNewResource: function (newResource) {
+    return axios.post("/rsc/addNew", newResource);
   }
-
-
-
 };
