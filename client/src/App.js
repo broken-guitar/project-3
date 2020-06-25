@@ -14,6 +14,10 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getCookie();
+  }
+
   // handle user lop in
   handleUserLogin = boolean => {
     console.log("DID IT WORKS?!??", boolean);
@@ -27,6 +31,7 @@ class App extends Component {
     if (Cookies.get("id") === undefined) {
       return " ";
     } else {
+      this.setState({ loggedIn: true });
       return Cookies.get("id").slice(3, -1);
     }
   };
