@@ -1,25 +1,82 @@
-import React from "react";
+import React, { Component } from "react";
 import Categicon from "../components/categicon/categicon.js";
-import Sectiontitle from "../components/sectiontitle/sectiontitle.js";
+import { Button, Modal } from "react-bootstrap";
+import API from "../utils/API.js";
 
-export default function Home(props) {
-  return (
-    <div>
-      <br />
-      <h1 className="welcoming">Welcome, {props.userName}</h1>
-      <br />
-      <div className="category-container">
-        {props.categArr.map(cat => (
-          <Categicon
-            key={cat._id}
-            id={cat._id}
-            title={cat.title}
-            link={cat.link}
-          />
-        ))}
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: "Home",
+      userId: "",
+      userName: "",
+      categArr: [],
+      show: false,
+      setShow: false,
+      modalResId: "",
+      modalRes: {}
+    };
+  }
+
+
+  // const [show, setShow] = useState(false);
+
+  handleClose = () => this.setState({ show: false });
+  handleShow = (event) => {
+    event.preventDefault();
+    this.setState({ show: true });
+    this.setState({modalResId: event.target.id});
+    this.getResourceById(event.target.id);
+  };
+
+
+  getResourceById = (rscId) => {
+    console.log("getRes func ID ", rscId);
+    API.getResourceById(rscId)
+    .then(res => {
+      console.log(res);
+      this.setState({ modalRes: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+
+
+
+
+  render () {
+    return (
+      <div>
+        <br />
+        <h1 className="welcoming">Welcome, {this.props.userName}</h1>
+        <br />
+        <div className="category-container">
+          {this.props.categArr.map(cat => (
+            <Categicon
+              key={cat._id}
+              id={cat._id}
+              title={cat.title}
+              // link={cat.link}
+              cat={cat}
+              onClick={this.handleShow}
+            />
+          ))}
+
+        <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.state.modalRes.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        </div>
       </div>
-
-      <Sectiontitle></Sectiontitle>
-    </div>
-  );
+    )};
 }

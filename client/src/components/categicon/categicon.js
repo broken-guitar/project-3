@@ -6,12 +6,10 @@ import "./style.css";
 export default function categicon(props) {
     return (
         <div className="cat-box">
-            <a href={props.link} target="_blank" rel="noopener noreferrer">
-                <Image src="./images/polygon.png" className="polygon" id={props.id} />
-                <div className="caption">
-                    <p>{props.title}</p>
-                </div>
-            </a>
+            <Image src="./images/polygon.png" className="polygon" id={props.id} onClick={props.onClick} cat={props.cat} />
+            <div className="caption">
+                <p>{props.title}</p>
+            </div>
         </div>
     )
 }

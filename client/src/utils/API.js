@@ -34,5 +34,9 @@ export default {
 
   addNewResource: function (newResource) {
     return axios.post("/rsc/addNew", newResource);
+  },
+
+  getResourceById: function (rscId) {
+    return axios.get("/rsc/getOne/" + rscId);
   }
 };
