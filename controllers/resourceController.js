@@ -2,7 +2,6 @@ const db = require("../models");
 
 module.exports = {
     
-        
     // find a specific RESOURCE by id
     findById: function(req, res) {
         db.Resource

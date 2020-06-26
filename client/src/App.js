@@ -20,14 +20,13 @@ class App extends Component {
 
   // handle user lop in
   handleUserLogin = boolean => {
-    console.log("DID IT WORKS?!??", boolean);
+    console.log("Is user logged in?" , boolean);
     this.setState({ loggedIn: boolean });
   };
 
-  // handleUserLogout
-
+  // sets loggedIn state to FALSE and removes user id cookie
   handleUserLogout = () => {
-    console.log("logging out");
+    console.log("Logging out user");
     this.setState({ loggedIn: false });
     Cookies.remove("id");
   };
