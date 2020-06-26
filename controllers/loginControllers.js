@@ -12,51 +12,49 @@ module.exports = {
         res.send("new user created successfully, logging you in...");
       })
       .catch(err => {
-        console.log("error from create: ", err.message);
-        res.json(err.message);
+        console.log("\nUser creation error: ", err.message);
+        res.json(err);
       });
   },
 
   // user log in to authenticate user
   userLogin: function (req, res) {
-    console.log("request to database", req.body);
-    // fetch user and test password verification
+    console.log("\nUser login request received: ", req.body);
+    // find user by username and verify submitted password
     db.User.findOne({ username: req.body.username }, function (err, user) {
-      if (err) {
-        res.status(422).json(err);
-      } else if (user) {
-        //  NOTE: comparePassword method uses bcrypt.compare; it takes the
-        //  submitted password (req.body.password) and compares it
-        //  against saved encrypted password (hash);
-        //  See User model for additional notes.
-        user.comparePassword(req.body.password, function (err, isMatch) {
-          console.log("is it a match?", isMatch);
-          if (err) {
-            throw err;
-          } else if (isMatch) {
-            // sending back MongoDB id of that logged in user to get custom things or make custom calls HERE WE CAN DO ANYTHING LIKE MAKE A CALL TO ANOTHER COLLECTION USING THIS ID AS A REFERENCE, OR WHATEVER
+        if (err) {
+            res.status(422).json(err); // <-- some other error!
+        } else if (user) {
+            // We found the user! let's check their password...
 
-            // using express' res.cookie() to send a browser cookie containing user _id
-            res.cookie("id", user._id);
-            // res.json(user._id);
-            res.send("user log in attempted");
-          } else if (!isMatch) {
-            res.send({
-              message: "PASSWORD INCORRECT"
+            //  NOTE: comparePassword method uses bcrypt.compare; it takes the
+            //      submitted password (req.body.password) and compares it
+            //      against saved encrypted password (hash);
+            //      See User model for additional notes.
+            user.comparePassword(req.body.password, function (err, isMatch) {
+                console.log("\tDoes the password match? ", isMatch);
+                if (err) {
+                    throw err;
+                } else if (isMatch) {
+                    // using express' res.cookie() to send a browser cookie containing user _id
+                    res.cookie("id", user._id);
+                    res.send("User log in attempted");
+
+                    console.log("\tUser authenticated!");
+
+                } else if (!isMatch) {
+                    res.send({ error: "PASSWORD INCORRECT" });
+                }
             });
-          }
-        });
       } else {
-        res.send({
-          message: "USERNAME DOES NOT EXIST"
-        });
-        console.log("That username doesn't exist");
+        res.send({error: "Username not found!"});
+        console.log("\tThat username doesn't exist");
       }
     });
   },
 
   checkUser: function (req, res) {
-    console.log("cookie", req.cookies.id, "body", req.body.id);
+    console.log("\nChecking user against cookie: \n\treq.cookies.id: ", req.cookies.id, "\n\treq.body.id: ", req.body.id);
     if (req.cookies.id === req.body.id) {
       res.json({ loggedin: true });
     } else {
@@ -66,7 +64,7 @@ module.exports = {
 
   // get username
   getUsername: function (req, res) {
-    console.log("getUser request: ", req.params.userId);
+    console.log("\ngetUser request: ", req.params.userId);
     db.User.findById(req.params.userId)
       .then(user => res.json(user))
       .catch(err => res.status(422).json(err));
