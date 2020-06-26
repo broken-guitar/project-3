@@ -18,17 +18,16 @@ export default class Home extends Component {
     };
   }
 
-
   // const [show, setShow] = useState(false);
 
   handleClose = () => this.setState({ show: false });
+
   handleShow = (event) => {
     event.preventDefault();
     this.setState({ show: true });
     this.setState({modalResId: event.target.id});
     this.getResourceById(event.target.id);
   };
-
 
   getResourceById = (rscId) => {
     console.log("getRes func ID ", rscId);
@@ -42,15 +41,14 @@ export default class Home extends Component {
     });
   };
 
-
-
-
   render () {
     return (
       <div>
         <br />
         <h1 className="welcoming">Welcome, {this.props.userName}</h1>
         <br />
+
+        {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
           {this.props.categArr.map(cat => (
             <Categicon
@@ -62,13 +60,16 @@ export default class Home extends Component {
               onClick={this.handleShow}
             />
           ))}
+        </div>
 
+
+        {/* modal to show the clicked on resource's contents */}
         <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalRes.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          
+          {/* resource content can go here */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
@@ -76,7 +77,6 @@ export default class Home extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        </div>
       </div>
     )};
 }
