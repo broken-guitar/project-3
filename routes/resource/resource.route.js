@@ -6,8 +6,8 @@ const resourceController = require("../../controllers/resourceController");
 router.route("/getAll/Resources").get(resourceController.findAll);
 
 // Get a resource by id
-// -> matches "/rsc/:rscId"
-router.route("/:rscId").get(resourceController.findById);
+// -> matches "/rsc/getOne/:rscId"
+router.route("/getOne/:rscId").get(resourceController.findById);
 
 // Get ALL resources/documents that belong to a user
 //  -> matches "/rsc/:UserId"
