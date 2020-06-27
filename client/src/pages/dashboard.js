@@ -37,7 +37,7 @@ export default class Dashboard extends Component {
       });
   };
 
-  // get all categories to set state to pass props to Home component.
+  // get all resources/categories to set state to pass props to Home component.
   getAllResources = () => {
     API.getAllResources()
       .then(res => {

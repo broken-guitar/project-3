@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Categicon from "../components/categicon/categicon.js";
+import Item from "../components/item/item.js"
 import { Button, Modal } from "react-bootstrap";
 import API from "../utils/API.js";
 
@@ -51,19 +52,23 @@ export default class Home extends Component {
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
           {this.props.categArr.map(cat => (
-            <Categicon
-              key={cat._id}
-              id={cat._id}
-              title={cat.title}
-              // link={cat.link}
-              cat={cat}
-              onClick={this.handleShow}
-            />
+            cat.type === "Category" ? 
+                <Categicon
+                key={cat._id}
+                id={cat._id}
+                title={cat.title}
+                type={cat.type}
+                // link={cat.link}
+                cat={cat}
+                onClick={this.handleShow}
+                />
+                : 
+                <Item key={cat._id} id={cat._id} title={cat.title} onClick={this.handleShow}/>
           ))}
         </div>
 
 
-        {/* modal to show the clicked on resource's contents */}
+        {/* modal to show the clicked item's contents */}
         <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalRes.title}</Modal.Title>
