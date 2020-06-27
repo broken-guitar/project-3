@@ -1,21 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const resourceSchema = new Schema(
-  {
-    title: { type: String, required: true },
-    category: { type: String, required: true },
 
-    // TODO >> add logic to make EITHER link OR description required
-    // (else, someone may add empty titles with no resource)
+const resourceSchema = new Schema({
 
-    link: { type: String, required: false },
-    description: { type: String, required: false },
+    title:          { type: String, required: true },
+    
+    type:           { type: String, required: true},
 
-    // TODO >> add user cookie to eventually display who created & when in details
 
-    creator: { type: String, required: false },
-    owner: { type: String, required: false },
+    category:       { type: String, required: false },
+
+
+    link:           { type: String, required: false },
+
+
+    description:    { type: String, required: false },
+
+
+    creator:        { type: String, required: false },
+
+    owner:          { type: String, required: false},
+    
 
     // 'users' is an array that stores User ObjectIds (_id), then
     // we have to manually save/remove User _ids here with separate queries

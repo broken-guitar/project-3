@@ -1,0 +1,9 @@
+.item-box {
+    display: inline-block;
+    margin: 10px;
+}
+
+.item-box:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }

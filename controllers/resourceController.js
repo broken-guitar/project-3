@@ -18,6 +18,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
+
   // create a new RESOURCE
   create: function (req, res) {
     db.Resource.create(req.body)
@@ -31,6 +32,7 @@ module.exports = {
       .then(dbResources => res.json(dbResources))
       .catch(err => res.status(422).json(err));
   },
+
 
   // add to favorites
   addFavorite: function (req, res) {

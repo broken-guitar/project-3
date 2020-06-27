@@ -7,27 +7,27 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      regUsername: "",
-      regEmail: "",
+      regUsername: "",  // OPTION: might be able to combine these login/register state vars
+      regEmail: "",     // and their modal components to make more reuseable
       regPassword: "",
       logUsername: "",
       logPassword: "",
-      Show: false,
-      setShow: false,
+      showLogin: false,
+      showRegister: false,
       showAlert: false,
       alertMessage: "",
-      errors: {         // these nested errors.props are for specific error messages on each input; 
-          username: "", // we can be remove later if we don't end up using them.
-          email: "",
-          password: ""
+      errors: {         // OPTION: these nested errors.props are for relaying specific error messages 
+        username: "",   // to each input control (we can be remove later if we don't end up using them)
+        email: "",
+        password: ""
       }
     };
   }
-  
 
-    componentDidMount() {
-        this.resetLoginForm(true);
-    }
+
+  componentDidMount() {
+    this.resetLoginForm(true);
+  }
   // updates input controls on login/register forms
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -36,7 +36,7 @@ export default class Login extends Component {
     });
   };
 
-  // saves the submitted username and password in "User", then sends it to this.userLogin()
+  // handles username and password submit, sends to this.userLogin()
   handleLoginSubmit = e => {
     e.preventDefault();
     let User = {
@@ -46,61 +46,49 @@ export default class Login extends Component {
     this.userLogin(User);
   };
 
-  // sends username/password to be checked by the server
-    userLogin = User => {
-        API.userLogin(User)
-            .then(res => {
-                // show Alert comp if the response returned any errors
-                if (res.data.error) {
-                    this.setState({
-                        showAlert: true,
-                        alertMessage: res.data.error
-                    });
-                } else {
-                    // check if user is authenticated with the cookie
-                    let parsedId = { id: this.props.getCookie() };
-                    API.checkUser(parsedId).then(response => {
-                        let boolean = response.data.loggedin;
-                        this.props.handleUserLogin(boolean);
-                    });
-                }
-            })
-        .catch(err => {
-            this.setState({
-                showAlert: true,
-                alertMessage: err || "Error :("
-            });
-            console.log("API.userLogin returned error: ", err);
-      });
-  };
-
-  //   register user function that will be called in the handle form submit function
-  registerUser = newUser => {
-    API.regUser(newUser)
+  // sends username/password to server for authentication against db
+  userLogin = User => {
+    API.userLogin(User)
       .then(res => {
-        // show Alert comp if the response returned any errors
-        if (res.data.errors) {
-            this.setState({
-                showAlert: true,
-                alertMessage: res.data.message
-            });
+        // show validation error Alertp if response returned any errors
+        if (res.data.error) {
+          this.setState({ showAlert: true, alertMessage: res.data.error });
         } else {
-            let parsedId = { id: this.props.getCookie() };
-            //   this is where we redirect to a new endpoint using the new userid, or atleast calling a function passing the new id
-            // console.log("response from registering new user: ", parsedId);
-            API.checkUser(parsedId).then(response => {
-            // console.log("loggedIn? ", response.data.loggedin);
-                let boolean = response.data.loggedin;
-                this.props.handleUserLogin(boolean);
-            });
+          // check if user is authenticated with the cookie
+          let parsedId = { id: this.props.getCookie() };
+          API.checkUser(parsedId).then(response => {
+            let boolean = response.data.loggedin;
+            this.props.handleUserLogin(boolean);
+          });
         }
       })
       .catch(err => {
-            this.setState({
-                showAlert: true,
-                alertMessage: err || "Error :("
-            });
-            console.log("API.regUser returned error: ", err);
+        this.setState({ showAlert: true, alertMessage: err || "Error :(" });
+        console.log("API.userLogin returned error: ", err);
+      });
+  };
+
+  //  register user function that will be called in the handle form submit function
+  registerUser = newUser => {
+    API.regUser(newUser)
+      .then(res => {
+        /// show validation error Alertp if response returned any errors
+        if (res.data.errors) {
+          this.setState({ showAlert: true, alertMessage: res.data.message });
+        } else {
+          let parsedId = { id: this.props.getCookie() };
+          //   this is where we redirect to a new endpoint using the new userid, or atleast calling a function passing the new id
+          // console.log("response from registering new user: ", parsedId);
+          API.checkUser(parsedId).then(response => {
+            // console.log("loggedIn? ", response.data.loggedin);
+            let boolean = response.data.loggedin;
+            this.props.handleUserLogin(boolean);
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({ showAlert: true, alertMessage: err || "Error :(" });
+        console.log("API.regUser returned error: ", err);
       });
   };
 
@@ -108,41 +96,41 @@ export default class Login extends Component {
   handleRegSubmit = e => {
     e.preventDefault();
     let User = {
-        username: this.state.regUsername,
-        email: this.state.regEmail,
-        password: this.state.regPassword
+      username: this.state.regUsername,
+      email: this.state.regEmail,
+      password: this.state.regPassword
     };
     this.registerUser(User);
   };
 
-    //  modal functions register/login
 
-    handleClose = () => this.setState({ setShow: false });
-    handleShow = () => {
-        this.setState({ setShow: true });
-        this.resetLoginForm(true);
-    }
-    handleLogClose = () => this.setState({ Show: false });
-    handleLogShow = () => {
-        this.setState({ Show: true });
-        this.resetLoginForm(true);
-    }
+  // show/close Register modal
+  handleShow = () => {
+    this.setState({ showRegister: true });
+    this.resetLoginForm(true); }
+  handleClose = () => this.setState({ showRegister: false });
 
-    resetLoginForm = (dismiss) => {
-        if (dismiss) {
-            this.setState({
-                regUsername: "",
-                regEmail: "",
-                regPassword: "",
-                logUsername: "",
-                logPassword: "",
-                showAlert: false,
-                alertMessage: ""
-            });
-        };
-    }
+  // show/close Login modal
+  handleLogShow = () => {
+    this.setState({ showLogin: true });
+    this.resetLoginForm(true); }
+  handleLogClose = () => this.setState({ showLogin: false });
 
-  // render
+  // clears input controls and user validation UI alert
+  resetLoginForm = (dismiss) => {
+    if (dismiss) {
+      this.setState({
+        regUsername: "",
+        regEmail: "",
+        regPassword: "",
+        logUsername: "",
+        logPassword: "",
+        showAlert: false,
+        alertMessage: ""
+      });
+    };
+  }
+
   render() {
     return (
       <>
@@ -152,71 +140,71 @@ export default class Login extends Component {
         </Button>
 
         {/* register modal */}
-        <Modal show={this.state.setShow} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Register</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+        <Modal show={this.state.showRegister} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Register</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
 
-                {/* register form */}
-                <Form id="registerUser">
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                            onChange={this.handleInputChange}
-                            type="email"
-                            name="regEmail"
-                            placeholder="Enter email"
-                            value={this.state.regEmail}
-                        />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
+            {/* register form */}
+            <Form id="registerUser">
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  onChange={this.handleInputChange}
+                  type="email"
+                  name="regEmail"
+                  placeholder="Enter email"
+                  value={this.state.regEmail}
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
                         </Form.Text>
-                    </Form.Group>
+              </Form.Group>
 
-                    <Form.Group controlId="formBasicUsername">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                        onChange={this.handleInputChange}
-                        type="username"
-                        name="regUsername"
-                        placeholder="Enter Username"
-                        value={this.state.regUsername}
-                        />
-                    </Form.Group>
+              <Form.Group controlId="formBasicUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  onChange={this.handleInputChange}
+                  type="username"
+                  name="regUsername"
+                  placeholder="Enter Username"
+                  value={this.state.regUsername}
+                />
+              </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            onChange={this.handleInputChange}
-                            type="password"
-                            name="regPassword"
-                            placeholder="Password"
-                            value={this.state.regPassword}
-                        />
-                    </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  onChange={this.handleInputChange}
+                  type="password"
+                  name="regPassword"
+                  placeholder="Password"
+                  value={this.state.regPassword}
+                />
+              </Form.Group>
 
-                    <Button
-                        onClick={this.handleRegSubmit}
-                        variant="primary"
-                        type="submit"
-                    >
-                        Submit
+              <Button
+                onClick={this.handleRegSubmit}
+                variant="primary"
+                type="submit"
+              >
+                Submit
                     </Button>
-                </Form>
-            </Modal.Body>
-            
-            <Modal.Footer>
+            </Form>
+          </Modal.Body>
 
-                <Alert show={this.state.showAlert} variant="danger" dismissible="false"
-                    header="Oops!" message={this.state.alertMessage}/>
-                
-                <Button variant="secondary" onClick={this.handleClose}>
-                Close
+          <Modal.Footer>
+
+            <Alert show={this.state.showAlert} variant="danger" dismissible="false"
+              header="Oops!" message={this.state.alertMessage} />
+
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
                 </Button>
 
-            </Modal.Footer>
-       
+          </Modal.Footer>
+
         </Modal>
 
         {/* login */}
@@ -225,7 +213,7 @@ export default class Login extends Component {
           Login
         </Button>
         {/* log modal */}
-        <Modal show={this.state.Show} onHide={this.handleLogClose}>
+        <Modal show={this.state.showLogin} onHide={this.handleLogClose}>
           <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
@@ -264,8 +252,8 @@ export default class Login extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-          <Alert show={this.state.showAlert} variant="danger" dismissible="false"
-                    header="Oops!" message={this.state.alertMessage}/>
+            <Alert show={this.state.showAlert} variant="danger" dismissible="false"
+              header="Oops!" message={this.state.alertMessage} />
             <Button variant="secondary" onClick={this.handleLogClose}>
               Close
             </Button>

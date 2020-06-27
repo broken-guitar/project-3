@@ -1,12 +1,15 @@
 import axios from "axios";
 
 export default {
-  // registere New User
+  
+  // *** USER LOGIN API ***
+
+  // register New User
   regUser: function (newUser) {
     return axios.post("/loginPage/login/createUser", newUser);
   },
 
-  //   login existing user
+  // login existing user
   userLogin: function (User) {
     return axios.post("/loginPage/login/login/", User);
   },
@@ -16,31 +19,35 @@ export default {
     return axios.post("/loginPage/login/checkUser", UserId);
   },
 
-  // after logged in, just to get username
+  // get username (after logged in)
   getUsername: function (UserId) {
     return axios.get("/API/getUser/" + UserId);
   },
 
-  // ---------------
-  // resources
+  // *** RESOURCE API ***
 
-  getResources: function (UserId) {
-    return axios.post("/rsc/", UserId);
-  },
-
+  // get all resources
   getAllResources: function () {
     return axios.get("/rsc/getAll/Resources");
   },
 
+  // add new resource
   addNewResource: function (newResource) {
     return axios.post("/rsc/addNew", newResource);
   },
 
+  // get one resource
   getResourceById: function (rscId) {
     return axios.get("/rsc/getOne/" + rscId);
   },
 
+
   addFavorite: function (resourceId) {
     return axios.get("/rsc/addFavorite/" + resourceId);
+  },
+  
+  getAllCategories: function() {
+      return axios.get("/rsc/getAll/Cats");
   }
+
 };
