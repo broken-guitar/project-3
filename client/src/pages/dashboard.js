@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
     API.getUsername(userId)
       .then(res => {
         console.log("results from axios API call to get user: ", res);
-        let userName = res.data.username;
+        let userName = res.data;
         this.setState({ userName: userName });
       })
       .catch(err => {

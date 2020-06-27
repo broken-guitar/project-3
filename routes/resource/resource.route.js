@@ -19,4 +19,7 @@ router
 // add new resource
 router.route("/addNew").post(resourceController.create);
 
+// add favorite
+router.route("/addFavorite/:id").get(resourceController.addFavorite);
+
 module.exports = router;

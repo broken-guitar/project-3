@@ -38,5 +38,9 @@ export default {
 
   getResourceById: function (rscId) {
     return axios.get("/rsc/getOne/" + rscId);
+  },
+
+  addFavorite: function (resourceId) {
+    return axios.get("/rsc/addFavorite/" + resourceId);
   }
 };
