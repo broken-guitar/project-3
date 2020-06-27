@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Categicon from "../components/categicon/categicon.js";
+import AddFavorite from "../components/addFavorite/addFavorite";
 import ResourceItem from "../components/Resource/Resource.js"
 import { Button, Modal } from "react-bootstrap";
 import API from "../utils/API.js";
@@ -26,23 +27,33 @@ export default class Home extends Component {
   handleShow = (event) => {
     event.preventDefault();
     this.setState({ show: true });
-    this.setState({modalResId: event.target.id});
+    this.setState({ modalResId: event.target.id });
     this.getResourceById(event.target.id);
   };
 
   getResourceById = (rscId) => {
     console.log("getRes func ID ", rscId);
     API.getResourceById(rscId)
-    .then(res => {
-      console.log(res);
-      this.setState({ modalRes: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        console.log(res);
+        this.setState({ modalRes: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  // favorite button click
+
+
+  onClick = () => {
+    let resourceId = this.state.modalResId;
+    console.log("favorites button on click:", resourceId);
+    API.addFavorite(resourceId)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
-  render () {
+  render() {
     return (
       <div>
         <br />
@@ -52,6 +63,7 @@ export default class Home extends Component {
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
           {this.props.categArr.map(cat => (
+
             cat.type === "Category" ? // render Category and Resource with separate components
                 <Categicon
                     key={cat._id}
@@ -95,5 +107,6 @@ export default class Home extends Component {
           </Modal.Footer>
         </Modal>
       </div>
-    )};
+    );
+  }
 }
