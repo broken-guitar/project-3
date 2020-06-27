@@ -58,7 +58,9 @@ export default class Dashboard extends Component {
         // save unique category array to state categArrUnique
         let uniqueArray = this.unique(initialArray);
         this.setState({ categArrUnique: uniqueArray });
-        console.log("Category Array: " + uniqueArray)
+        console.log("Category Array: " + uniqueArray);
+        console.log("Category Array type: " + typeof uniqueArray);
+        this.state.categArrUnique.map(cat => console.log(cat))
       })
       .catch(err => {
         console.log(err);
@@ -70,7 +72,7 @@ export default class Dashboard extends Component {
   contains = (v, arr) => {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] === v) {
-        console.log("remove this! " + v);
+        // console.log("remove this! " + v);
         return true;
       }
       return false;
@@ -98,7 +100,7 @@ export default class Dashboard extends Component {
   renderPage = () => {
     if (this.state.currentPage === "Home") {
       return (
-        <Home userName={this.state.userName} categArr={this.state.categArr} />
+        <Home userName={this.state.userName} categArr={this.state.categArr} categArrUnique={this.state.categArrUnique} />
       );
     } else if (this.state.currentPage === "Recent") {
       return <Recent />;

@@ -13,6 +13,8 @@ export default class Home extends Component {
       userId: "",
       userName: "",
       categArr: [],
+      categArrUnique: [],
+      currentCateg: "",
       show: false,
       setShow: false,
       modalResId: "",
@@ -28,6 +30,8 @@ export default class Home extends Component {
     event.preventDefault();
     this.setState({ show: true });
     this.setState({ modalResId: event.target.id });
+    this.setState({ currentCateg: event.target.id })
+    console.log("current category" + this.state.currentCateg)
     this.getResourceById(event.target.id);
   };
 
@@ -58,7 +62,23 @@ export default class Home extends Component {
         <br />
         <h1 className="welcoming">Welcome, {this.props.userName}</h1>
         <br />
+        <div className="category-container">
+          {this.props.categArrUnique.map(cat =>
+            <Categicon
+              key={cat}
+              id={cat}
+              title={cat}
+              // type={cat.type}
+              // link={cat.link}
+              cat={cat}
+              onClick={this.handleShow}
+            />
+          )}
+        </div>
 
+        <br />
+        <h2 className="welcoming">Prior mapping tool</h2>
+        <br />
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
           {this.props.categArr.map(cat =>
@@ -73,13 +93,13 @@ export default class Home extends Component {
                 onClick={this.handleShow}
               />
             ) : (
-              <ResourceItem
-                key={cat._id}
-                id={cat._id}
-                title={cat.title}
-                onClick={this.handleShow}
-              />
-            )
+                <ResourceItem
+                  key={cat._id}
+                  id={cat._id}
+                  title={cat.title}
+                  onClick={this.handleShow}
+                />
+              )
           )}
         </div>
 
@@ -91,7 +111,9 @@ export default class Home extends Component {
           animation={false}
         >
           <Modal.Header closeButton>
-            <Modal.Title>{this.state.modalRes.title}</Modal.Title>
+            {this.state.currentCateg === undefined ?
+              (<Modal.Title>{this.state.modalRes.title}</Modal.Title>) :
+              (<Modal.Title>{this.state.currentCateg}</Modal.Title>)}
           </Modal.Header>
 
           <Modal.Body
