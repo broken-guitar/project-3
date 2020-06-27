@@ -27,7 +27,11 @@ export default function navbar(props) {
             >
               Favorites
             </Nav.Link>
+            
+            {/* add new resource button */}
             <AddNewBtn addNewResource={props.addNewResource} />
+
+            {/* logout button */}
             <Button
               variant="outline-dark"
               onClick={() => {

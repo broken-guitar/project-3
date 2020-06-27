@@ -11,6 +11,8 @@ const userSchema = new Schema({
 
   password: { type: String, required: true },
 
+  role: { type: String, required: true, default: "User" },
+
   // 'resources' is an array of Resource ids of Resources that we want to associate with the User
   resources: [{ type: Schema.Types.ObjectId, ref: "Resources" }],
   // 'favorites' is an array of Resource ids for Resrouces the user favorited

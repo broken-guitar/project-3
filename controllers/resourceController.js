@@ -29,7 +29,7 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
 
-    // Find all resources in DB
+    // Find all Resources in DB
     findAll: function(req, res) {
         db.Resource
             .find({})
@@ -37,6 +37,7 @@ module.exports = {
             .catch(err => res.status(422).json(err));
 
     }
+
     
 
 }

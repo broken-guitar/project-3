@@ -3,10 +3,13 @@ import { Button, Modal } from "react-bootstrap";
 import AddResourceForm from "../addResource/addResource";
 
 export default function addNewBtn(props) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
+  
+  // useState is a "hook" that allows us to use state in a regular component
+  const [show, setShow] = useState(false); // [ show = false, setShow = function that updates "show" ]
+    
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   return (
     <>
       <Button variant="outline-info" className="mr-3" onClick={handleShow}>
@@ -18,7 +21,10 @@ export default function addNewBtn(props) {
           <Modal.Title>Add New Resource!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
+          {/* render the add resource form component */}
           <AddResourceForm handleClose={handleClose}></AddResourceForm>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

@@ -4,17 +4,17 @@ const Schema = mongoose.Schema;
 const resourceSchema = new Schema({
 
     title:          { type: String, required: true },
-    category:       { type: String, required: true },
+    
+    type:           { type: String, required: true},
 
-    // TODO >> add logic to make EITHER link OR description required
-    // (else, someone may add empty titles with no resource)
+    category:       { type: String, required: false },
 
     link:           { type: String, required: false },
+
     description:    { type: String, required: false },
 
-    // TODO >> add user cookie to eventually display who created & when in details
-
     creator:        { type: String, required: false },
+
     owner:          { type: String, required: false},
     
     // 'users' is an array that stores User ObjectIds (_id), then
