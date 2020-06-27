@@ -12,7 +12,8 @@ export default class Dashboard extends Component {
       currentPage: "Home",
       userId: "",
       userName: "",
-      categArr: []
+      categArr: [],
+      categArrUnique: []
     };
   }
 
@@ -41,12 +42,54 @@ export default class Dashboard extends Component {
   getAllResources = () => {
     API.getAllResources()
       .then(res => {
+
+        // return ALL resource database data and set to state categArr
         this.setState({ categArr: res.data });
+        console.log("Response with resource data: ", res.data);
+
+        // loop through res data for duplicate category array
+        let initialArray = [];
+        for (let i = 0; i < res.data.length; i++) {
+          // console.log("looped! " + res.data[i].category);
+          initialArray.push(res.data[i].category);
+        }
+        console.log("Initial Array: " + initialArray)
+
+        // save unique category array to state categArrUnique
+        let uniqueArray = this.unique(initialArray);
+        this.setState({ categArrUnique: uniqueArray });
+        console.log("Category Array: " + uniqueArray)
       })
       .catch(err => {
         console.log(err);
       });
   };
+
+  // contains function to check whether a value is contained within an array 
+  // used for unique function to generate unique category array
+  contains = (v, arr) => {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === v) {
+        console.log("remove this! " + v);
+        return true;
+      }
+      return false;
+    }
+  };
+
+  // unique function, which outputs unique values of an array 
+  // used for unique category array - also removes undefined values
+  unique = (array) => {
+    let new_array = [];
+    for (var i = 0; i < array.length; i++) {
+      if ((!this.contains(array[i], new_array)) && (array[i] !== undefined)) {
+        new_array.push(array[i]);
+        // console.log("this was added! " + array[i]);
+      }
+    }
+    return new_array;
+  };
+
 
   handlePageChange = page => {
     this.setState({ currentPage: page });
