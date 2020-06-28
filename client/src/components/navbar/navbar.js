@@ -1,6 +1,13 @@
 import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import AddNewBtn from "../addNewBtn/addNewBtn";
+import { FaRegHandPeace } from "react-icons/fa";
+import { GiBackwardTime } from "react-icons/gi";
+import { FiHeart } from "react-icons/fi";
+import { AiOutlineHome } from "react-icons/ai";
+import "./style.css";
+
+
 
 export default function navbar(props) {
   return (
@@ -11,6 +18,9 @@ export default function navbar(props) {
           onClick={() => props.handlePageChange("Home")}
         >
           Resource Center
+          <div className="nav-item home">
+            <AiOutlineHome />
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -20,12 +30,18 @@ export default function navbar(props) {
               onClick={() => props.handlePageChange("Recent")}
             >
               Recent
+              <div className="nav-item recent">
+                <GiBackwardTime />
+              </div>
             </Nav.Link>
             <Nav.Link
               href="#favorite"
               onClick={() => props.handlePageChange("Favorites")}
             >
               Favorites
+              <div className="nav-item heart">
+                <FiHeart />
+              </div>
             </Nav.Link>
             
             {/* add new resource button */}
@@ -39,6 +55,9 @@ export default function navbar(props) {
               }}
             >
               Logout
+              <div className="nav-item peace">
+                <FaRegHandPeace />
+              </div>
             </Button>
           </Nav>
         </Navbar.Collapse>

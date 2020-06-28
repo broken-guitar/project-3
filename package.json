@@ -28,6 +28,7 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.9.18",
     "mongoose-unique-validator": "^2.0.3",
-    "node-gyp": "^7.0.0"
+    "node-gyp": "^7.0.0",
+    "react-icons": "^3.10.0"
   }
 }
