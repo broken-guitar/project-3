@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import AddResourceForm from "../addResource/addResource";
+import { FiPlus } from "react-icons/fi";
+import "./style.css";
 
 export default function addNewBtn(props) {
   
@@ -13,7 +15,10 @@ export default function addNewBtn(props) {
   return (
     <>
       <Button variant="outline-info" className="mr-3" onClick={handleShow}>
-        Add New Resource!
+        Add New Resource
+        <div className="add-new">
+          <FiPlus />
+        </div>
       </Button>
 
       <Modal show={show} onHide={handleClose} animation={false}>

@@ -1,0 +1,16 @@
+.nav-item {
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.peace {
+    vertical-align: 2px;
+}
+
+.heart {
+    vertical-align: 2px;
+}
+
+.home {
+    vertical-align: 3px;
+}
