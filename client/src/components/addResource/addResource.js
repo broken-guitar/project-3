@@ -7,31 +7,31 @@ export default class AddResourceForm extends Component {
     super(props);
     this.state = {
       title: "",
-      type: "",
+      link: "",
       category: "",
-      description: ""
+      description: "",
     };
   }
 
   //    input change
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   //   handle submit
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     let newResource = {
       title: this.state.title,
-      type: this.state.type,
+      link: this.state.link,
       category: this.state.category,
-      description: this.state.description
+      description: this.state.description,
     };
     console.log(newResource);
-    API.addNewResource(newResource).then(res => console.log(res));
+    API.addNewResource(newResource).then((res) => console.log(res));
     this.props.handleClose();
   };
 
@@ -50,20 +50,13 @@ export default class AddResourceForm extends Component {
             />
           </Form.Group>
 
-          <Form.Group controlId="newResourceType">
-            <Form.Label>Type</Form.Label>
+          <Form.Group controlId="newResourceLink">
+            <Form.Label>Link</Form.Label>
             <Form.Control
-              as="select"
-              name="type"
+              as="input"
+              name="link"
               onChange={this.handleInputChange}
-            >
-              <option>....</option>
-              <option>Link</option>
-              <option>Note</option>
-              <option>Contact</option>
-              <option>Document</option>
-              <option>Image</option>
-            </Form.Control>
+            ></Form.Control>
           </Form.Group>
           <Form.Group controlId="newResourceCategory">
             <Form.Label>Category</Form.Label>
