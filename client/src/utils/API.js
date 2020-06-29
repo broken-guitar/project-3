@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default {
-  
   // *** USER LOGIN API ***
 
   // register New User
@@ -41,13 +40,18 @@ export default {
     return axios.get("/rsc/getOne/" + rscId);
   },
 
-
+  // add resource to favorites array in User db
   addFavorite: function (resourceId) {
     return axios.get("/rsc/addFavorite/" + resourceId);
   },
-  
-  getAllCategories: function() {
-      return axios.get("/rsc/getAll/Cats");
-  }
 
+  // get all categories
+  getAllCategories: function () {
+    return axios.get("/rsc/getAll/Cats");
+  },
+
+  // get favorite resources from User DB on favorites page load
+  getFavorites: function (UserId) {
+    return axios.get("/rsc/getfavorites/" + UserId);
+  },
 };
