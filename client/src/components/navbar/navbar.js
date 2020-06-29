@@ -7,8 +7,6 @@ import { FiHeart } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import "./style.css";
 
-
-
 export default function navbar(props) {
   return (
     <>
@@ -43,7 +41,7 @@ export default function navbar(props) {
                 <FiHeart />
               </div>
             </Nav.Link>
-            
+
             {/* add new resource button */}
             <AddNewBtn addNewResource={props.addNewResource} />
 
