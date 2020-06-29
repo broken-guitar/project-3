@@ -1,0 +1,18 @@
+
+.login-enter {
+    opacity: 0.01;
+}
+
+.login-enter.login-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+}
+
+.login-exit {
+    opacity: 1;
+}
+
+.login-exit.login-exit-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}

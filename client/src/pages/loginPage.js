@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
+
+import LoginForm from "../components/forms/LoginForm";
 import Alert from "../components/alerts/loginAlert";
+
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import API from "../utils/API";
+
+import "./style.css";
 
 export default class Login extends Component {
   constructor(props) {
@@ -132,11 +138,18 @@ export default class Login extends Component {
   }
 
   render() {
+
+
     return (
       <>
         {/* register button */}
         <Button variant="primary" onClick={this.handleShow}>
           Register
+        </Button>
+
+        {/* log button */}
+        <Button variant="primary" onClick={this.handleLogShow}>
+          Login
         </Button>
 
         {/* register modal */}
@@ -208,58 +221,75 @@ export default class Login extends Component {
         </Modal>
 
         {/* login */}
-        {/* log button */}
-        <Button variant="primary" onClick={this.handleLogShow}>
-          Login
-        </Button>
+        
         {/* log modal */}
-        <Modal show={this.state.showLogin} onHide={this.handleLogClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Login</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {/* login form */}
-            <Form id="loginUser">
-              <Form.Group controlId="formloginUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  onChange={this.handleInputChange}
-                  type="username"
-                  name="logUsername"
-                  placeholder="Enter Username"
-                  value={this.state.logUsername}
-                />
-              </Form.Group>
+        <TransitionGroup transitionName="login">
+          
+        {this.state.showLogin &&
+          <CSSTransition
+            key="login1"
+            classNames="login"
+            timeout={500}
+          >
+          <LoginForm
+          handleInputChange={this.handleInputChange}
+          logUsername={this.logUsername}
+          logPassword={this.logPassword}
+          handleLoginSubmit={this.handleLoginSubmit}
+          />
+          </CSSTransition>}
+          </TransitionGroup>
+          
+          
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  onChange={this.handleInputChange}
-                  type="password"
-                  name="logPassword"
-                  placeholder="Password"
-                  value={this.state.logPassword}
-                />
-              </Form.Group>
-
-              <Button
-                onClick={this.handleLoginSubmit}
-                variant="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Alert show={this.state.showAlert} variant="danger" dismissible="false"
-              header="Oops!" message={this.state.alertMessage} />
-            <Button variant="secondary" onClick={this.handleLogClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </>
     );
   }
 }
+
+// {/* <Modal show={this.state.showLogin} onHide={this.handleLogClose}>
+// <Modal.Header closeButton>
+//   <Modal.Title>Login</Modal.Title>
+// </Modal.Header>
+// <Modal.Body>
+//   {/* login form */}
+//   <Form id="loginUser">
+//     <Form.Group controlId="formloginUsername">
+//       <Form.Label>Username</Form.Label>
+//       <Form.Control
+//         onChange={this.handleInputChange}
+//         type="username"
+//         name="logUsername"
+//         placeholder="Enter Username"
+//         value={this.state.logUsername}
+//       />
+//     </Form.Group>
+
+//     <Form.Group controlId="formBasicPassword">
+//       <Form.Label>Password</Form.Label>
+//       <Form.Control
+//         onChange={this.handleInputChange}
+//         type="password"
+//         name="logPassword"
+//         placeholder="Password"
+//         value={this.state.logPassword}
+//       />
+//     </Form.Group>
+
+//     <Button
+//       onClick={this.handleLoginSubmit}
+//       variant="primary"
+//       type="submit"
+//     >
+//       Submit
+//     </Button>
+//   </Form>
+// </Modal.Body>
+// <Modal.Footer>
+//   <Alert show={this.state.showAlert} variant="danger" dismissible="false"
+//     header="Oops!" message={this.state.alertMessage} />
+//   <Button variant="secondary" onClick={this.handleLogClose}>
+//     Close
+//   </Button>
+// </Modal.Footer>
+// </Modal> */}
