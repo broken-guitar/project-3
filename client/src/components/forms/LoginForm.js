@@ -48,15 +48,15 @@ export default function LoginForm(props) {
                         variant="primary"
                         type="submit"
                     >
-                    Login
+                        Login
                     </Button>
                     <Button
                         className="login-button"
-                        onClick={() => props.handleRegShow}
+                        onClick={props.handleRegShow}
                         variant="primary"
-                        type="data"
+                        type="submit"
                     >
-                    Register
+                        Register
                     </Button>
                     </Col>
                 
@@ -70,71 +70,71 @@ export default function LoginForm(props) {
             {/* register modal */}
 
              <Modal show={props.showRegister} onHide={props.handleRegClose}>
-<Modal.Header closeButton>
-  <Modal.Title>Register</Modal.Title>
-</Modal.Header>
-<Modal.Body>
+                <Modal.Header closeButton>
+                <Modal.Title>Register</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
 
-//   {/* register form */}
-   <Form id="registerUser">
-    <Form.Group controlId="formBasicEmail">
-      <Form.Label>Email address</Form.Label>
-       <Form.Control
-        onChange={props.handleInputChange}
-        type="email"
-        name="regEmail"
-        placeholder="Enter email"
-        value={props.regEmail}
-      />
-      <Form.Text className="text-muted">
-        We'll never share your email with anyone else.
-              </Form.Text>
-    </Form.Group>
+                {/* register form */}
+                <Form id="registerUser">
+                    <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        onChange={props.handleInputChange}
+                        type="email"
+                        name="regEmail"
+                        placeholder="Enter email"
+                        value={props.regEmail}
+                    />
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                            </Form.Text>
+                    </Form.Group>
 
-    <Form.Group controlId="formBasicUsername">
-      <Form.Label>Username</Form.Label>
-      <Form.Control
-        onChange={props.handleInputChange}
-        type="username"
-        name="regUsername"
-        placeholder="Enter Username"
-        value={props.regUsername}
-      />
-    </Form.Group>
+                    <Form.Group controlId="formBasicUsername">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        onChange={props.handleInputChange}
+                        type="username"
+                        name="regUsername"
+                        placeholder="Enter Username"
+                        value={props.regUsername}
+                    />
+                    </Form.Group>
 
-    <Form.Group controlId="formBasicPassword">
-      <Form.Label>Password</Form.Label>
-      <Form.Control
-        onChange={props.handleInputChange}
-        type="password"
-        name="regPassword"
-        placeholder="Password"
-        value={props.regPassword}
-      />
-    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        onChange={props.handleInputChange}
+                        type="password"
+                        name="regPassword"
+                        placeholder="Password"
+                        value={props.regPassword}
+                    />
+                    </Form.Group>
 
-    <Button
-      onClick={props.handleRegSubmit}
-      variant="primary"
-      type="submit"
-    >
-      Submit
-          </Button>
-  </Form>
-</Modal.Body>
+                    <Button
+                    onClick={props.handleRegSubmit}
+                    variant="primary"
+                    type="submit"
+                    >
+                    Submit
+                        </Button>
+                </Form>
+                </Modal.Body>
 
-<Modal.Footer>
+                <Modal.Footer>
 
-  <Alert show={props.showAlert} variant="danger" dismissible="false"
-    header="Oops!" message={props.alertMessage} />
+                <Alert show={props.showAlert} variant="danger" dismissible="false"
+                    header="Oops!" message={props.alertMessage} />
 
-  <Button variant="secondary" onClick={props.handleRegClose}>
-    Close
-      </Button>
+                {/* <Button variant="secondary" onClick={props.handleRegClose}>
+                    Close
+                    </Button> */}
 
-</Modal.Footer>
+                </Modal.Footer>
 
-</Modal>
+                </Modal>
        
         
         </div>

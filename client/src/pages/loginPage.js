@@ -96,7 +96,11 @@ export default class Login extends Component {
         }
       })
       .catch(err => {
-        this.setState({ showAlert: true, alertMessage: err || "Error :(" });
+        let errMessage = "There was an error! :(";
+        if (typeof err === "string") {
+            let errMessage = err;
+        }
+        this.setState({ showAlert: true, alertMessage: errMessage });
         console.log("API.regUser returned error: ", err);
       });
   };
@@ -112,18 +116,15 @@ export default class Login extends Component {
     this.registerUser(User);
   };
 
-
   // show/close Register modal
-  handleRegShow = e => {
-    // e.preventDefault();
-    this.resetLoginForm(true);
+  handleRegShow = (e) => {
+    e.preventDefault();
     console.log("trying to show register modal")
-    // setTimeout(
-    //     // 
-    //     200
-    // );
     this.setState({ showRegister: true });
+    this.resetLoginForm(true);
+
   }
+
   handleRegClose = () => this.setState({ showRegister: false });
 
   // show/close Login modal
@@ -149,28 +150,12 @@ export default class Login extends Component {
 
   render() {
 
-
     return (
       <div
         className="login-page-wrapper"
         >
         <div className="login-background"></div>
         
-        {/* register button
-        <Button variant="primary" onClick={this.handleShow}>
-          Register
-        </Button> */}
-
-        {/* log button
-        <Button variant="primary" onClick={this.handleLogShow}>
-          Login
-        </Button> */}
-
-        
-
-        {/* login */}
-        
-        {/* log modal */}
         <TransitionGroup>
             {this.state.showLogin && 
             <CSSTransition
@@ -181,15 +166,19 @@ export default class Login extends Component {
                 <LoginForm
                 className="login-form"
                 handleInputChange={this.handleInputChange}
+
                 logUsername={this.state.logUsername}
                 logPassword={this.state.logPassword}
                 handleLoginSubmit={this.handleLoginSubmit}
-                registerButtonClick={this.handleRegShow}
+
+                showRegister={this.state.showRegister}
+                handleRegShow={this.handleRegShow}
                 handleRegClose={this.handleRegClose}
                 regEmail={this.state.regEmail}
                 regUsername={this.state.regUsername}
                 regPassword={this.state.regPassword}
-                handleRegSubmit={this.handleRegSutmit}
+                handleRegSubmit={this.handleRegSubmit}
+
                 showAlert={this.state.showAlert}
                 alertMessage={this.state.alertMessage}
                 />
