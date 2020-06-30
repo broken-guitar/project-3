@@ -28,7 +28,7 @@ export default function addNewBtn(props) {
         <Modal.Body>
 
           {/* render the add resource form component */}
-          <AddResourceForm handleClose={handleClose}></AddResourceForm>
+          <AddResourceForm  handleClose={handleClose}></AddResourceForm>
 
         </Modal.Body>
         <Modal.Footer>
