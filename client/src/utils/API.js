@@ -40,6 +40,11 @@ export default {
     return axios.get("/rsc/getOne/" + rscId);
   },
 
+  // get all resources by category
+  getAllByCategory: function (category) {
+    return axios.get("/rsc/getByCat/" + category);
+  },
+
   // add resource to favorites array in User db
   addFavorite: function (resourceId) {
     return axios.get("/rsc/addFavorite/" + resourceId);

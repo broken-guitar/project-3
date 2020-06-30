@@ -55,18 +55,12 @@ module.exports = {
         res.json(dbUser.favorites);
       })
       .catch((err) => console.log(err));
+  },
 
-    // db.Resource.find({
-    //   _id: {
-    //     $in: favorites,
-    //   },
-    //   function(err, results) {
-    //     if (err) {
-    //       throw err;
-    //     } else {
-    //       res.json(results);
-    //     }
-    //   },
-    // });
+  // find resources by category
+  findByCategory: function (req, res) {
+    db.Resource.find({ category: req.params.category }).then((dbResources) =>
+      res.json(dbResources)
+    );
   },
 };
