@@ -42,6 +42,7 @@ export default class AddResourceForm extends Component {
     console.log(newResource);
     API.addNewResource(newResource).then((res) => console.log(res));
     this.props.handleClose();
+    this.props.updateState();
   };
 
   //   rendering
@@ -81,6 +82,7 @@ export default class AddResourceForm extends Component {
               <option>Human Resources</option>
               <option>Shipping and Receiving</option>
               <option>Vendors</option>
+              <option>Information and Technology</option>
               <option>Food</option>
               <option>Commute</option>
               <option>Extracurricular</option>

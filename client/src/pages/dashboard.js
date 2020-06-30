@@ -115,6 +115,7 @@ export default class Dashboard extends Component {
     return (
       <>
         <Navbar
+          updateState={this.getAllResources}
           currentPage={this.state.currentPage}
           handlePageChange={this.handlePageChange}
           logout={this.props.logout}
