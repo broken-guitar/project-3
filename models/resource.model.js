@@ -8,15 +8,11 @@ const resourceSchema = new Schema({
 
   type: { type: String, required: false },
 
-
   category: { type: String, required: false },
-
 
   link: { type: String, required: false },
 
-
   description: { type: String, required: false },
-
 
   creator: { type: String, required: false },
 
