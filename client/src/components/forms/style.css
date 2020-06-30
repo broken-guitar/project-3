@@ -1,18 +1,8 @@
 
-.login-enter {
-    opacity: 0.01;
+
+/* buttons */
+.login-button {
+    min-width: 6rem;
 }
 
-.login-enter.login-enter-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in;
-}
 
-.login-leave {
-    opacity: 1;
-}
-
-.login-leave.login-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
-}

@@ -18,7 +18,7 @@ export default class Login extends Component {
       regPassword: "",
       logUsername: "",
       logPassword: "",
-      showLogin: false,
+    //   showLogin: false,
       showRegister: false,
       showAlert: false,
       alertMessage: "",
@@ -32,7 +32,10 @@ export default class Login extends Component {
 
 
   componentDidMount() {
-    this.resetLoginForm(true);
+    console.log("login page mounted");
+    this.resetLoginForm(true); // clears input values and alerts
+    this.setState({showLogin: true}); // show login form on load
+
   }
   // updates input controls on login/register forms
   handleInputChange = e => {
@@ -111,10 +114,17 @@ export default class Login extends Component {
 
 
   // show/close Register modal
-  handleShow = () => {
+  handleRegShow = e => {
+    // e.preventDefault();
+    this.resetLoginForm(true);
+    console.log("trying to show register modal")
+    // setTimeout(
+    //     // 
+    //     200
+    // );
     this.setState({ showRegister: true });
-    this.resetLoginForm(true); }
-  handleClose = () => this.setState({ showRegister: false });
+  }
+  handleRegClose = () => this.setState({ showRegister: false });
 
   // show/close Login modal
   handleLogShow = () => {
@@ -141,155 +151,54 @@ export default class Login extends Component {
 
 
     return (
-      <>
-        {/* register button */}
+      <div
+        className="login-page-wrapper"
+        >
+        <div className="login-background"></div>
+        
+        {/* register button
         <Button variant="primary" onClick={this.handleShow}>
           Register
-        </Button>
+        </Button> */}
 
-        {/* log button */}
+        {/* log button
         <Button variant="primary" onClick={this.handleLogShow}>
           Login
-        </Button>
+        </Button> */}
 
-        {/* register modal */}
-        <Modal show={this.state.showRegister} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Register</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-
-            {/* register form */}
-            <Form id="registerUser">
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  onChange={this.handleInputChange}
-                  type="email"
-                  name="regEmail"
-                  placeholder="Enter email"
-                  value={this.state.regEmail}
-                />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                        </Form.Text>
-              </Form.Group>
-
-              <Form.Group controlId="formBasicUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  onChange={this.handleInputChange}
-                  type="username"
-                  name="regUsername"
-                  placeholder="Enter Username"
-                  value={this.state.regUsername}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  onChange={this.handleInputChange}
-                  type="password"
-                  name="regPassword"
-                  placeholder="Password"
-                  value={this.state.regPassword}
-                />
-              </Form.Group>
-
-              <Button
-                onClick={this.handleRegSubmit}
-                variant="primary"
-                type="submit"
-              >
-                Submit
-                    </Button>
-            </Form>
-          </Modal.Body>
-
-          <Modal.Footer>
-
-            <Alert show={this.state.showAlert} variant="danger" dismissible="false"
-              header="Oops!" message={this.state.alertMessage} />
-
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-                </Button>
-
-          </Modal.Footer>
-
-        </Modal>
+        
 
         {/* login */}
         
         {/* log modal */}
-        <TransitionGroup transitionName="login">
-          
-        {this.state.showLogin &&
-          <CSSTransition
-            key="login1"
-            classNames="login"
-            timeout={500}
-          >
-          <LoginForm
-          handleInputChange={this.handleInputChange}
-          logUsername={this.logUsername}
-          logPassword={this.logPassword}
-          handleLoginSubmit={this.handleLoginSubmit}
-          />
-          </CSSTransition>}
-          </TransitionGroup>
+        <TransitionGroup>
+            {this.state.showLogin && 
+            <CSSTransition
+                key="login1"
+                classNames="login"
+                timeout={300}
+            >
+                <LoginForm
+                className="login-form"
+                handleInputChange={this.handleInputChange}
+                logUsername={this.state.logUsername}
+                logPassword={this.state.logPassword}
+                handleLoginSubmit={this.handleLoginSubmit}
+                registerButtonClick={this.handleRegShow}
+                handleRegClose={this.handleRegClose}
+                regEmail={this.state.regEmail}
+                regUsername={this.state.regUsername}
+                regPassword={this.state.regPassword}
+                handleRegSubmit={this.handleRegSutmit}
+                showAlert={this.state.showAlert}
+                alertMessage={this.state.alertMessage}
+                />
+            </CSSTransition>}
+        </TransitionGroup>
           
           
 
-      </>
+      </div>
     );
   }
 }
-
-// {/* <Modal show={this.state.showLogin} onHide={this.handleLogClose}>
-// <Modal.Header closeButton>
-//   <Modal.Title>Login</Modal.Title>
-// </Modal.Header>
-// <Modal.Body>
-//   {/* login form */}
-//   <Form id="loginUser">
-//     <Form.Group controlId="formloginUsername">
-//       <Form.Label>Username</Form.Label>
-//       <Form.Control
-//         onChange={this.handleInputChange}
-//         type="username"
-//         name="logUsername"
-//         placeholder="Enter Username"
-//         value={this.state.logUsername}
-//       />
-//     </Form.Group>
-
-//     <Form.Group controlId="formBasicPassword">
-//       <Form.Label>Password</Form.Label>
-//       <Form.Control
-//         onChange={this.handleInputChange}
-//         type="password"
-//         name="logPassword"
-//         placeholder="Password"
-//         value={this.state.logPassword}
-//       />
-//     </Form.Group>
-
-//     <Button
-//       onClick={this.handleLoginSubmit}
-//       variant="primary"
-//       type="submit"
-//     >
-//       Submit
-//     </Button>
-//   </Form>
-// </Modal.Body>
-// <Modal.Footer>
-//   <Alert show={this.state.showAlert} variant="danger" dismissible="false"
-//     header="Oops!" message={this.state.alertMessage} />
-//   <Button variant="secondary" onClick={this.handleLogClose}>
-//     Close
-//   </Button>
-// </Modal.Footer>
-// </Modal> */}
