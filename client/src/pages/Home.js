@@ -102,10 +102,10 @@ export default class Home extends Component {
         <br />
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
-          {this.props.categArr.map((cat) =>
+          {this.props.categArr.map((cat, index) =>
             cat.type === "Category" ? ( // render Category and Resource with separate components
               <Categicon
-                key={cat._id}
+                key={index}
                 id={cat._id}
                 title={cat.title}
                 type={cat.type}
