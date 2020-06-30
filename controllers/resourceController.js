@@ -11,16 +11,25 @@ module.exports = {
 
   // update a specific resource by id
 
-  //   updateByID: function (req, res) {
-  //     db.Resource.findByIdAndUpdate(req.params.id,
-  //       update [{ title: req.params.title },
-  //       { type: req.params.type },
-  //       { category: req.params.category },
-  //       { link: req.params.link },
-  //       { description: req.params.description }])
-  //     .then((dbModel) => res.json(dbModel))
-  //     .catch((err) => res.status(422).json(err));
-  // },
+  updateById: function (req, res) {
+    db.Resource.findByIdAndUpdate(req.params.rscId,
+
+
+      {
+        $set:
+        {
+          title: req.body.title,
+          type: req.body.type,
+          category: req.body.category,
+          link: req.body.link,
+          description: req.body.description
+        }, useFindAndModify: false, new: true
+      }
+
+    )
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
 
 
   // delete a specific resource by id
