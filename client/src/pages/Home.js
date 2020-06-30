@@ -74,7 +74,9 @@ export default class Home extends Component {
 
   // renddering addFavorite button into resource items
   renderAddFav = (category) => {
-    return <AddFavorite category={category} onClick={this.onClick}></AddFavorite>;
+    return (
+      <AddFavorite category={category} onClick={this.onClick}></AddFavorite>
+    );
   };
 
   render() {
@@ -86,12 +88,8 @@ export default class Home extends Component {
         <div className="category-container">
           {this.props.categArrUnique.map((cat) => (
             <Categicon
-              key={cat}
-              id={cat}
-              title={cat}
-              // type={cat.type}
-              // link={cat.link}
-              cat={cat}
+              key={cat.id}
+              category={cat.category}
               onClick={this.handleShow}
             />
           ))}
@@ -102,29 +100,17 @@ export default class Home extends Component {
         <br />
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
-          {this.props.categArr.map((cat, index) =>
-            cat.type === "Category" ? ( // render Category and Resource with separate components
-              <Categicon
-                key={index}
-                id={cat._id}
-                title={cat.title}
-                type={cat.type}
-                // link={cat.link}
-                cat={cat}
-                onClick={this.handleShow}
-              />
-            ) : (
-              <ResourceItem
-                key={cat._id}
-                id={cat._id}
-                description={cat.description}
-                link={cat.link}
-                title={cat.title}
-                renderBtn={this.renderAddFav}
-                onClick={this.handleShow}
-              />
-            )
-          )}
+          {this.props.categArr.map((cat) => (
+            <ResourceItem
+              key={cat._id}
+              id={cat._id}
+              description={cat.description}
+              link={cat.link}
+              title={cat.title}
+              renderBtn={this.renderAddFav}
+              onClick={this.handleShow}
+            />
+          ))}
         </div>
 
         {/* Modal to show the clicked item contents
@@ -163,7 +149,6 @@ export default class Home extends Component {
                 ></ResourceItem>
               );
             })}
-            <p>hello</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
