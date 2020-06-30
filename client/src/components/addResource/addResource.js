@@ -70,7 +70,7 @@ export default class AddResourceForm extends Component {
               <option>Sales</option>
               <option>Accounting</option>
               <option>Human Resources</option>
-              <option>Shipping/Receiving</option>
+              <option>Shipping and Receiving</option>
               <option>Maintenance</option>
             </Form.Control>
           </Form.Group>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import ResourceItem from "../components/Resource/Resource";
+import { Button } from "react-bootstrap";
 
 export default class Favorites extends Component {
   constructor(props) {
@@ -27,6 +28,11 @@ export default class Favorites extends Component {
       .catch((err) => console.log(err));
   };
 
+  // rendering the delete button
+  renderDeleteFav = () => {
+    return <Button variant="danger">Delete Fav</Button>
+  };
+
   //   rendering
   render() {
     return (
@@ -40,6 +46,7 @@ export default class Favorites extends Component {
               id={resource._id}
               link={resource.link}
               description={resource.description}
+              renderBtn={this.renderDeleteFav}
             />
           ))}
         </div>

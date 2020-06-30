@@ -9,6 +9,9 @@ router.route("/getAll/Resources").get(resourceController.findAll);
 //    matches "/rsc/getOne/:rscId"
 router.route("/getOne/:rscId").get(resourceController.findById);
 
+// get ALL by CATEGORY
+router.route("/getByCat/:category").get(resourceController.findByCategory);
+
 // Get ALL resources/documents that belong to a user
 //    matches "/rsc/:UserId"
 router
