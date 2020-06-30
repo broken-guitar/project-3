@@ -33,6 +33,9 @@ router.route("/addNew").post(resourceController.create);
 // add favorite
 router.route("/addFavorite/:id").get(resourceController.addFavorite);
 
+// delete favorite from array in USER DB, using $pull in controller
+router.route("/deleteFavorite/:id").get(resourceController.deleteFavorite);
+
 // get favorite
 router.route("/getfavorites/:id").get(resourceController.getFavorite);
 

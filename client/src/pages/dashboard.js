@@ -49,16 +49,22 @@ export default class Dashboard extends Component {
         // loop through res data for duplicate category array
         let initialArray = [];
         for (let i = 0; i < res.data.length; i++) {
+          let unique = { id: res.data[i]._id, category: res.data[i].category };
           // console.log("looped! " + res.data[i].category);
-          initialArray.push(res.data[i].category);
+          console.log(unique);
+          initialArray.push(unique);
         }
-        console.log("Initial Array: " + initialArray);
+        console.log("Initial Array: " + initialArray.length);
 
         // save unique category array to state categArrUnique
-        let uniqueArray = this.unique(initialArray);
+        let uniqueArray = Array.from(
+          new Set(initialArray.map((a) => a.category))
+        ).map((cat) => {
+          return initialArray.find((a) => a.category === cat);
+        });
         this.setState({ categArrUnique: uniqueArray });
-        console.log("Category Array: " + uniqueArray);
-        console.log("Category Array type: " + typeof uniqueArray);
+        console.log(" Unique ,filtered Category Array: " + uniqueArray.length);
+        console.log("Category Array type: " + typeof initialArray);
         this.state.categArrUnique.map((cat) => console.log(cat));
       })
       .catch((err) => {

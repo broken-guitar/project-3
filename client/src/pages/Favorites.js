@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import ResourceItem from "../components/Resource/Resource";
-import { Button } from "react-bootstrap";
+import DeleteFav from "../components/deleteFav/deleteFav";
 
 export default class Favorites extends Component {
   constructor(props) {
@@ -28,9 +28,23 @@ export default class Favorites extends Component {
       .catch((err) => console.log(err));
   };
 
+  // delete button
+  deleteFavorite = (event) => {
+    let resourceId = event.target.id;
+    console.log("delete clicked", resourceId);
+    API.deleteFavorite(resourceId)
+      .then((res) => {
+        console.log(res);
+        this.getFavorites(this.props.getCookie());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   // rendering the delete button
-  renderDeleteFav = () => {
-    return <Button variant="danger">Delete Fav</Button>
+  renderDeleteFav = (id) => {
+    return <DeleteFav id={id} delete={this.deleteFavorite}></DeleteFav>;
   };
 
   //   rendering
