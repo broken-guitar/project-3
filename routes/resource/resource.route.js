@@ -11,16 +11,18 @@ router.route("/getOne/:rscId").get(resourceController.findById);
 
 // Get ALL resources/documents that belong to a user
 //    matches "/rsc/:UserId"
-router.route("/:UserId")
+router
+  .route("/:UserId")
   .get(resourceController.findUsersResources)
   .post(resourceController.create);
 
 // add new resource
 router.route("/addNew").post(resourceController.create);
 
-
 // add favorite
 router.route("/addFavorite/:id").get(resourceController.addFavorite);
 
+// get favorite
+router.route("/getfavorites/:id").get(resourceController.getFavorite);
 
 module.exports = router;
