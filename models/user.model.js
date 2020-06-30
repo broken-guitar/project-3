@@ -19,9 +19,9 @@ const userSchema = new Schema({
   favorites: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Resources"
-    }
-  ]
+      ref: "Resource",
+    },
+  ],
 });
 
 // this is the PRE HOOK hashes the password before saving it to the database
