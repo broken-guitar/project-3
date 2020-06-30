@@ -38,7 +38,7 @@ module.exports = {
     console.log(req.cookies.id);
 
     db.User.findByIdAndUpdate(req.cookies.id, {
-      $push: { favorites: req.params.id },
+      $addToSet: { favorites: req.params.id },
       useFindAndModify: false,
       new: true,
     })
