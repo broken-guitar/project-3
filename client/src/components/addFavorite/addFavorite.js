@@ -5,7 +5,7 @@ export default function addFavorite(props) {
   // functions
 
   return (
-    <Button variant="outline-info" onClick={props.onClick}>
+    <Button  id = {props.category} variant="outline-info" onClick={props.onClick}>
       Add to Favorites!
     </Button>
   );

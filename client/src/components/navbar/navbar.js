@@ -43,7 +43,10 @@ export default function navbar(props) {
             </Nav.Link>
 
             {/* add new resource button */}
-            <AddNewBtn addNewResource={props.addNewResource} />
+            <AddNewBtn
+              updateState={props.updateState}
+              addNewResource={props.addNewResource}
+            />
 
             {/* logout button */}
             <Button

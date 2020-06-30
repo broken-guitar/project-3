@@ -1,16 +1,41 @@
 import React from "react";
-import Image from "react-bootstrap/Image";
+import { Card, Button } from "react-bootstrap";
 import "./style.css";
 
 // OPTION: define several different components for each resource type here
 
 export default function ResourceItem(props) {
-    return (
-        <div className="item-box">
-            <Image src="./images/Rectangle.png" className="rectangle" id={props.id} onClick={props.onClick} cat={props.item} />
-            <div className="caption">
-                <p>{props.title}</p>
-            </div>
-        </div>
-    )
+  return (
+    <div className="item-box">
+      <Card style={{ width: "18rem" }}>
+        {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+        <Card.Body>
+          <Card.Title>{props.title}</Card.Title>
+          <Card.Text>{props.description}</Card.Text>
+        </Card.Body>
+        <Card.Footer>
+          <Button
+            className="mr-2"
+            href={props.link}
+            target={"_blank"}
+            variant="primary"
+          >
+            Link
+          </Button>
+          {/* rendering the addfav button here for the home */}
+          {props.renderBtn(props.id)}
+        </Card.Footer>
+      </Card>
+      {/* <Image
+        src="./images/Rectangle.png"
+        className="rectangle"
+        id={props.id}
+        onClick={props.onClick}
+        cat={props.item}
+      />
+      <div className="caption">
+        <p>{props.title}</p>
+      </div> */}
+    </div>
+  );
 }

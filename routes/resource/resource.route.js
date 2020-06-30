@@ -9,6 +9,17 @@ router.route("/getAll/Resources").get(resourceController.findAll);
 //    matches "/rsc/getOne/:rscId"
 router.route("/getOne/:rscId").get(resourceController.findById);
 
+// Update a resource by id
+//    matches "/rsc/updateOne/:rscId"
+// router.route("/updateOne/:rscId").put(resourceController.updateById);
+
+// Delete a resource by id
+//    matches "/rsc/deleteOne/:rscId"
+router.route("/deleteOne/:rscId").delete(resourceController.deleteById);
+
+// get ALL by CATEGORY
+router.route("/getByCat/:category").get(resourceController.findByCategory);
+
 // Get ALL resources/documents that belong to a user
 //    matches "/rsc/:UserId"
 router

@@ -10,6 +10,7 @@ export default class AddResourceForm extends Component {
       link: "",
       category: "",
       description: "",
+      categoryInput: "",
     };
   }
 
@@ -24,6 +25,14 @@ export default class AddResourceForm extends Component {
   //   handle submit
   handleSubmit = (e) => {
     e.preventDefault();
+    if (
+      this.state.title === "" ||
+      this.state.link === "" ||
+      this.state.category === "" ||
+      this.state.description === ""
+    ) {
+      alert("Please fill out every form field please!");
+    }
     let newResource = {
       title: this.state.title,
       link: this.state.link,
@@ -33,6 +42,7 @@ export default class AddResourceForm extends Component {
     console.log(newResource);
     API.addNewResource(newResource).then((res) => console.log(res));
     this.props.handleClose();
+    this.props.updateState();
   };
 
   //   rendering
@@ -70,8 +80,13 @@ export default class AddResourceForm extends Component {
               <option>Sales</option>
               <option>Accounting</option>
               <option>Human Resources</option>
-              <option>Shipping/Receiving</option>
-              <option>Maintenance</option>
+              <option>Shipping and Receiving</option>
+              <option>Vendors</option>
+              <option>Information and Technology</option>
+              <option>Food</option>
+              <option>Commute</option>
+              <option>Extracurricular</option>
+              <option>Misc</option>
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="description">
