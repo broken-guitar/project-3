@@ -12,9 +12,9 @@ export default function LoginForm(props) {
     return (
         <div>
         {/* login form */}
-        <Container className="login-container vh-100">
+        <Container fluid="lg" className="login-container vh-100">
             <Row className="align-items-center h-100">
-            <Col className="col-12 mx-auto">
+            <Col className="col-sm-12 mx-auto">
             <Card style={{width: "400px", margin: "0 auto", float: "none"}}>
                 <Card.Header>Login</Card.Header>
                 <Card.Body> {/* Card.Body pads the content */}
@@ -61,7 +61,12 @@ export default function LoginForm(props) {
                     </Col>
                 
                 </Form>
+               
                 </Card.Body>
+                <div className="px-2">
+                <Alert show={props.showAlert} variant="danger" dismissible="false"
+                    header="Oops!" message={props.alertMessage} />
+                </div>
             </Card>
             </Col>
             </Row>

@@ -151,10 +151,10 @@ export default class Login extends Component {
   render() {
 
     return (
-      <div
-        className="login-page-wrapper"
-        >
-        <div className="login-background"></div>
+
+      <div className="login-page-wrapper">
+        <div className="company-logo">Resource Center</div>
+        <div className="login-background"/>
         
         <TransitionGroup>
             {this.state.showLogin && 
@@ -164,28 +164,26 @@ export default class Login extends Component {
                 timeout={300}
             >
                 <LoginForm
-                className="login-form"
-                handleInputChange={this.handleInputChange}
+                  className="login-form"
+                  handleInputChange={this.handleInputChange}
 
-                logUsername={this.state.logUsername}
-                logPassword={this.state.logPassword}
-                handleLoginSubmit={this.handleLoginSubmit}
+                  logUsername={this.state.logUsername}
+                  logPassword={this.state.logPassword}
+                  handleLoginSubmit={this.handleLoginSubmit}
 
-                showRegister={this.state.showRegister}
-                handleRegShow={this.handleRegShow}
-                handleRegClose={this.handleRegClose}
-                regEmail={this.state.regEmail}
-                regUsername={this.state.regUsername}
-                regPassword={this.state.regPassword}
-                handleRegSubmit={this.handleRegSubmit}
+                  showRegister={this.state.showRegister}
+                  handleRegShow={this.handleRegShow}
+                  handleRegClose={this.handleRegClose}
+                  regEmail={this.state.regEmail}
+                  regUsername={this.state.regUsername}
+                  regPassword={this.state.regPassword}
+                  handleRegSubmit={this.handleRegSubmit}
 
-                showAlert={this.state.showAlert}
-                alertMessage={this.state.alertMessage}
+                  showAlert={this.state.showAlert}
+                  alertMessage={this.state.alertMessage}
                 />
             </CSSTransition>}
         </TransitionGroup>
-          
-          
 
       </div>
     );

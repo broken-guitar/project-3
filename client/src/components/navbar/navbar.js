@@ -10,7 +10,7 @@ import "./style.css";
 export default function navbar(props) {
   return (
     <>
-      <Navbar sticky="top" bg="light" expand="lg">
+      <Navbar sticky="top" bg="light" expand="md">
         <Navbar.Brand
           href="#home"
           onClick={() => props.handlePageChange("Home")}
@@ -47,13 +47,17 @@ export default function navbar(props) {
               updateState={props.updateState}
               addNewResource={props.addNewResource}
             />
-
+            {/* tasks button */}
+            <Button
+              className="mr-3"
+              variant="outline-danger"
+              onClick={() => props.showTaskBar()}
+            >Tasks</Button>
             {/* logout button */}
             <Button
+              className="float-right"
               variant="outline-dark"
-              onClick={() => {
-                props.logout();
-              }}
+              onClick={() => props.logout()}
             >
               Logout
               <div className="nav-item peace">
