@@ -50,6 +50,11 @@ export default {
     return axios.get("/rsc/addFavorite/" + resourceId);
   },
 
+  // delete resource from favorites array User DB
+  deleteFavorite: function(resourceId){
+    return axios.get("/rsc/deleteFavorite/"+ resourceId)
+  },
+
   // get all categories
   getAllCategories: function () {
     return axios.get("/rsc/getAll/Cats");

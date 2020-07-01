@@ -11,7 +11,7 @@ router.route("/getOne/:rscId").get(resourceController.findById);
 
 // Update a resource by id
 //    matches "/rsc/updateOne/:rscId"
-// router.route("/updateOne/:rscId").put(resourceController.updateById);
+router.route("/updateOne/:rscId").put(resourceController.updateById);
 
 // Delete a resource by id
 //    matches "/rsc/deleteOne/:rscId"
@@ -32,6 +32,9 @@ router.route("/addNew").post(resourceController.create);
 
 // add favorite
 router.route("/addFavorite/:id").get(resourceController.addFavorite);
+
+// delete favorite from array in USER DB, using $pull in controller
+router.route("/deleteFavorite/:id").get(resourceController.deleteFavorite);
 
 // get favorite
 router.route("/getfavorites/:id").get(resourceController.getFavorite);
