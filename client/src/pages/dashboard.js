@@ -4,6 +4,9 @@ import Home from "../pages/Home";
 import Recent from "../pages/Recent";
 import Favorites from "../pages/Favorites";
 import API from "../utils/API";
+import TaskBar from "../components/task/TaskBar";
+
+import "./style.css";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -14,6 +17,7 @@ export default class Dashboard extends Component {
       userName: "",
       categArr: [],
       categArrUnique: [],
+      showTaskBar: false
     };
   }
 
@@ -101,6 +105,11 @@ export default class Dashboard extends Component {
     this.setState({ currentPage: page });
   };
 
+  showTaskBar = () => {
+    this.setState({ showTaskBar: !this.state.showTaskBar});
+    console.log("showTaskBar: ", this.state.showTaskBar);
+  }
+
   renderPage = () => {
     if (this.state.currentPage === "Home") {
       return (
@@ -119,15 +128,22 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <>
-        <Navbar
-          updateState={this.getAllResources}
-          currentPage={this.state.currentPage}
-          handlePageChange={this.handlePageChange}
-          logout={this.props.logout}
-        ></Navbar>
+      <div className="dashboard-container">
+        <div className="navbar-container">
+          <Navbar
+            updateState={this.getAllResources}
+            currentPage={this.state.currentPage}
+            handlePageChange={this.handlePageChange}
+            logout={this.props.logout}
+            showTaskBar={this.showTaskBar}
+          />
+        </div>
+        <TaskBar show={this.state.showTaskBar}></TaskBar>
         {this.renderPage()}
-      </>
+
+        
+        
+      </div>
     );
   }
 }
