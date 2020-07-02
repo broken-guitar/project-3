@@ -30,6 +30,11 @@ export default {
     return axios.get("/rsc/getAll/Resources");
   },
 
+  // update rsc by id
+  editResource: function (id, newResource) {
+    return axios.put("/rsc/updateOne/" + id, newResource);
+  },
+
   // add new resource
   addNewResource: function (newResource) {
     return axios.post("/rsc/addNew", newResource);
@@ -51,8 +56,8 @@ export default {
   },
 
   // delete resource from favorites array User DB
-  deleteFavorite: function(resourceId){
-    return axios.get("/rsc/deleteFavorite/"+ resourceId)
+  deleteFavorite: function (resourceId) {
+    return axios.get("/rsc/deleteFavorite/" + resourceId);
   },
 
   // get all categories
@@ -63,5 +68,5 @@ export default {
   // get favorite resources from User DB on favorites page load
   getFavorites: function (UserId) {
     return axios.get("/rsc/getfavorites/" + UserId);
-  },
+  }
 };
