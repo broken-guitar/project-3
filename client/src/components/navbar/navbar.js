@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import AddNewBtn from "../addNewBtn/addNewBtn";
-import { FaRegHandPeace } from "react-icons/fa";
+import { FaRegHandPeace, FaTasks } from "react-icons/fa";
 import { GiBackwardTime } from "react-icons/gi";
 import { FiHeart } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
@@ -52,7 +52,11 @@ export default function navbar(props) {
               className="mr-3"
               variant="outline-danger"
               onClick={() => props.showTaskBar()}
-            >Tasks</Button>
+            >Tasks
+              <div className="nav-item task">
+                <FaTasks />
+              </div>
+            </Button>
             {/* logout button */}
             <Button
               className="float-right"
