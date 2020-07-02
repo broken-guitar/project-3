@@ -69,6 +69,18 @@ const resourceSeed = [
     }
 ]
 
+const taskSeed = [
+    {
+        title: "task1"
+    },
+    {
+        title: "task2"
+    },
+    {
+        title: "task3"
+    }
+]
+
 // ADD THE SEEDS
 
 db.Resource.remove({}).exec() // remove all Resource docs
@@ -79,6 +91,10 @@ db.Resource.remove({}).exec() // remove all Resource docs
       .then( () => db.User.collection.insertMany(userSeed) // add user seeds
         .then( dbUsr => console.log(dbUsr.result.n + " User record(s) inserted!"))
     ))
+    .then(() => db.Task.remove({}).exec() 
+      .then(() => db.Task.collection.insertMany(taskSeed)
+        .then(dbTask => console.log(dbTask.result.n + " Task record(s) inserted!")
+    )))
 
     // .then( () => db.Category.remove({}).exec() // remove all Category docs
     //   .then( () => db.Category.collection.insertMany(categorySeed) // add Category seeds

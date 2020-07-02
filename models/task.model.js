@@ -11,7 +11,7 @@ const taskSchema = new Schema({
   category: { type: String, required: false },
   link: { type: String, required: false },
   
-  assUsers: [{ type: Schema.Types.ObjectId, ref: "User"}], // assigned users
+  users: [{ type: Schema.Types.ObjectId, ref: "User"}], // assigned users
   resources: [{ type: Schema.Types.ObjectId, ref: "Resources" }],
 
   creator: { type: String, required: false },

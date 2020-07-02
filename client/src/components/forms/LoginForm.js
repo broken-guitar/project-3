@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Form, Button, Modal } from "react-bootstrap";
 import Alert from "../alerts/loginAlert";
-import "./style.css"
+import "./style.css";
 
 
 // import Image from "react-bootstrap/Image";
@@ -12,12 +12,12 @@ export default function LoginForm(props) {
     const [wasOpen, setWasOpen] = useState(false);
 
     useEffect(() => {
-        console.log("useEffect -> loginForm updated!", props.showRegister, wasOpen);
+        // console.log("useEffect -> loginForm updated!", props.showRegister, wasOpen);
         if (props.showRegister) {
             setWasOpen(true);
         }
         if (wasOpen && !props.showRegister) {
-            console.log("should reset login form");
+            // console.log("should reset login form");
             setWasOpen(false);
             props.resetLoginForm(true);
         }

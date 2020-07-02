@@ -29,7 +29,7 @@ module.exports = {
 
   findUsersTasks: function (req, res) {
     db.Task.find(
-        { assUsers: {$in: [req.params.id]}}
+        { users: {$in: [req.params.id]}} // get tasks that have user id in tasks's users array
         ) // find the user by _id
         .then((dbModel) => res.json(dbModel))
         .catch((err) => res.status(422).json(err));

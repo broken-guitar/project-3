@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TaskForm from "./TaskForm";
 import API from "../../utils/API";
 
 // slide-out taskbar overlay component
@@ -40,6 +41,9 @@ export default class TaskBar extends Component {
                 style={{width: this.state.width}}
                 className={`taskbar-container ${this.props.show && 'show'}`}>
                 <h3 className="p-0">i'm the TaskBar</h3>
+                <TaskForm
+                    userId={this.props.userId}
+                    />
             </div>
             
         )

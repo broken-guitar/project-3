@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Recent from "../pages/Recent";
 import Favorites from "../pages/Favorites";
 import API from "../utils/API";
+import taskAPI from "../utils/taskAPI";
 import TaskBar from "../components/task/TaskBar";
 
 import "./style.css";
@@ -26,6 +27,7 @@ export default class Dashboard extends Component {
     this.setState({ userId: this.props.getCookie() });
     this.getUsername(this.props.getCookie());
     this.getAllResources();
+
     // find all from the resource collection
   }
 
@@ -75,7 +77,9 @@ export default class Dashboard extends Component {
         console.log(err);
       });
   };
-
+  getUsersTasks = () => {
+    //   taskAPI.get
+  }
   // contains function to check whether a value is contained within an array
   // used for unique function to generate unique category array
   contains = (v, arr) => {
@@ -138,7 +142,11 @@ export default class Dashboard extends Component {
             showTaskBar={this.showTaskBar}
           />
         </div>
-        <TaskBar show={this.state.showTaskBar}></TaskBar>
+        <TaskBar
+            show={this.state.showTaskBar}
+            userId={this.state.userId}    
+        >
+        </TaskBar>
         {this.renderPage()}
 
         
