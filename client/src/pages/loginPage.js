@@ -130,12 +130,14 @@ export default class Login extends Component {
   // show/close Login modal
   handleLogShow = () => {
     this.setState({ showLogin: true });
-    this.resetLoginForm(true); }
+    this.resetLoginForm(true);
+  }
+  
   handleLogClose = () => this.setState({ showLogin: false });
 
   // clears input controls and user validation UI alert
-  resetLoginForm = (dismiss) => {
-    if (dismiss) {
+  resetLoginForm = (reset) => {
+    if (reset) {
       this.setState({
         regUsername: "",
         regEmail: "",
@@ -181,6 +183,8 @@ export default class Login extends Component {
 
                   showAlert={this.state.showAlert}
                   alertMessage={this.state.alertMessage}
+
+                  resetLoginForm={this.resetLoginForm}
                 />
             </CSSTransition>}
         </TransitionGroup>

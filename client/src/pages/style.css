@@ -60,9 +60,7 @@
 .taskbar-container {
     position: fixed;
     float: left;
-    /* width: 0; */
     height: 100%;
-    /* top: 0; */
     right: 0;
     z-index: 100;
     background: rgba(243, 115, 115, 0.568);
