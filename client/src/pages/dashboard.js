@@ -30,14 +30,14 @@ export default class Dashboard extends Component {
   }
 
   // get username of current logged in user
-  getUsername = (userId) => {
+  getUsername = userId => {
     API.getUsername(userId)
-      .then((res) => {
+      .then(res => {
         console.log("results from axios API call to get user: ", res);
         let userName = res.data;
         this.setState({ userName: userName });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
   // get all resources/categories to set state to pass props to Home component.
   getAllResources = () => {
     API.getAllResources()
-      .then((res) => {
+      .then(res => {
         // return ALL resource database data and set to state categArr
         this.setState({ categArr: res.data });
         console.log("Response with resource data: ", res.data);
@@ -62,16 +62,16 @@ export default class Dashboard extends Component {
 
         // save unique category array to state categArrUnique
         let uniqueArray = Array.from(
-          new Set(initialArray.map((a) => a.category))
-        ).map((cat) => {
-          return initialArray.find((a) => a.category === cat);
+          new Set(initialArray.map(a => a.category))
+        ).map(cat => {
+          return initialArray.find(a => a.category === cat);
         });
         this.setState({ categArrUnique: uniqueArray });
         console.log(" Unique ,filtered Category Array: " + uniqueArray.length);
         console.log("Category Array type: " + typeof initialArray);
-        this.state.categArrUnique.map((cat) => console.log(cat));
+        this.state.categArrUnique.map(cat => console.log(cat));
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
@@ -90,7 +90,7 @@ export default class Dashboard extends Component {
 
   // unique function, which outputs unique values of an array
   // used for unique category array - also removes undefined values
-  unique = (array) => {
+  unique = array => {
     let new_array = [];
     for (var i = 0; i < array.length; i++) {
       if (!this.contains(array[i], new_array) && array[i] !== undefined) {
@@ -101,14 +101,14 @@ export default class Dashboard extends Component {
     return new_array;
   };
 
-  handlePageChange = (page) => {
+  handlePageChange = page => {
     this.setState({ currentPage: page });
   };
 
   showTaskBar = () => {
-    this.setState({ showTaskBar: !this.state.showTaskBar});
+    this.setState({ showTaskBar: !this.state.showTaskBar });
     console.log("showTaskBar: ", this.state.showTaskBar);
-  }
+  };
 
   renderPage = () => {
     if (this.state.currentPage === "Home") {
@@ -117,12 +117,18 @@ export default class Dashboard extends Component {
           userName={this.state.userName}
           categArr={this.state.categArr}
           categArrUnique={this.state.categArrUnique}
+          updateState={this.getAllResources}
         />
       );
     } else if (this.state.currentPage === "Recent") {
       return <Recent />;
     } else {
-      return <Favorites getCookie={this.props.getCookie} />;
+      return (
+        <Favorites
+          updateState={this.getAllResources}
+          getCookie={this.props.getCookie}
+        />
+      );
     }
   };
 
@@ -140,9 +146,6 @@ export default class Dashboard extends Component {
         </div>
         <TaskBar show={this.state.showTaskBar}></TaskBar>
         {this.renderPage()}
-
-        
-        
       </div>
     );
   }
