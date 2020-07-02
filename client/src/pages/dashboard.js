@@ -5,7 +5,6 @@ import Recent from "../pages/Recent";
 import Favorites from "../pages/Favorites";
 import API from "../utils/API";
 import TaskBar from "../components/task/TaskBar";
-
 import "./style.css";
 
 export default class Dashboard extends Component {

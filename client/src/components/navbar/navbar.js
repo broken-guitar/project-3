@@ -10,7 +10,7 @@ import "./style.css";
 export default function navbar(props) {
   return (
     <>
-      <Navbar sticky="top" bg="light" expand="md">
+      <Navbar sticky="top" className="navbar-dark" expand="md">
         <Navbar.Brand
           href="#home"
           onClick={() => props.handlePageChange("Home")}
@@ -22,8 +22,9 @@ export default function navbar(props) {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link
+          <Nav className="ml-auto">
+            {/* <Nav.Link
+              className="nav-item"
               href="#recent"
               onClick={() => props.handlePageChange("Recent")}
             >
@@ -31,7 +32,7 @@ export default function navbar(props) {
               <div className="nav-item recent">
                 <GiBackwardTime />
               </div>
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link
               href="#favorite"
               onClick={() => props.handlePageChange("Favorites")}
@@ -49,8 +50,8 @@ export default function navbar(props) {
             />
             {/* tasks button */}
             <Button
-              className="mr-3"
-              variant="outline-danger"
+              className="mr-3 task-button"
+              bsPrefix="button"
               onClick={() => props.showTaskBar()}
             >Tasks
               <div className="nav-item task">

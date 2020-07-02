@@ -81,8 +81,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
-        <br />
+      <div className="home-wrapper">
         <h1 className="welcoming">Welcome, {this.props.userName}</h1>
         <br />
         <div className="category-container">

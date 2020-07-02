@@ -1,6 +1,19 @@
+.navbar {
+    color: white;
+}
+
+.navbar-nav {
+    float: right;
+}
+
+.navbar-brand {
+    color: white;
+}
+
 .nav-item {
     display: inline-block;
     margin-left: 3px;
+
 }
 
 .peace {
@@ -13,4 +26,12 @@
 
 .home {
     vertical-align: 3px;
+}
+
+.task-button {
+    color: #f77e8a;
+    background-color: #636262;
+    border-style: solid;
+    outline: 1px #f77e8a;
+    border-radius: .25rem;
 }
