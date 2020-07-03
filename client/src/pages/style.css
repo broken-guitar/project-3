@@ -1,9 +1,9 @@
-
-/* LOGIN PAGE */ 
+/* LOGIN PAGE */
 .login-page-wrapper {
     /* position: relative; */
     text-align: center;
 }
+
 .company-logo {
     position: absolute;
     display: block;
@@ -29,10 +29,10 @@
     z-index: 10;
     background: rgba(238, 238, 238, 0.192);
     /* box-shadow: -2rem 2rem 2rem rgba(black, 0.2); */
-    
+
 }
 
- /* login animation */
+/* login animation */
 
 .login-enter {
     opacity: 0.01;
@@ -52,9 +52,21 @@
     transition: opacity 700ms ease-in;
 }
 
+.navbar-container {
+    background-color: #636262;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
+
+.home-wrapper {
+    margin-top: 80px;
+}
+
 .dashboard-container {
     position: absolute;
     z-index: 1;
+    background-color: grey;
 }
 
 .taskbar-container {
@@ -65,7 +77,7 @@
     z-index: 100;
     background: rgba(243, 115, 115, 0.568);
     transition: width 0.61s ease-out;
-    
+
 }
 
 /* .taskbar-container.show {

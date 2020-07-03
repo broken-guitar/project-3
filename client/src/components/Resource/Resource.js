@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import "./style.css";
+import EditButton from "../editBtn/editBtn";
 
 // OPTION: define several different components for each resource type here
 
@@ -24,6 +25,10 @@ export default function ResourceItem(props) {
           </Button>
           {/* rendering the addfav button here for the home */}
           {props.renderBtn(props.id)}
+          <EditButton
+            updateState={props.updateState}
+            id={props.id}
+          ></EditButton>
         </Card.Footer>
       </Card>
       {/* <Image

@@ -19,15 +19,18 @@ export default class Home extends Component {
       setShow: false,
       modalResId: "",
       modalRes: {},
-      sortedResources: [],
+      sortedResources: []
     };
   }
 
   // const [show, setShow] = useState(false);
+  componentDidMount() {
+    this.props.updateState();
+  }
 
   handleClose = () => this.setState({ show: false });
 
-  handleShow = (event) => {
+  handleShow = event => {
     event.preventDefault();
     this.setState({ show: true });
     this.setState({ modalResId: event.target.id });
@@ -38,42 +41,42 @@ export default class Home extends Component {
   };
 
   // get one resource by id
-  getResourceById = (rscId) => {
+  getResourceById = rscId => {
     console.log("getRes func ID ", rscId);
     API.getResourceById(rscId)
-      .then((res) => {
+      .then(res => {
         console.log(res);
         this.setState({ modalRes: res.data });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
 
   // get all resources by category
-  getByCategory = (category) => {
+  getByCategory = category => {
     API.getAllByCategory(category)
-      .then((res) => {
+      .then(res => {
         console.log(res.data);
         this.setState({ sortedResources: res.data });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   // update state after adding new resource
-  updateResState = (rsc) => {};
+  updateResState = rsc => {};
 
   // favorite button click
-  onClick = (event) => {
+  onClick = event => {
     let resourceId = event.target.id;
     console.log("favorites button on click:", resourceId);
     API.addFavorite(resourceId)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
   // renddering addFavorite button into resource items
-  renderAddFav = (category) => {
+  renderAddFav = category => {
     return (
       <AddFavorite category={category} onClick={this.onClick}></AddFavorite>
     );
@@ -81,12 +84,11 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
-        <br />
+      <div className="home-wrapper">
         <h1 className="welcoming">Welcome, {this.props.userName}</h1>
         <br />
         <div className="category-container">
-          {this.props.categArrUnique.map((cat) => (
+          {this.props.categArrUnique.map(cat => (
             <Categicon
               key={cat.id}
               category={cat.category}
@@ -100,7 +102,7 @@ export default class Home extends Component {
         <br />
         {/* container for rendering all user's categories/resource items */}
         <div className="category-container">
-          {this.props.categArr.map((cat) => (
+          {this.props.categArr.map(cat => (
             <ResourceItem
               key={cat._id}
               id={cat._id}
@@ -109,6 +111,7 @@ export default class Home extends Component {
               title={cat.title}
               renderBtn={this.renderAddFav}
               onClick={this.handleShow}
+              updateState={this.props.updateState}
             />
           ))}
         </div>
@@ -132,11 +135,11 @@ export default class Home extends Component {
             style={{
               backgroundImage: "url(" + (this.state.modalRes.link || "") + ")",
               backgroundSize: "contain",
-              minHeight: "300px",
+              minHeight: "300px"
             }}
           >
             {/* resource content can go here */}
-            {this.state.sortedResources.map((rsc) => {
+            {this.state.sortedResources.map(rsc => {
               return (
                 <ResourceItem
                   key={rsc._id}
@@ -146,6 +149,7 @@ export default class Home extends Component {
                   title={rsc.title}
                   renderBtn={this.renderAddFav}
                   onClick={this.handleShow}
+                  updateState={this.props.updateState}
                 ></ResourceItem>
               );
             })}

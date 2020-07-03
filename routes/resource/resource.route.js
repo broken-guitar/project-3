@@ -11,7 +11,7 @@ router.route("/getOne/:rscId").get(resourceController.findById);
 
 // Update a resource by id
 //    matches "/rsc/updateOne/:rscId"
-router.route("/updateOne/:rscId").put(resourceController.updateById);
+router.route("/updateOne/:id").put(resourceController.updateById);
 
 // Delete a resource by id
 //    matches "/rsc/deleteOne/:rscId"
