@@ -4,9 +4,12 @@ module.exports = {
 
 // CREATE
   
-  create: function (req, res) {
-    db.Task.create(req.body)
-      .then((dbModel) => res.json(dbModel))
+  addTask: function (req, res) {
+    db.Task.create(req.body.task)
+      .then(dbModel => {
+        console.log("Task.create: ", dbModel);
+        res.json(dbModel)
+      })
       .catch((err) => res.status(422).json(err));
   },
 

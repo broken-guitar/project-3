@@ -3,13 +3,14 @@ const router = require("express").Router();
 const loginRoutes = require("./login");
 const resourceRoutes = require("./resource");
 const userRoutes = require("./user");
+const taskRoutes = require("./task");
 
 // LOGIN ROUTES
 
 //  matches "/loginPage"
 router.use("/loginPage", loginRoutes);
 
-// USER ROUTES
+// USER 
 // matches "/API"
 router.use("/API", userRoutes);
 
@@ -17,6 +18,9 @@ router.use("/API", userRoutes);
 
 //  matches "/"
 router.use("/", resourceRoutes);
+
+router.use("/task", taskRoutes);
+
 
 // If no API routes are hit, send the React app
 router.use(function (req, res) {
