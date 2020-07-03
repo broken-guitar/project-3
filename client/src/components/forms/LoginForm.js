@@ -8,9 +8,11 @@ import "./style.css";
 // import "./style.css";
 
 export default function LoginForm(props) {
-
+    
     const [wasOpen, setWasOpen] = useState(false);
 
+    // useEffect runs whenever the function component state updates;
+    // using it here to reset the LoginForm when register modal exits
     useEffect(() => {
         // console.log("useEffect -> loginForm updated!", props.showRegister, wasOpen);
         if (props.showRegister) {
