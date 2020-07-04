@@ -2,3 +2,45 @@
 /* .taskbar-container.close {
     width: 0px;
 } */
+
+.taskbar-modal {
+    color: rgb(31, 31, 31);
+}
+
+.taskbar-btn-wrapper {
+    display: block;
+    width: 100%;
+    padding-left: 5px;
+
+    /* float: none; */
+}
+
+.taskbar-close-btn {
+    font-size: 28px;
+    float: left;
+    padding-right: 7px;
+    vertical-align: top;
+}
+
+.taskbar-add-btn {
+    font-size: 28px;
+    float: left;
+
+    padding-right: 7px;
+    vertical-align: top;
+}
+
+/* small effect for buttons: animate on hover if class name ends in "btn" */
+[class$="btn"]:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.tasklist-container {
+    color: rgba(78, 76, 76, 0.835);
+}
+
+.task-card {
+    opacity: .87;
+    background-color: rgba(197, 133, 127, 0.774);
+}

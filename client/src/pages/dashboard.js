@@ -4,7 +4,6 @@ import Home from "../pages/Home";
 import Recent from "../pages/Recent";
 import Favorites from "../pages/Favorites";
 import API from "../utils/API";
-import taskAPI from "../utils/taskAPI";
 import TaskBar from "../components/task/TaskBar";
 import "./style.css";
 
@@ -22,12 +21,11 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.getCookie());
+    console.log("dashboard page mounted!");
+    // console.log(this.props.getCookie());
     this.setState({ userId: this.props.getCookie() });
     this.getUsername(this.props.getCookie());
     this.getAllResources();
-
-    // find all from the resource collection
   }
 
   // get username of current logged in user
@@ -49,17 +47,17 @@ export default class Dashboard extends Component {
       .then(res => {
         // return ALL resource database data and set to state categArr
         this.setState({ categArr: res.data });
-        console.log("Response with resource data: ", res.data);
+        //console.log("Response with resource data: ", res.data);
 
         // loop through res data for duplicate category array
         let initialArray = [];
         for (let i = 0; i < res.data.length; i++) {
           let unique = { id: res.data[i]._id, category: res.data[i].category };
           // console.log("looped! " + res.data[i].category);
-          console.log(unique);
+          //console.log(unique);
           initialArray.push(unique);
         }
-        console.log("Initial Array: " + initialArray.length);
+        //console.log("Initial Array: " + initialArray.length);
 
         // save unique category array to state categArrUnique
         let uniqueArray = Array.from(
@@ -68,17 +66,15 @@ export default class Dashboard extends Component {
           return initialArray.find(a => a.category === cat);
         });
         this.setState({ categArrUnique: uniqueArray });
-        console.log(" Unique ,filtered Category Array: " + uniqueArray.length);
-        console.log("Category Array type: " + typeof initialArray);
-        this.state.categArrUnique.map(cat => console.log(cat));
+        //console.log(" Unique ,filtered Category Array: " + uniqueArray.length);
+        //console.log("Category Array type: " + typeof initialArray);
+        // this.state.categArrUnique.map(cat => console.log(cat));
       })
       .catch(err => {
         console.log(err);
       });
   };
-  getUsersTasks = () => {
-    //   taskAPI.get
-  }
+ 
   // contains function to check whether a value is contained within an array
   // used for unique function to generate unique category array
   contains = (v, arr) => {
@@ -108,7 +104,7 @@ export default class Dashboard extends Component {
     this.setState({ currentPage: page });
   };
 
-  showTaskBar = () => {
+  handleShowTaskBar = () => {
     this.setState({ showTaskBar: !this.state.showTaskBar });
     console.log("showTaskBar: ", this.state.showTaskBar);
   };
@@ -144,12 +140,14 @@ export default class Dashboard extends Component {
             currentPage={this.state.currentPage}
             handlePageChange={this.handlePageChange}
             logout={this.props.logout}
-            showTaskBar={this.showTaskBar}
+            handleShowTaskBar={this.handleShowTaskBar}
           />
         </div>
         <TaskBar
             show={this.state.showTaskBar}
-            userId={this.state.userId}    
+            handleShowTaskBar={this.handleShowTaskBar}
+            userId={this.state.userId}
+            getCookieId={this.props.getCookie}   
         >
         </TaskBar>
         {this.renderPage()}

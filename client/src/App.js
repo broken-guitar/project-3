@@ -22,6 +22,7 @@ class App extends Component {
   handleUserLogin = boolean => {
     console.log("Is user logged in?" , boolean);
     this.setState({ loggedIn: boolean });
+    // this.setState({ userId: })
   };
 
   // sets loggedIn state to FALSE and removes user id cookie

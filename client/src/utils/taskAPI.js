@@ -1,14 +1,14 @@
 import axios from "axios";
 
-export default {
+export const API = {
 
     // get user's tasks
-    getUsersTasks: function(userId) {
-        return axios.get("/task/s/", userId);
+    getUserTasks: function(userId) {
+        return axios.get("/API/task/" + userId);
     },
 
     addTask: function(data) {
-        return axios.post("/task/s/", data);
+        return axios.post("/API/task/", data);
     }
 
     
