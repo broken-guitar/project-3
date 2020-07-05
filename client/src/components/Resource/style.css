@@ -1,9 +1,18 @@
 .item-box {
-    display: inline-block;
-    margin: 10px;
+  display: inline-block;
+  margin: 10px;
 }
 
 .item-box:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.card-body {
+  background-color: rgb(34, 60, 85);
+  color: #f4f4f4;
+}
+
+h5 {
+  color: "#ff9a76";
+}

@@ -64,6 +64,7 @@ export default class AddResourceForm extends Component {
             <Form.Label>Link</Form.Label>
             <Form.Control
               as="input"
+              placeholder="link to site? pdf file?"
               name="link"
               onChange={this.handleInputChange}
             ></Form.Control>
@@ -80,6 +81,8 @@ export default class AddResourceForm extends Component {
               <option>Sales</option>
               <option>Accounting</option>
               <option>Human Resources</option>
+              <option>Common Programs</option>
+              <option>Research</option>
               <option>Shipping and Receiving</option>
               <option>Vendors</option>
               <option>Information and Technology</option>
@@ -94,6 +97,7 @@ export default class AddResourceForm extends Component {
             <Form.Control
               as="textarea"
               rows="3"
+              placeholder="Helpful details..."
               name="description"
               onChange={this.handleInputChange}
             />

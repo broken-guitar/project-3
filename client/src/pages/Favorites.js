@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import ResourceItem from "../components/Resource/Resource";
 import DeleteFav from "../components/deleteFav/deleteFav";
+import "./style.css";
 
 export default class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: []
+      favorites: [],
     };
   }
 
@@ -19,31 +20,31 @@ export default class Favorites extends Component {
   }
 
   //   call api to get favorites from user db
-  getFavorites = UserId => {
+  getFavorites = (UserId) => {
     API.getFavorites(UserId)
-      .then(res => {
+      .then((res) => {
         this.setState({ favorites: res.data });
         console.log("FAVORITES YO", this.state.favorites);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   // delete button
-  deleteFavorite = event => {
+  deleteFavorite = (event) => {
     let resourceId = event.target.id;
     console.log("delete clicked", resourceId);
     API.deleteFavorite(resourceId)
-      .then(res => {
+      .then((res) => {
         console.log(res);
         this.getFavorites(this.props.getCookie());
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
 
   // rendering the delete button
-  renderDeleteFav = id => {
+  renderDeleteFav = (id) => {
     return <DeleteFav id={id} delete={this.deleteFavorite}></DeleteFav>;
   };
 
@@ -51,19 +52,21 @@ export default class Favorites extends Component {
   render() {
     return (
       <>
-        <h1>Placeholder: We're at the favorites page</h1>
-        <div className="resource-container">
-          {this.state.favorites.map(resource => (
-            <ResourceItem
-              title={resource.title}
-              key={resource._id}
-              id={resource._id}
-              link={resource.link}
-              description={resource.description}
-              renderBtn={this.renderDeleteFav}
-              updateState={this.getFavorites}
-            />
-          ))}
+        <div className="fav-wrapper">
+          <div className="resource-container">
+            <h1>-Favorites-</h1>
+            {this.state.favorites.map((resource) => (
+              <ResourceItem
+                title={resource.title}
+                key={resource._id}
+                id={resource._id}
+                link={resource.link}
+                description={resource.description}
+                renderBtn={this.renderDeleteFav}
+                updateState={this.getFavorites}
+              />
+            ))}
+          </div>
         </div>
       </>
     );

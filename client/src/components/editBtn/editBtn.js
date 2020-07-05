@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import EditForm from "../editForm/editForm";
 import API from "../../utils/API";
+import { FiEdit } from "react-icons/fi";
 
 export default function editBtn(props) {
   const [show, setShow] = useState(false);
@@ -11,9 +12,9 @@ export default function editBtn(props) {
 
   const [resource, setResource] = useState({});
 
-  const click = event => {
+  const click = (event) => {
     API.getResourceById(event.target.id)
-      .then(res => {
+      .then((res) => {
         let data = res.data;
         console.log(data);
         setResource({
@@ -21,19 +22,19 @@ export default function editBtn(props) {
           title: data.title,
           link: data.link,
           category: data.category,
-          description: data.description
+          description: data.description,
         });
 
         console.log(resource);
         handleShow();
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
     <>
-      <Button variant="outline-warning" id={props.id} onClick={click}>
-        Edit
+      <Button variant="outline-warning" >
+        <FiEdit id={props.id} onClick={click}></FiEdit>
       </Button>
 
       <Modal show={show} onHide={handleClose} animation={false}>

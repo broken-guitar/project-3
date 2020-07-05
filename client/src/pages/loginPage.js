@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
 
 import LoginForm from "../components/forms/LoginForm";
 import Alert from "../components/alerts/loginAlert";

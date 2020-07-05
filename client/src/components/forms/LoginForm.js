@@ -45,7 +45,7 @@ export default function LoginForm(props) {
                     <Button
                         className="mr-4 login-button"
                         onClick={props.handleLoginSubmit}
-                        variant="primary"
+                        variant="dark"
                         type="submit"
                     >
                         Login
@@ -53,7 +53,7 @@ export default function LoginForm(props) {
                     <Button
                         className="login-button"
                         onClick={props.handleRegShow}
-                        variant="primary"
+                        variant="dark"
                         type="submit"
                     >
                         Register
