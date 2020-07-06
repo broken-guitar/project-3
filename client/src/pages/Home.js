@@ -4,6 +4,7 @@ import ResourceItem from "../components/Resource/Resource.js";
 import { Button, Modal } from "react-bootstrap";
 import API from "../utils/API.js";
 import AddFavorite from "../components/addFavorite/addFavorite.js";
+import DeleteFav from "../components/deleteFav/deleteFav";
 
 export default class Home extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ export default class Home extends Component {
   };
 
   // update state after adding new resource
-  updateResState = (rsc) => {};
+  updateResState = (rsc) => { };
 
   // favorite button click
   onClick = (event) => {
@@ -80,6 +81,25 @@ export default class Home extends Component {
     return (
       <AddFavorite category={category} onClick={this.onClick}></AddFavorite>
     );
+  };
+
+  // delete button (as done for favorites)
+  deleteResourceById = (event) => {
+    let resourceId = event.target.id;
+    console.log("delete clicked", resourceId);
+    API.deleteResourceById(resourceId)
+      .then((res) => {
+        console.log(res);
+        this.props.updateState();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // rendering the delete button (as done for favorites)
+  renderDeleteById = (id) => {
+    return <DeleteFav id={id} delete={this.deleteResourceById}></DeleteFav>;
   };
 
   render() {
@@ -113,6 +133,7 @@ export default class Home extends Component {
               link={cat.link}
               title={cat.title}
               renderBtn={this.renderAddFav}
+              renderDeleteBtn={this.renderDeleteById}
               onClick={this.handleShow}
               updateState={this.props.updateState}
             />
@@ -130,8 +151,8 @@ export default class Home extends Component {
             {this.state.currentCateg === undefined ? (
               <Modal.Title>{this.state.modalRes.title}</Modal.Title>
             ) : (
-              <Modal.Title>{this.state.currentCateg}</Modal.Title>
-            )}
+                <Modal.Title>{this.state.currentCateg}</Modal.Title>
+              )}
           </Modal.Header>
 
           <Modal.Body
@@ -151,6 +172,7 @@ export default class Home extends Component {
                   link={rsc.link}
                   title={rsc.title}
                   renderBtn={this.renderAddFav}
+                  renderDeleteBtn={this.renderDeleteById}
                   onClick={this.handleShow}
                   updateState={this.props.updateState}
                 ></ResourceItem>

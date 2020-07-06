@@ -33,7 +33,7 @@ export default function editBtn(props) {
 
   return (
     <>
-      <Button variant="outline-warning" >
+      <Button variant="outline-warning" className="mr-2">
         <FiEdit id={props.id} onClick={click}></FiEdit>
       </Button>
 
