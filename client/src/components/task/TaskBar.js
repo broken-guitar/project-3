@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Card, Modal } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { BsX, BsPlus } from "react-icons/bs";
 import TaskForm from "./TaskForm";
+import TaskItem from "./TaskItem";
 import { API } from "../../utils/taskAPI";
 
 // slide-out taskbar overlay component
@@ -14,8 +15,10 @@ export default class TaskBar extends Component {
         this.state = {
             userId: this.props.getCookieId(),
             width: 0,
-            showTaskFormModal: false,
-            usersTasks: []
+            showTaskForm: false,
+            taskFormIsEdit: false,
+            usersTasks: [],
+            currentTask: ""
         };
     };
 
@@ -43,11 +46,28 @@ export default class TaskBar extends Component {
             .catch(err => console.log(err));
     };
 
-    handleShowTaskFormModal = () => {
-        
+    handleShowTaskFormModal = (task) => {
         if(this._isMounted) {
-            this.setState({showTaskFormModal: true});
+            if (typeof task === "object" && task !== null && task !== "undefined") {
+                this.setState({
+                    showTaskForm: true,
+                    taskFormIsEdit: true,
+                    currentTask: task
+                });
+            } else {
+                this.setState({
+                    showTaskForm: true,
+                    taskFormIsEdit: false
+                });
+            }
+           
         }
+
+        
+
+        console.log("handleShowTaskFormModal-> ", task, this.state.taskFormIsEdit);
+
+        
 
 
     };
@@ -55,13 +75,20 @@ export default class TaskBar extends Component {
 
     handleTaskFormModalClose = () => {
 
-        console.log("TaskBar.handleTaskFormModalClose called!");
        
         if(this._isMounted) {
-            this.setState({showTaskFormModal: false});
+            this.setState({showTaskForm: false});
         }
 
     };
+
+    handleOpeningTask= (task) => {
+        // console.log("handleOpeningTask fired! e.target=", e.currentTarget.getAttribute("data-id"));
+
+        // let task = this.state.usersTasks.find(t => t._id); // get selected task object from  state array
+        this.handleShowTaskFormModal(task);
+        console.log("opening task: ", task)
+    }
 
     render() {
        
@@ -105,39 +132,27 @@ export default class TaskBar extends Component {
                 <div style={{clear: "both"}}>
                     <h4 className="p-0">Tasks</h4>
 
-                    <p>{this.props.userId}</p>
+                    <p>user id: {this.props.userId}</p>
 
                 
                 </div>
                
                 <div className="tasklist-container">
                     {this.state.usersTasks.map(task => (
-                        <Card key={task._id} className="task-card m-1" border="light">
-                            <Card.Body>
-                                <Card.Title>{task.title}</Card.Title>
-                                <Card.Text>{task.description}</Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <TaskItem key={task._id} task={task} handleOpeningTask={this.handleOpeningTask}/>
+                        
                     ))}
                 </div>
                 
-                <Modal className="taskbar-modal" show={this.state.showTaskFormModal} onHide={this.handleTaskFormModalClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add Task</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <TaskForm
-                            userId={this.props.userId}
-                        />
                 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        {/* <Alert show={props.showAlert} variant="danger" dismissible="false"
-                            header="Oops!"
-                            message={props.alertMessage}
-                        /> */}
-                    </Modal.Footer>
-                </Modal>
+                <TaskForm
+                    show={this.state.showTaskForm}
+                    userId={this.state.userId}
+                    isEdit={this.state.taskFormIsEdit}
+                    task={this.state.currentTask}
+                    onHide={this.handleTaskFormModalClose}
+                />
+
             </div>
             
         )

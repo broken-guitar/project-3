@@ -40,7 +40,12 @@
     color: rgba(78, 76, 76, 0.835);
 }
 
-.task-card {
+.taskitem {
     opacity: .87;
-    background-color: rgba(197, 133, 127, 0.774);
+    /* background-color: rgba(173, 43, 28, 0.774); */
+}
+
+.taskitem-body {
+    opacity: .87;
+    background-color: rgba(243, 197, 197, 0.582);
 }
