@@ -45,6 +45,11 @@ export default {
     return axios.get("/rsc/getOne/" + rscId);
   },
 
+  // delete one resource
+  deleteResourceById: function (rscId) {
+    return axios.delete("/rsc/deleteOne/" + rscId);
+  },
+
   // get all resources by category
   getAllByCategory: function (category) {
     return axios.get("/rsc/getByCat/" + category);

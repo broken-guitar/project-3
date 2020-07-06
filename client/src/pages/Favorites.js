@@ -48,6 +48,8 @@ export default class Favorites extends Component {
     return <DeleteFav id={id} delete={this.deleteFavorite}></DeleteFav>;
   };
 
+  renderDeleteBtn = () => { return false }
+
   //   rendering
   render() {
     return (
@@ -63,6 +65,7 @@ export default class Favorites extends Component {
                 link={resource.link}
                 description={resource.description}
                 renderBtn={this.renderDeleteFav}
+                renderDeleteBtn={this.renderDeleteBtn}
                 updateState={this.getFavorites}
               />
             ))}

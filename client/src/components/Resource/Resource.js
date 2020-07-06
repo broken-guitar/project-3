@@ -30,6 +30,12 @@ export default function ResourceItem(props) {
             updateState={props.updateState}
             id={props.id}
           ></EditButton>
+          {props.renderDeleteBtn() === false ? (
+            <></>) :
+            (<>
+              {props.renderDeleteBtn(props.id)}
+            </>
+            )}
         </Card.Footer>
       </Card>
       {/* <Image
@@ -42,6 +48,6 @@ export default function ResourceItem(props) {
       <div className="caption">
         <p>{props.title}</p>
       </div> */}
-    </div>
+    </div >
   );
 }
