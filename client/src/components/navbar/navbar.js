@@ -2,7 +2,6 @@ import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import AddNewBtn from "../addNewBtn/addNewBtn";
 import { FaRegHandPeace, FaTasks } from "react-icons/fa";
-import { GiBackwardTime } from "react-icons/gi";
 import { FiHeart } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import "./style.css";
@@ -33,6 +32,7 @@ export default function navbar(props) {
                 <GiBackwardTime />
               </div>
             </Nav.Link> */}
+            
             <Nav.Link
               href="#favorite"
               onClick={() => props.handlePageChange("Favorites")}
@@ -53,7 +53,8 @@ export default function navbar(props) {
               className="mr-3 task-button"
               bsPrefix="button"
               onClick={() => props.showTaskBar()}
-            >Tasks
+            >
+              Tasks
               <div className="nav-item task">
                 <FaTasks />
               </div>
@@ -61,7 +62,7 @@ export default function navbar(props) {
             {/* logout button */}
             <Button
               className="float-right"
-              variant="outline-dark"
+              variant="outline-light"
               onClick={() => props.logout()}
             >
               Logout
