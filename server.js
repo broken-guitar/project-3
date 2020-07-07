@@ -5,7 +5,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const routes = require("./routes");
 const cookieParser = require("cookie-parser");
-require("dotenv").config();
+const mailer = require("./services/mailer.js");
+require("dotenv").config({ silent: true });
+
 
 // Define middleware here
 app.use(cookieParser());
@@ -36,9 +38,28 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+
+// transporter.sendMail(mailOptions, function(error, info){
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log('Email sent: ' + info.response);
+//     }
+//   });
+
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
+
+
+
+
+
+
+
+
+
+
 
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated
