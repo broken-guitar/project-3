@@ -151,6 +151,7 @@ export default class TaskBar extends Component {
                     isEdit={this.state.taskFormIsEdit}
                     task={this.state.currentTask}
                     onHide={this.handleTaskFormModalClose}
+                    getUsersTasks={this.getUserTasks}
                 />
 
             </div>

@@ -10,19 +10,27 @@ export default function TaskForm(props) {
         taskTitle: "",
         taskDesc:  ""
     });
-    
+    const [isInputDisabled, setIsInputDisabled] = useState(true);
 
     // useEffect( () => {
     //     console.log("TaskForm.useEffect->values: ", values);
     //     loadTaskData();
     // }, []);
-
-    const loadTaskData = () => {
-        if (typeof props.task === "object" && props.task !== null) {
+    
+    const loadTaskFormData = () => {
+        // load or clear form input values depending on add/edit form state
+        if (typeof props.task === "object" && props.task !== null && props.isEdit) {
             setValues({
                 taskTitle: props.task.title,
                 taskDesc: props.task.description
             });
+            setIsInputDisabled(true);
+        } else {
+            setValues({
+                taskTitle:  "",
+                taskDesc:   ""
+            });
+            setIsInputDisabled(false);
         }
     };
 
@@ -33,19 +41,14 @@ export default function TaskForm(props) {
 
     const addTask = (e) => {
         e.preventDefault();
-        const { taskTitle, taskDesc } = values;
-
-        // simple validation, check if object exists
-        //if(!taskTitle) return
-
-        console.log(taskTitle, taskDesc, values);
-
+        const { taskTitle, taskDesc } = values; // don't need to destructure here?
         const newTask = { title: taskTitle, description: taskDesc};
         const data = { task: newTask, userId: props.userId};
 
         API.addTask(data)
           .then(res => {
             console.log("addTask res: ", res);
+            props.getUsersTasks(props.userId);
            })
            .catch(err => {
                 console.log(err);
@@ -53,13 +56,40 @@ export default function TaskForm(props) {
     };
 
     const editTask = e => {
-        // TODO create api call to edit task
+        // OPTION: possible to move this into Edit button onClick instead? 
+        setIsInputDisabled(false);
     };
-   
-    const deleteTask = task => {
-        console.log("deleteTask -> task: ", task);
 
-        // TODO create api call to delete task
+    const saveTask = taskId => {
+       
+        const taskData = {
+            title: values.taskTitle,
+            description: values.taskDesc
+        }
+        console.log("taskData: ", taskData);
+        // API.updateTask(taskId, taskData)
+        //     .then(res => {
+        //         console.log("API.updateTask -> res=", res);
+        //         setIsInputDisabled(true);
+        //         props.getUsersTasks(props.userId);
+        //         props.onHide();
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+    }
+   
+    const deleteTask = taskId => {
+        console.log("deleteTask -> task: ", taskId);
+        API.deleteTask(taskId)
+            .then(res => {
+                console.log("API.deleteTask -> res=", res);
+                props.getUsersTasks(props.userId);
+                props.onHide();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     return (
         <div>
@@ -67,7 +97,7 @@ export default function TaskForm(props) {
                 className="taskbar-modal border-danger"
                 show={props.show}
                 onHide={props.onHide}
-                onEntering={loadTaskData}
+                onEntering={loadTaskFormData}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>{props.isEdit ? "Edit" : "Add"}</Modal.Title>
@@ -79,6 +109,7 @@ export default function TaskForm(props) {
                                 name="taskTitle"
                                 value={values.taskTitle}
                                 onChange={handleInputChange}
+                                disabled={isInputDisabled ? "disabled" : ""}
                             />
                             <Form.Text className="text-muted">enter a name</Form.Text>
                         </Form.Group>
@@ -88,23 +119,37 @@ export default function TaskForm(props) {
                             name="taskDesc"
                             value={values.taskDesc}
                             onChange={handleInputChange}
+                            disabled={isInputDisabled ? "disabled" : ""}
                         />
                             <Form.Text className="text-muted">enter a description</Form.Text>
                         </Form.Group>
                         {props.isEdit ?
                             <div>
-                                <Button
-                                    variant="secondary"
-                                    onClick={editTask}
-                                >edit</Button>
-                                <Button variant="danger" onClick={() => deleteTask(props.task)}>
+                                {isInputDisabled ?
+                                    <Button
+                                        variant="secondary" className=""
+                                        onClick={() => editTask()}
+                                    >
+                                        Edit
+                                    </Button> :
+                                    <Button
+                                        variant="success" className=""
+                                         onClick={() => saveTask(props.task._id)}
+                                    >
+                                        Save
+                                    </Button>
+                                }
+                                
+
+                                <Button className="mx-2"variant="danger" onClick={() => deleteTask(props.task._id)}>
                                     delete
                                 </Button>
+
                             </div> :
                             <div>
                                 <Button
                                     variant="secondary"
-                                    onClick={addTask}
+                                    onClick={() => addTask()}
                                 >Add</Button>
                             </div>}
                         

@@ -22,18 +22,18 @@ module.exports = {
 
 // READ
 
-  findAll: function (req, res) {
-    db.Task.find({})
-      .then((dbResources) => res.json(dbResources))
-      .catch((err) => res.status(422).json(err));
-  },
+//   findAll: function (req, res) {
+//     db.Task.find({})
+//       .then((dbResources) => res.json(dbResources))
+//       .catch((err) => res.status(422).json(err));
+//   },
 
-  findById: function (req, res) {
-    db.Task.findById(req.params.taskId)
-      .sort({})
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
-  },
+//   findById: function (req, res) {
+//     db.Task.findById(req.params.taskId)
+//       .sort({})
+//       .then((dbModel) => res.json(dbModel))
+//       .catch((err) => res.status(422).json(err));
+//   },
 
   findUsersTasks: function (req, res) {
     console.log("controller.findUsersTasks: ", req.params.userId);
@@ -49,11 +49,26 @@ module.exports = {
 
 // UPDATE
 
-updateById: function (req, res) {
-    db.Task.findById(req.params.id)
-}
+
+    updateTask: function(req, res) {
+        db.Task.findByIdAndUpdate(req.params.taskId,{
+            title: req.body.taskData.title,
+            description: req.body.taskData.description,
+        },
+        { useFindAndModify: false, new: true })
+        .then(dbTask => {
+            console.log("Task " + dbTask._id + " updated successfully!");
+            res.json(dbTask);
+        })
+        .catch((err) => res.status(422).json(err));
+    },
 
 // DELETE
 
+    deleteTask: function(req, res) {
+        db.Resource.findByIdAndDelete(req.params.taskId)
+        .then(dbTask => res.json(dbTask))
+        .catch(err => res.status(422).json(err));
+    }
 
 };
