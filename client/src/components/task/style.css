@@ -3,11 +3,8 @@
     width: 0px;
 } */
 
-.taskbar-modal {
-    color: rgb(31, 31, 31);
-}
 
-.taskbar-btn-wrapper {
+.taskbar-btn-container {
     display: block;
     width: 100%;
     padding-left: 5px;
@@ -29,6 +26,11 @@
     vertical-align: top;
 }
 
+.taskform-modal {
+    color: rgb(31, 31, 31);
+}
+
+
 /* small effect for buttons: animate on hover if class name ends in "btn" */
 [class$="btn"]:hover {
     cursor: pointer;
@@ -48,7 +50,7 @@
 }
 
 .taskform-btn-container {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 .tasklist-container {

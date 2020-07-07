@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Modal, Form, Button } from "react-bootstrap";
+import { Card, Row, Col, Modal, Form, Button } from "react-bootstrap";
 import { BsPlusSquare, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
@@ -107,12 +107,13 @@ export default function TaskForm(props) {
     }
     return (
         <div>
-            <Modal
-                className="taskbar-modal border-danger"
+            <Modal 
+                className="taskform-modal"
                 show={props.show}
                 onHide={props.onHide}
                 onEntering={loadTaskFormData}
                 >
+                <div className="tf-modal-content-wrapper">
                     <Modal.Header closeButton>
                         <Modal.Title>{props.isEdit ? "Edit" : "Add"} Task</Modal.Title>
                     </Modal.Header>
@@ -140,8 +141,8 @@ export default function TaskForm(props) {
                                         onChange={handleInputChange}
                                         disabled={isInputDisabled ? "disabled" : ""}
                                         >
-                                        {values.taskTypes.map(taskType => (
-                                            <option>{taskType}</option>
+                                        {values.taskTypes.map((taskType, index) => (
+                                            <option key={index}>{taskType}</option>
                                         ))}
                                     </Form.Control>
                                 </Col>
@@ -150,7 +151,7 @@ export default function TaskForm(props) {
                             <Form.Group as={Row}>
                                 <Form.Label column sm={3} className="text">Description</Form.Label>
                                 <Col sm={9}>
-                                    <Form.Control type="text" placeholder="description"
+                                    <Form.Control as="textarea" rows="3" placeholder="description"
                                         name="taskDesc"
                                         value={values.taskDesc}
                                         onChange={handleInputChange}
@@ -207,6 +208,7 @@ export default function TaskForm(props) {
                             message={props.alertMessage}
                         /> */}
                     </Modal.Footer>
+                </div>
                 </Modal>
             
         </div>

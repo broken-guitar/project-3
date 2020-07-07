@@ -21,7 +21,7 @@ export default function TaskItem(props) {
         
         <Card
             className="taskitem-card mt-2"
-            border="light"
+            border="secondary"
             onDoubleClick={() => props.handleOpeningTask(props.task)}
             data-id={props.task._id}
 

@@ -99,7 +99,7 @@ export default class TaskBar extends Component {
                 style={{width: this.state.width}}
                 className={`taskbar-container ${this.props.show && 'show'}`}
             >
-                <div className="taskbar-btn-wrapper">
+                <div className="taskbar-btn-container">
                     
                     <div
                         className="taskbar-close-btn"
