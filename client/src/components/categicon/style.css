@@ -6,4 +6,9 @@
 .cat-box:hover {
     cursor: pointer;
     transform: scale(1.1);
-  }
+}
+
+.polygon {
+    height: 100%;
+    /* width: 100%; */
+}

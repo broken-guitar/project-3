@@ -36,6 +36,16 @@
     border-radius: .25rem;
 }
 
-h3{
+.task-button:hover {
+    background-color: #f77e8a;
+    transition: 0.3s;
+    color: white;
+}
+
+.logout {
+    margin-right: 16px;
+}
+
+h3 {
     text-align: center;
 }

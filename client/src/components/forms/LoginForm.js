@@ -15,7 +15,7 @@ export default function LoginForm(props) {
         <Container fluid="lg" className="login-container vh-100">
             <Row className="align-items-center h-100">
             <Col className="col-sm-12 mx-auto">
-            <Card style={{width: "400px", margin: "0 auto", float: "none"}}>
+            <Card style={{width: "300px", margin: "0 auto", float: "none"}}>
                 <Card.Header>Login</Card.Header>
                 <Card.Body> {/* Card.Body pads the content */}
                 <Form id="loginUser">
