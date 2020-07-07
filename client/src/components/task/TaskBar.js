@@ -18,6 +18,7 @@ export default class TaskBar extends Component {
             showTaskForm: false,
             taskFormIsEdit: false,
             usersTasks: [],
+            taskTypes: [],
             currentTask: ""
         };
     };
@@ -35,13 +36,14 @@ export default class TaskBar extends Component {
     };
 
     getUserTasks = userId => {
-        // console.log("TaskBar > getUserTasks > userId: ", userId);
         API.getUserTasks(userId)
             .then(res => {
                 if(this._isMounted) {
-                    this.setState({ usersTasks: res.data});
+                    this.setState({
+                        usersTasks: res.data.tasks,
+                        taskTypes:  res.data.taskTypes
+                    });
                 }
-                console.log("TaskBar.getUserTasks -> res.data: ", res.data);
             })
             .catch(err => console.log(err));
     };
@@ -60,34 +62,17 @@ export default class TaskBar extends Component {
                     taskFormIsEdit: false
                 });
             }
-           
         }
-
-        
-
-        console.log("handleShowTaskFormModal-> ", task, this.state.taskFormIsEdit);
-
-        
-
-
     };
 
-
     handleTaskFormModalClose = () => {
-
-       
         if(this._isMounted) {
             this.setState({showTaskForm: false});
         }
-
     };
 
     handleOpeningTask= (task) => {
-        // console.log("handleOpeningTask fired! e.target=", e.currentTarget.getAttribute("data-id"));
-
-        // let task = this.state.usersTasks.find(t => t._id); // get selected task object from  state array
         this.handleShowTaskFormModal(task);
-        console.log("opening task: ", task)
     }
 
     render() {
@@ -127,28 +112,34 @@ export default class TaskBar extends Component {
                         onClick={() => this.handleShowTaskFormModal()}>
                         <BsPlus/>
                     </div>
+                    
                     <div style={{clear: "both"}}/>
+                
                 </div>
-                <div style={{clear: "both"}}>
+               
+               <div style={{clear: "both"}}>
                     <h4 className="p-0">Tasks</h4>
                 
                 </div>
                
                 <div className="tasklist-container">
+                    
                     {this.state.usersTasks.map(task => (
                         <TaskItem key={task._id} task={task} handleOpeningTask={this.handleOpeningTask}/>
                         
                     ))}
+
                 </div>
                 
                 
                 <TaskForm
-                    show={this.state.showTaskForm}
-                    userId={this.state.userId}
-                    isEdit={this.state.taskFormIsEdit}
-                    task={this.state.currentTask}
-                    onHide={this.handleTaskFormModalClose}
-                    getUsersTasks={this.getUserTasks}
+                    show            = {this.state.showTaskForm}
+                    userId          = {this.state.userId}
+                    isEdit          = {this.state.taskFormIsEdit}
+                    task            = {this.state.currentTask}
+                    taskTypes       = {this.state.taskTypes}
+                    onHide          = {this.handleTaskFormModalClose}
+                    getUsersTasks   = {this.getUserTasks}
                 />
 
             </div>

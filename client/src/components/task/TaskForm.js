@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
-import { BsPlusSquare, BsPencilSquare, BsXSquare, BsCheck } from "react-icons/bs";
+import { Row, Col, Modal, Form, Button } from "react-bootstrap";
+import { BsPlusSquare, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
 import { set } from "mongoose";
@@ -9,7 +9,9 @@ export default function TaskForm(props) {
 
     const [values, setValues] = useState({
         taskTitle: "",
-        taskDesc:  ""
+        taskDesc:  "",
+        taskType:   "",
+        taskTypes: ["Task"]
     });
     const [isInputDisabled, setIsInputDisabled] = useState(true);
 
@@ -22,18 +24,21 @@ export default function TaskForm(props) {
         // load or clear form input values depending on add/edit form state
         if (typeof props.task === "object" && props.task !== null && props.isEdit) {
             setValues({
-                taskTitle: props.task.title,
-                taskDesc: props.task.description
+                taskTitle:  props.task.title,
+                taskDesc:   props.task.description,
+                taskType:   props.task.type,
+                taskTypes:  props.taskTypes
             });
             setIsInputDisabled(true);
         } else {
             setValues({
                 taskTitle:  "",
-                taskDesc:   ""
+                taskDesc:   "",
+                taskType:   "",
+                taskTypes:  props.taskTypes
             });
             setIsInputDisabled(false);
         }
-        console.log("currentTask.props.task: ", props.task);
     };
 
     const handleInputChange = e => {
@@ -43,8 +48,12 @@ export default function TaskForm(props) {
 
     const addTask = () => {
         // e.preventDefault();
-        const { taskTitle, taskDesc } = values; // don't need to destructure here?
-        const newTask = { title: taskTitle, description: taskDesc};
+        const { taskTitle, taskDesc, taskType } = values; // don't need to destructure here?
+        const newTask = {
+            title:          taskTitle,
+            description:    taskDesc,
+            type:           taskType        
+        };
         const data = { task: newTask, userId: props.userId};
 
         API.addTask(data)
@@ -67,8 +76,9 @@ export default function TaskForm(props) {
     const saveTask = taskId => {
        
         const taskData = {
-            title: values.taskTitle,
-            description: values.taskDesc
+            title:          values.taskTitle,
+            description:    values.taskDesc,
+            type:           values.taskType
         }
         console.log("taskData: ", taskData);
         API.updateTask(taskId, taskData)
@@ -104,61 +114,91 @@ export default function TaskForm(props) {
                 onEntering={loadTaskFormData}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>{props.isEdit ? "Edit" : "Add"}</Modal.Title>
+                        <Modal.Title>{props.isEdit ? "Edit" : "Add"} Task</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>task id: {props.task._id}</p>
-                        <Form className="border-danger">
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="title"
-                                name="taskTitle"
-                                value={values.taskTitle}
-                                onChange={handleInputChange}
-                                disabled={isInputDisabled ? "disabled" : ""}
-                            />
-                            <Form.Text className="text-muted">task name</Form.Text>
-                        </Form.Group>
+                        <Form className="border-danger" variant="danger">
+                            <Form.Group as={Row}>
+                                <Form.Label column sm={3} className="text">Title</Form.Label>
+                                <Col sm={9}>
+                                <Form.Control type="text" placeholder="title"
+                                    name="taskTitle"
+                                    value={values.taskTitle}
+                                    onChange={handleInputChange}
+                                    disabled={isInputDisabled ? "disabled" : ""}
+                                    />
+                                </Col>
+                            </Form.Group>
 
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="description"
-                            name="taskDesc"
-                            value={values.taskDesc}
-                            onChange={handleInputChange}
-                            disabled={isInputDisabled ? "disabled" : ""}
-                        />
-                            <Form.Text className="text-muted">description</Form.Text>
-                        </Form.Group>
-                        {props.isEdit ?
-                            <div>
-                                {isInputDisabled ?
-                                    <Button
-                                        variant="secondary" className=""
-                                        onClick={() => editTask()}
-                                    >
-                                        <BsPencilSquare/>
-                                    </Button> :
-                                    <Button
-                                        variant="success" className=""
-                                         onClick={() => saveTask(props.task._id)}
-                                    >
-                                       <BsCheck/>
-                                    </Button>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm={3} className="text">Type</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        as="select"
+                                        name="taskType"
+                                        value={values.taskType}
+                                        onChange={handleInputChange}
+                                        disabled={isInputDisabled ? "disabled" : ""}
+                                        >
+                                        {values.taskTypes.map(taskType => (
+                                            <option>{taskType}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row}>
+                                <Form.Label column sm={3} className="text">Description</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control type="text" placeholder="description"
+                                        name="taskDesc"
+                                        value={values.taskDesc}
+                                        onChange={handleInputChange}
+                                        disabled={isInputDisabled ? "disabled" : ""}
+                                        />
+                                </Col>
+                            </Form.Group>
+                            <div className="taskform-btn-container">
+                                {props.isEdit ?
+                                    <div>
+                                        {isInputDisabled ?
+                                            
+                                            <Button
+                                                variant="secondary" className="task-edit fbtn"
+                                                size="lg"
+                                                onClick={() => editTask()}
+                                                >
+                                                <BsPencilSquare className="tf-icon"/>
+                                            </Button>
+                                            :
+                                            <Button
+                                                variant="success" className="task-save fbtn"
+                                                size="lg"
+                                                onClick={() => saveTask(props.task._id)}
+                                                >
+                                                <BsCheck className="tf-icon"/>
+                                            </Button>
+                                        }
+                                        
+                                        <Button className="task-delete fbtn"variant="danger"
+                                            onClick={() => deleteTask(props.task._id)}
+                                            size="lg"
+                                            >
+                                            <BsTrash className="tf-icon"/>
+                                        </Button>
+
+                                    </div>
+                                    :
+                                    <div>
+                                        <Button
+                                            className="task-add-fbtn" size="lg"
+                                            variant="success"
+                                            onClick={() => addTask()}
+                                            ><BsPlusSquare className="tf-icon"/>
+                                        </Button>
+                                    </div>
                                 }
-                                
-
-                                <Button className="mx-2"variant="danger" onClick={() => deleteTask(props.task._id)}>
-                                    <BsXSquare/>
-                                </Button>
-
-                            </div> :
-                            <div>
-                                <Button
-                                    variant="success"
-                                    onClick={() => addTask()}
-                                > <BsPlusSquare/></Button>
-                            </div>}
-                        
-            
+                            </div>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>

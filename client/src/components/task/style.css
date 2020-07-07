@@ -25,7 +25,6 @@
 .taskbar-add-btn {
     font-size: 28px;
     float: left;
-
     padding-right: 7px;
     vertical-align: top;
 }
@@ -36,16 +35,54 @@
     transform: scale(1.1);
 }
 
-.tasklist-container {
-    color: rgba(78, 76, 76, 0.835);
+/* task form buttons */
+.fbtn {
+    /* width: 3rem; */
+    text-align: center;
 }
 
-.taskitem {
-    opacity: .87;
-    /* background-color: rgba(173, 43, 28, 0.774); */
+.tf-icon {
+    font-size: 1.6rem;
+    padding-bottom: 3px;
+    /* text-align: left; */
+}
+
+.taskform-btn-container {
+    margin-top: 3rem;
+}
+
+.tasklist-container {
+    color: rgba(78, 76, 76, 0.835);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.taskitem-card {
+    opacity: .95;
 }
 
 .taskitem-body {
     opacity: .87;
+    color: rgb(53, 53, 53);
     background-color: rgba(243, 197, 197, 0.582);
+}
+
+.taskitem-prepend {
+    position: absolute;
+    height: 100%;
+    width: 75px;
+    text-align: left;
+    font-size: 1.8rem;
+    padding-left: 7px;
+    opacity: .70;
+}
+
+
+.task-delete.fbtn {
+    float: right;
+    clear: right;
+}
+
+.text {
+    font-size: 6px;
 }

@@ -27,21 +27,25 @@ module.exports = {
     db.Task.find(
         { users: {$in: [req.params.userId]}} // get tasks that have user id in tasks's users array
         ) // find the user by _id
-        .then((dbModel) => {
+        .then((dbUserTasks) => {
             // console.log("\n.findUsersTasks->return: ", dbModel);
-            res.json(dbModel)
+            let data = {
+                tasks: dbUserTasks,
+                taskTypes: db.Task.schema.path("type").enumValues
+            }
+            res.json(data)
         })
         .catch((err) => res.status(422).json(err));
   },
 
 // UPDATE
 
-
     updateTask: function(req, res) {
         console.log("controller.updateTask.req: ", req.params, "body: ", req.body)
         db.Task.findByIdAndUpdate(req.params.taskId, {
-            title: req.body.title,
-            description: req.body.description,
+            title:          req.body.title,
+            description:    req.body.description,
+            type:           req.body.type
         },
         { useFindAndModify: false, new: true })
         .then(dbTask => {
@@ -58,10 +62,8 @@ module.exports = {
         db.Task.findByIdAndDelete(req.params.taskId)
         .then(dbTask => {
             console.log("res: ", dbTask);
-            res.json(dbTask);
-            
+            res.json(dbTask);  
         })
         .catch(err => res.status(422).json(err));
     }
-
 };
