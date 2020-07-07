@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
+import { BsPlusSquare, BsPencilSquare, BsXSquare, BsCheck } from "react-icons/bs";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
 import { set } from "mongoose";
@@ -32,6 +33,7 @@ export default function TaskForm(props) {
             });
             setIsInputDisabled(false);
         }
+        console.log("currentTask.props.task: ", props.task);
     };
 
     const handleInputChange = e => {
@@ -39,8 +41,8 @@ export default function TaskForm(props) {
         setValues({...values, [name]: value});
     };
 
-    const addTask = (e) => {
-        e.preventDefault();
+    const addTask = () => {
+        // e.preventDefault();
         const { taskTitle, taskDesc } = values; // don't need to destructure here?
         const newTask = { title: taskTitle, description: taskDesc};
         const data = { task: newTask, userId: props.userId};
@@ -49,6 +51,8 @@ export default function TaskForm(props) {
           .then(res => {
             console.log("addTask res: ", res);
             props.getUsersTasks(props.userId);
+            props.onHide();
+
            })
            .catch(err => {
                 console.log(err);
@@ -67,23 +71,23 @@ export default function TaskForm(props) {
             description: values.taskDesc
         }
         console.log("taskData: ", taskData);
-        // API.updateTask(taskId, taskData)
-        //     .then(res => {
-        //         console.log("API.updateTask -> res=", res);
-        //         setIsInputDisabled(true);
-        //         props.getUsersTasks(props.userId);
-        //         props.onHide();
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
+        API.updateTask(taskId, taskData)
+            .then(res => {
+                console.log("API.updateTask -> res=", res);
+                setIsInputDisabled(true);
+                props.getUsersTasks(props.userId);
+                props.onHide();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
    
     const deleteTask = taskId => {
         console.log("deleteTask -> task: ", taskId);
         API.deleteTask(taskId)
             .then(res => {
-                console.log("API.deleteTask -> res=", res);
+                // console.log("API.deleteTask -> res=", res);
                 props.getUsersTasks(props.userId);
                 props.onHide();
             })
@@ -103,6 +107,7 @@ export default function TaskForm(props) {
                         <Modal.Title>{props.isEdit ? "Edit" : "Add"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <p>task id: {props.task._id}</p>
                         <Form className="border-danger">
                         <Form.Group>
                             <Form.Control type="text" placeholder="title"
@@ -111,7 +116,7 @@ export default function TaskForm(props) {
                                 onChange={handleInputChange}
                                 disabled={isInputDisabled ? "disabled" : ""}
                             />
-                            <Form.Text className="text-muted">enter a name</Form.Text>
+                            <Form.Text className="text-muted">task name</Form.Text>
                         </Form.Group>
 
                         <Form.Group>
@@ -121,7 +126,7 @@ export default function TaskForm(props) {
                             onChange={handleInputChange}
                             disabled={isInputDisabled ? "disabled" : ""}
                         />
-                            <Form.Text className="text-muted">enter a description</Form.Text>
+                            <Form.Text className="text-muted">description</Form.Text>
                         </Form.Group>
                         {props.isEdit ?
                             <div>
@@ -130,27 +135,27 @@ export default function TaskForm(props) {
                                         variant="secondary" className=""
                                         onClick={() => editTask()}
                                     >
-                                        Edit
+                                        <BsPencilSquare/>
                                     </Button> :
                                     <Button
                                         variant="success" className=""
                                          onClick={() => saveTask(props.task._id)}
                                     >
-                                        Save
+                                       <BsCheck/>
                                     </Button>
                                 }
                                 
 
                                 <Button className="mx-2"variant="danger" onClick={() => deleteTask(props.task._id)}>
-                                    delete
+                                    <BsXSquare/>
                                 </Button>
 
                             </div> :
                             <div>
                                 <Button
-                                    variant="secondary"
+                                    variant="success"
                                     onClick={() => addTask()}
-                                >Add</Button>
+                                > <BsPlusSquare/></Button>
                             </div>}
                         
             

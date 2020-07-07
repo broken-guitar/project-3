@@ -22,26 +22,13 @@ module.exports = {
 
 // READ
 
-//   findAll: function (req, res) {
-//     db.Task.find({})
-//       .then((dbResources) => res.json(dbResources))
-//       .catch((err) => res.status(422).json(err));
-//   },
-
-//   findById: function (req, res) {
-//     db.Task.findById(req.params.taskId)
-//       .sort({})
-//       .then((dbModel) => res.json(dbModel))
-//       .catch((err) => res.status(422).json(err));
-//   },
-
   findUsersTasks: function (req, res) {
-    console.log("controller.findUsersTasks: ", req.params.userId);
+    // console.log("controller.findUsersTasks: ", req.params.userId);
     db.Task.find(
         { users: {$in: [req.params.userId]}} // get tasks that have user id in tasks's users array
         ) // find the user by _id
         .then((dbModel) => {
-            console.log("\n.findUsersTasks->return: ", dbModel);
+            // console.log("\n.findUsersTasks->return: ", dbModel);
             res.json(dbModel)
         })
         .catch((err) => res.status(422).json(err));
@@ -51,9 +38,10 @@ module.exports = {
 
 
     updateTask: function(req, res) {
-        db.Task.findByIdAndUpdate(req.params.taskId,{
-            title: req.body.taskData.title,
-            description: req.body.taskData.description,
+        console.log("controller.updateTask.req: ", req.params, "body: ", req.body)
+        db.Task.findByIdAndUpdate(req.params.taskId, {
+            title: req.body.title,
+            description: req.body.description,
         },
         { useFindAndModify: false, new: true })
         .then(dbTask => {
@@ -66,8 +54,13 @@ module.exports = {
 // DELETE
 
     deleteTask: function(req, res) {
-        db.Resource.findByIdAndDelete(req.params.taskId)
-        .then(dbTask => res.json(dbTask))
+        console.log("controller.deleteTask-> taskId ", req.params.taskId)
+        db.Task.findByIdAndDelete(req.params.taskId)
+        .then(dbTask => {
+            console.log("res: ", dbTask);
+            res.json(dbTask);
+            
+        })
         .catch(err => res.status(422).json(err));
     }
 

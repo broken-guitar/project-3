@@ -35,7 +35,7 @@ export default class TaskBar extends Component {
     };
 
     getUserTasks = userId => {
-        console.log("TaskBar > getUserTasks > userId: ", userId);
+        // console.log("TaskBar > getUserTasks > userId: ", userId);
         API.getUserTasks(userId)
             .then(res => {
                 if(this._isMounted) {
@@ -131,9 +131,6 @@ export default class TaskBar extends Component {
                 </div>
                 <div style={{clear: "both"}}>
                     <h4 className="p-0">Tasks</h4>
-
-                    <p>user id: {this.props.userId}</p>
-
                 
                 </div>
                
