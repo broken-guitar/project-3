@@ -70,9 +70,7 @@
 .taskbar-container {
   position: fixed;
   float: left;
-  /* width: 0; */
   height: 100%;
-  /* top: 0; */
   right: 0;
   z-index: 100;
   background: rgba(243, 115, 115, 0.568);
@@ -84,10 +82,18 @@
   width: 100vw;
 }
 
-.resource-container{
-    width:100vw
+.resource-container {
+  width: 100vw
 }
 
-/* .taskbar-container.show {
-    width: 300px;
-} */
+
+/* below 430 px width */
+@media screen and (max-width: 430px) {
+  .cat-box {
+    display: inline-block;
+    margin: 10px;
+    height: 60px;
+    font-size: small;
+
+  }
+}

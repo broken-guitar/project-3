@@ -1,7 +1,7 @@
 {
-  "name": "mern",
+  "name": "resource_center",
   "version": "1.0.0",
-  "description": "Mern Demo",
+  "description": "Resource Center",
   "main": "server.js",
   "scripts": {
     "seed": "node scripts/seedDB.js",
