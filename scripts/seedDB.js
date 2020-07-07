@@ -35,42 +35,42 @@ const resourceSeed = [
 
     {
         title: "Trinet",
-        type: "Link",
+        // type: "Link",
         category: "Human Resources",
         link: "https://www.trinet.com/",
         description: "Log in for paycheck, insurance info....",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Company LinkedIn",
-        type: "Link",
+        // type: "Link",
         category: "Human Resources",
         link: "https://www.linkedin.com/company/pg-paper-company-ltd/",
         description: "Connect with your coworkers on LinkedIn!",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Company Website",
-        type: "Link",
+        // type: "Link",
         category: "Human Resources",
         link: "https://www.pgpaper.com/",
         description: "Log in for paycheck, insurance info....",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Complaint or Concern?",
-        type: "Note",
+        // type: "Note",
         category: "Human Resources",
-        link: "",
+        link: "http://www.complaint.com/",
         description: "Please email mscott@pgpaper.com with any questions or concerns",
-        creator: "Michael Scott",
-        owner: "Micheal Scott"
+        // creator: "Michael Scott",
+        // owner: "Micheal Scott"
     },
 
 
@@ -78,44 +78,44 @@ const resourceSeed = [
 
     {
         title: "Microsoft 365",
-        type: "Link",
+        // type: "Link",
         category: "Common Programs",
         link: "https://www.microsoft.com/en-us/microsoft-365",
         description: "Make sure your account is set up here.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Oracle Netsuite",
-        type: "Link",
+        // type: "Link",
         category: "Common Programs",
         link: "https://nlcorp.extforms.netsuite.com/",
         description: "Warehouse tracking program. Make sure your account is set up here.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     // Shipping & Receiving
 
     {
         title: "Fedex",
-        type: "Link",
-        category: "Shipping & Receiving",
+        // type: "Link",
+        category: "Shipping and Receiving",
         link: "https://www.fedex.com/apps/myprofile/deliverymanager/",
         description: "Our account number is 11111111. Create a login and link to company profile.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Point Purchasing",
-        type: "Link",
-        category: "Shipping & Receiving",
+        // type: "Link",
+        category: "Shipping and Receiving",
         link: "https://www.pointpurchasing.com/",
         description: "Can order through this site. Make sure to log all items received in this site.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
 
@@ -123,64 +123,64 @@ const resourceSeed = [
 
     {
         title: "Britannica Papermaking",
-        type: "Link",
+        // type: "Link",
         category: "Research",
         link: "https://www.britannica.com/technology/papermaking/Fibre-sources",
         description: "How paper is made.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "EPA Industry Profile",
-        type: "Link",
+        // type: "Link",
         category: "Research",
         link: "https://www.epa.gov/ghgreporting/ghgrp-pulp-and-paper-sector-industrial-profile",
         description: "Paper industry profile.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "EPA Paper Pollutants",
-        type: "Link",
+        // type: "Link",
         category: "Research",
         link: "https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=ORD&TIMSType=&count=10000&dirEntryId=35610&searchAll=&showCriteria=2&simpleSearch=0&startIndex=70001",
         description: "EPA reports paper pollution. Issue we want resolved.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Top Paper Consumption/Producer",
-        type: "Link",
+        // type: "Link",
         category: "Research",
         link: "https://globaledge.msu.edu/blog/post/55571/the-worldwide-paper-industry#:~:text=Overall%2C%20China%20leads%20all%20countries,with%20221%20kilograms%20per%20capita.",
         description: "Global Edge article reporting China as top consumer and producer of paper.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     // Lunch Options
 
     {
         title: "Ikes",
-        type: "Link",
-        category: "Lunch Options",
+        // type: "Link",
+        category: "Food",
         link: "https://www.grubhub.com/food/ikes_love__sandwiches",
         description: "They deliver super fast!",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
     {
         title: "Food Trucks out Front",
-        type: "Link",
-        category: "Lunch Options",
+        // type: "Link",
+        category: "Food",
         link: "https://www.mvblfeast.com/weekly-markets",
         description: "Tuesdays and Thursdays 11am-1:30pm. Exit front, turn right and walk one block.",
-        creator: "Pam Beesly",
-        owner: "Pam Beesly"
+        // creator: "Pam Beesly",
+        // owner: "Pam Beesly"
     },
 
 

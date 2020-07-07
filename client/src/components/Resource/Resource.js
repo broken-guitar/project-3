@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
+import { FaLink } from "react-icons/fa";
 import "./style.css";
 import EditButton from "../editBtn/editBtn";
 
@@ -8,10 +9,10 @@ import EditButton from "../editBtn/editBtn";
 export default function ResourceItem(props) {
   return (
     <div className="item-box">
-      <Card style={{ width: "18rem" }}>
+      <Card style={{ width: "18rem", height: "17rem" }}>
         {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
         <Card.Body>
-          <Card.Title>{props.title}</Card.Title>
+          <Card.Title style={{ color: "#ff9a76" }}>{props.title}</Card.Title>
           <Card.Text>{props.description}</Card.Text>
         </Card.Body>
         <Card.Footer>
@@ -19,9 +20,9 @@ export default function ResourceItem(props) {
             className="mr-2"
             href={props.link}
             target={"_blank"}
-            variant="primary"
+            variant="outline-primary"
           >
-            Link
+            <FaLink href={props.link}></FaLink>
           </Button>
           {/* rendering the addfav button here for the home */}
           {props.renderBtn(props.id)}
@@ -29,6 +30,12 @@ export default function ResourceItem(props) {
             updateState={props.updateState}
             id={props.id}
           ></EditButton>
+          {props.renderDeleteBtn() === false ? (
+            <></>) :
+            (<>
+              {props.renderDeleteBtn(props.id)}
+            </>
+            )}
         </Card.Footer>
       </Card>
       {/* <Image
@@ -41,6 +48,6 @@ export default function ResourceItem(props) {
       <div className="caption">
         <p>{props.title}</p>
       </div> */}
-    </div>
+    </div >
   );
 }
