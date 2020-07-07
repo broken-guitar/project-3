@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import LoginForm from "../components/forms/LoginForm";
-import Alert from "../components/alerts/loginAlert";
+//import Alert from "../components/alerts/loginAlert";
 
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import API from "../utils/API";
@@ -58,6 +58,7 @@ export default class Login extends Component {
   userLogin = User => {
     API.userLogin(User)
       .then(res => {
+        console.log("loginPage.userLogin-> res: ", res)
         // show validation error Alertp if response returned any errors
         if (res.data.error) {
           this.setState({ showAlert: true, alertMessage: res.data.error });
@@ -67,6 +68,7 @@ export default class Login extends Component {
           API.checkUser(parsedId).then(response => {
             let boolean = response.data.loggedin;
             this.props.handleUserLogin(boolean);
+            // this.props.setUserId()
           });
         }
       })
@@ -97,7 +99,7 @@ export default class Login extends Component {
       .catch(err => {
         let errMessage = "There was an error! :(";
         if (typeof err === "string") {
-            let errMessage = err;
+            errMessage = err;
         }
         this.setState({ showAlert: true, alertMessage: errMessage });
         console.log("API.regUser returned error: ", err);
@@ -129,12 +131,14 @@ export default class Login extends Component {
   // show/close Login modal
   handleLogShow = () => {
     this.setState({ showLogin: true });
-    this.resetLoginForm(true); }
+    this.resetLoginForm(true);
+  }
+  
   handleLogClose = () => this.setState({ showLogin: false });
 
   // clears input controls and user validation UI alert
-  resetLoginForm = (dismiss) => {
-    if (dismiss) {
+  resetLoginForm = (reset) => {
+    if (reset) {
       this.setState({
         regUsername: "",
         regEmail: "",
@@ -180,6 +184,8 @@ export default class Login extends Component {
 
                   showAlert={this.state.showAlert}
                   alertMessage={this.state.alertMessage}
+
+                  resetLoginForm={this.resetLoginForm}
                 />
             </CSSTransition>}
         </TransitionGroup>

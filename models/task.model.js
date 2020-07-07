@@ -5,13 +5,14 @@ const Schema = mongoose.Schema;
 const taskSchema = new Schema({
 
   title:    { type: String, required: true },
+  type:     { type: String, required: true, enum: ["Task", "Reminder", "Note"], default: "Task"},
   priority: { type: String, required: false },
   status:   { type: String, required: false },
   description: { type: String, required: false },
   category: { type: String, required: false },
   link: { type: String, required: false },
   
-  assUsers: [{ type: Schema.Types.ObjectId, ref: "User"}], // assigned users
+  users: [{ type: Schema.Types.ObjectId, ref: "User"}], // assigned users
   resources: [{ type: Schema.Types.ObjectId, ref: "Resources" }],
 
   creator: { type: String, required: false },

@@ -224,6 +224,18 @@ const resourceSeed = [
     // }
 ]
 
+const taskSeed = [
+    {
+        title: "task1"
+    },
+    {
+        title: "task2"
+    },
+    {
+        title: "task3"
+    }
+]
+
 // ADD THE SEEDS
 
 db.Resource.remove({}).exec() // remove all Resource docs

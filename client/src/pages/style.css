@@ -68,22 +68,21 @@
 }
 
 .taskbar-container {
-  position: fixed;
-  float: left;
-  height: 100%;
-  right: 0;
-  z-index: 100;
-  background: rgba(243, 115, 115, 0.568);
-  transition: width 0.61s ease-out;
+    position: fixed;
+    float: left;
+    height: 100%;
+    right: 0;
+    z-index: 100;
+    background: rgba(243, 115, 115, 0.568);
+    transition: width 0.61s ease-out;
+    overflow-y: scroll;
+    box-sizing: content-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.fav-wrapper {
-  margin-top: 80px;
-  width: 100vw;
-}
-
-.resource-container {
-  width: 100vw
+.taskbar-container::-webkit-scrollbar {
+    display: none;
 }
 
 
