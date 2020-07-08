@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Row, Col, Modal, Form, Button } from "react-bootstrap";
 import { BsPlusSquare, BsPlus, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
+import DateTime from "react-datetime";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
+import "./datetime-style.css";
 
 export default function TaskForm(props) {
 
@@ -15,6 +17,9 @@ export default function TaskForm(props) {
     const [isInputDisabled, setIsInputDisabled] = useState(true);
     const [validated, setValidated] = useState(false);
     const taskForm = useRef(null);
+    const [inputDateTime, setInputDateTime] = useState(new Date());
+
+    // const datetime = new Date();
 
     // useEffect( () => {
     //     console.log("TaskForm.useEffect->values: ", values);
@@ -43,10 +48,18 @@ export default function TaskForm(props) {
         }
     };
 
+
     const handleInputChange = e => {
         const { name, value } = e.target;
         setValues({...values, [name]: value});
     };
+
+
+    const handleInputDateTime = (datetime) => {
+        setInputDateTime(datetime);
+        console.log("inputDateTime: ", inputDateTime);
+    };
+
 
     const formIsValid = (e, form) => {
         // const form = e.currentTarget;
@@ -59,9 +72,10 @@ export default function TaskForm(props) {
             valid = true;
         }
         setValidated(true);
-       
         return valid;
       };
+
+
 
     const addTask = e => {
         e.preventDefault();
@@ -72,16 +86,13 @@ export default function TaskForm(props) {
                 description:    values.taskDesc,
                 type:           values.taskType        
             };
-            console.log("newTask: ", newTask);
-    
+            // console.log("newTask: ", newTask);
             const data = { task: newTask, userId: props.userId};
-    
             API.addTask(data)
               .then(res => {
                 console.log("addTask res: ", res);
                 props.getUsersTasks(props.userId);
                 props.onHide();
-    
                })
                .catch(err => {
                     console.log(err);
@@ -90,40 +101,40 @@ export default function TaskForm(props) {
         
     };
 
+
+
     const editTask = e => {
         // OPTION: possible to move this into Edit button onClick instead? 
         setIsInputDisabled(false);
     };
 
+
     const saveTask = taskId => {
-       
         const taskData = {
             title:          values.taskTitle,
             description:    values.taskDesc,
             type:           values.taskType
         }
-        console.log("taskData: ", taskData);
-        API.updateTask(taskId, taskData)
-            .then(res => {
+        // console.log("taskData: ", taskData);
+        API.updateTask(taskId, taskData).then(res => {
                 console.log("API.updateTask -> res=", res);
                 setIsInputDisabled(true);
                 props.getUsersTasks(props.userId);
                 props.onHide();
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
             });
-    }
+    };
    
+
+
     const deleteTask = taskId => {
         console.log("deleteTask -> task: ", taskId);
-        API.deleteTask(taskId)
-            .then(res => {
+        API.deleteTask(taskId).then(res => {
                 // console.log("API.deleteTask -> res=", res);
                 props.getUsersTasks(props.userId);
                 props.onHide();
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
             });
     }
@@ -144,31 +155,29 @@ export default function TaskForm(props) {
                             ref={taskForm}
                             data-feedback={{success: "", error: "fa-times"}}
                             >
-                            <Form.Group as={Row} controlId="validTitle" >
-                                <Form.Label column sm={3} className="text">Title</Form.Label>
-                                <Col sm={9}>
+                            <Form.Group controlId="validTitle" >
+                                <Form.Label className="text-muted">Title</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="title"
+                                    placeholder=""
                                     name="taskTitle"
                                     value={values.taskTitle}
                                     onChange={handleInputChange}
                                     disabled={isInputDisabled ? "disabled" : ""}
-                                    />
+                                />
                                 <Form.Control.Feedback type="invalid">
-                                 Please enter a title!
+                                    Please enter a title!
                                 </Form.Control.Feedback>
-                                </Col>
                             </Form.Group>
                          
-                            <Form.Group as={Row} className="no-validate">
-                                <Form.Label column sm={3} className="text">Type</Form.Label>
-                                <Col sm={9}>
+                            <Form.Group className="no-validate">
+                                <Form.Label className="text-muted">Type</Form.Label>
                                     <Form.Control
                                         as="select"
                                         name="taskType"
                                         defaultValue="Task"
+                                        className="pr-3"
                                         value={values.taskType}
                                         onChange={handleInputChange}
                                         disabled={isInputDisabled ? "disabled" : ""}
@@ -183,22 +192,31 @@ export default function TaskForm(props) {
                                             </option>
                                         ))}
                                     </Form.Control>
-                                    <Form.Control.Feedback>
+                                    {values.taskType==="Reminder" ? 
+                                        <DateTime
+                                            className="date-time-picker mt-3"
+                                            onChange={handleInputDateTime}
+                                            // value={inputDateTime}
+                                        />
+                                        :
+                                        null
+                                    }
                                     
+
+                                    <Form.Control.Feedback>
                                     </Form.Control.Feedback>
-                                </Col>
-                            </Form.Group>                 
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3} className="text">Description</Form.Label>
-                                <Col sm={9}>
-                                    <Form.Control as="textarea" rows="3" placeholder="description"
+                            </Form.Group>
+                                            
+                            <Form.Group>
+                                <Form.Label className="text-muted">Description</Form.Label>
+                                    <Form.Control as="textarea" rows="3" placeholder=""
                                         name="taskDesc"
                                         value={values.taskDesc}
                                         onChange={handleInputChange}
                                         disabled={isInputDisabled ? "disabled" : ""}
                                         />
-                                </Col>
                             </Form.Group>
+
                             <div className="taskform-btn-container">
                                 {props.isEdit ?
                                     <div>
