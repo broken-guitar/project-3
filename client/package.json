@@ -1,7 +1,7 @@
 {
-  "name": "mern",
+  "name": "resource_center",
   "version": "0.1.0",
-  "description": "Mern Demo",
+  "description": "Resource Center",
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {

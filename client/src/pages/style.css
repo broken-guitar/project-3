@@ -85,6 +85,23 @@
     display: none;
 }
 
-/* .taskbar-container.show {
-    width: 300px;
-} */
+.fav-wrapper {
+  margin-top: 80px;
+  width: 100vw;
+}
+
+.resource-container {
+  width: 100vw
+}
+
+
+/* below 430 px width */
+@media screen and (max-width: 430px) {
+  .cat-box {
+    display: inline-block;
+    margin: 10px;
+    height: 60px;
+    font-size: small;
+
+  }
+}

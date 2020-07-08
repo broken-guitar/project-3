@@ -32,8 +32,18 @@ export default function navbar(props) {
                 <GiBackwardTime />
               </div>
             </Nav.Link> */}
+            <Nav.Link
+              href="#home"
+              onClick={() => props.handlePageChange("Home")}
+            >
+              Home
+              <div className="nav-item home">
+              <AiOutlineHome />
+              </div>
+            </Nav.Link>
             
             <Nav.Link
+              className="favorites"
               href="#favorite"
               onClick={() => props.handlePageChange("Favorites")}
             >
@@ -60,7 +70,7 @@ export default function navbar(props) {
             </Button>
             {/* logout button */}
             <Button
-              className="float-right"
+              className="float-right logout"
               variant="outline-light"
               onClick={() => props.logout()}
             >
