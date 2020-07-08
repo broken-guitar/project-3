@@ -146,7 +146,7 @@ export default function TaskForm(props) {
                 onHide={props.onHide}
                 onEntering={loadTaskFormData}
                 >
-                <div className="tf-modal-content-wrapper">
+                <div className="tf-modal-content-container">
                     <Modal.Header closeButton>
                         <Modal.Title>{props.isEdit ? "Edit" : "Add"} Task</Modal.Title>
                     </Modal.Header>
