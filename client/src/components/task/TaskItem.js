@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, InputGroup } from "react-bootstrap";
+import useLongPress from "../../utils/useLongPress";
 import { BsCheckBox, BsBell, BsFileText } from "react-icons/bs";
 
 export default function TaskItem(props) {
@@ -17,6 +18,21 @@ export default function TaskItem(props) {
         }
     }
 
+    const onLongPress = () => {
+        console.log('longpress is triggered');
+        props.handleOpeningTask(props.task)
+    };
+
+    const onClick = () => {
+        // console.log('click is triggered')
+    }
+
+    const defaultOptions = {
+        shouldPreventDefault: true,
+        delay: 500,
+    };
+    const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
+
     return (
         
         <Card
@@ -24,9 +40,10 @@ export default function TaskItem(props) {
             border="secondary"
             onDoubleClick={() => props.handleOpeningTask(props.task)}
             data-id={props.task._id}
+            onPress={() => props.handleOpeningTask(props.task)}
+            {...longPressEvent}
 
-        >
-           
+        > 
             <div className="taskitem-prepend">
                 {taskIconSwitch(props.task.type)}
             </div>
