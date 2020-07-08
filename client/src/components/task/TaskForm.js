@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Row, Col, Modal, Form, Button } from "react-bootstrap";
-import { BsPlusSquare, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
+import { BsPlusSquare, BsPlus, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
-import { set } from "mongoose";
 
 export default function TaskForm(props) {
 
@@ -14,6 +13,8 @@ export default function TaskForm(props) {
         taskTypes: ["Task"]
     });
     const [isInputDisabled, setIsInputDisabled] = useState(true);
+    const [validated, setValidated] = useState(false);
+    const taskForm = useRef(null);
 
     // useEffect( () => {
     //     console.log("TaskForm.useEffect->values: ", values);
@@ -22,6 +23,7 @@ export default function TaskForm(props) {
     
     const loadTaskFormData = () => {
         // load or clear form input values depending on add/edit form state
+        setValidated(false);
         if (typeof props.task === "object" && props.task !== null && props.isEdit) {
             setValues({
                 taskTitle:  props.task.title,
@@ -34,7 +36,7 @@ export default function TaskForm(props) {
             setValues({
                 taskTitle:  "",
                 taskDesc:   "",
-                taskType:   "",
+                taskType:   "Task", // set the default
                 taskTypes:  props.taskTypes
             });
             setIsInputDisabled(false);
@@ -46,26 +48,46 @@ export default function TaskForm(props) {
         setValues({...values, [name]: value});
     };
 
-    const addTask = () => {
-        // e.preventDefault();
-        const { taskTitle, taskDesc, taskType } = values; // don't need to destructure here?
-        const newTask = {
-            title:          taskTitle,
-            description:    taskDesc,
-            type:           taskType        
-        };
-        const data = { task: newTask, userId: props.userId};
+    const formIsValid = (e, form) => {
+        // const form = e.currentTarget;
+        let valid = false;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+            valid = false;
+        } else {
+            valid = true;
+        }
+        setValidated(true);
+       
+        return valid;
+      };
 
-        API.addTask(data)
-          .then(res => {
-            console.log("addTask res: ", res);
-            props.getUsersTasks(props.userId);
-            props.onHide();
-
-           })
-           .catch(err => {
-                console.log(err);
-           });
+    const addTask = e => {
+        e.preventDefault();
+        let valid = formIsValid(e, taskForm.current);
+        if(valid) {
+            const newTask = {
+                title:          values.taskTitle,
+                description:    values.taskDesc,
+                type:           values.taskType        
+            };
+            console.log("newTask: ", newTask);
+    
+            const data = { task: newTask, userId: props.userId};
+    
+            API.addTask(data)
+              .then(res => {
+                console.log("addTask res: ", res);
+                props.getUsersTasks(props.userId);
+                props.onHide();
+    
+               })
+               .catch(err => {
+                    console.log(err);
+               });
+        } 
+        
     };
 
     const editTask = e => {
@@ -118,36 +140,54 @@ export default function TaskForm(props) {
                         <Modal.Title>{props.isEdit ? "Edit" : "Add"} Task</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form className="border-danger" variant="danger">
-                            <Form.Group as={Row}>
+                        <Form noValidate validated={validated}className="border-danger" variant="danger"
+                            ref={taskForm}
+                            data-feedback={{success: "", error: "fa-times"}}
+                            >
+                            <Form.Group as={Row} controlId="validTitle" >
                                 <Form.Label column sm={3} className="text">Title</Form.Label>
                                 <Col sm={9}>
-                                <Form.Control type="text" placeholder="title"
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="title"
                                     name="taskTitle"
                                     value={values.taskTitle}
                                     onChange={handleInputChange}
                                     disabled={isInputDisabled ? "disabled" : ""}
                                     />
+                                <Form.Control.Feedback type="invalid">
+                                 Please enter a title!
+                                </Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
-
-                            <Form.Group as={Row}>
+                         
+                            <Form.Group as={Row} className="no-validate">
                                 <Form.Label column sm={3} className="text">Type</Form.Label>
                                 <Col sm={9}>
                                     <Form.Control
                                         as="select"
                                         name="taskType"
+                                        defaultValue="Task"
                                         value={values.taskType}
                                         onChange={handleInputChange}
                                         disabled={isInputDisabled ? "disabled" : ""}
                                         >
+                                        {/* <option className="text-muted" value="" disabled hidden>Select task type...</option> */}
                                         {values.taskTypes.map((taskType, index) => (
-                                            <option key={index}>{taskType}</option>
+                                            <option
+                                                key={index}
+                                                value={taskType}
+                                                >
+                                                {taskType}
+                                            </option>
                                         ))}
                                     </Form.Control>
+                                    <Form.Control.Feedback>
+                                    
+                                    </Form.Control.Feedback>
                                 </Col>
-                            </Form.Group>
-
+                            </Form.Group>                 
                             <Form.Group as={Row}>
                                 <Form.Label column sm={3} className="text">Description</Form.Label>
                                 <Col sm={9}>
@@ -165,7 +205,8 @@ export default function TaskForm(props) {
                                         {isInputDisabled ?
                                             
                                             <Button
-                                                variant="secondary" className="task-edit fbtn"
+                                                variant="outline-secondary"
+                                                className="task-edit fbtn"
                                                 size="lg"
                                                 onClick={() => editTask()}
                                                 >
@@ -173,7 +214,8 @@ export default function TaskForm(props) {
                                             </Button>
                                             :
                                             <Button
-                                                variant="success" className="task-save fbtn"
+                                                variant="outline-success"
+                                                className="task-save fbtn"
                                                 size="lg"
                                                 onClick={() => saveTask(props.task._id)}
                                                 >
@@ -181,7 +223,9 @@ export default function TaskForm(props) {
                                             </Button>
                                         }
                                         
-                                        <Button className="task-delete fbtn"variant="danger"
+                                        <Button
+                                            className="task-delete fbtn"
+                                            variant="outline-danger"
                                             onClick={() => deleteTask(props.task._id)}
                                             size="lg"
                                             >
@@ -192,10 +236,12 @@ export default function TaskForm(props) {
                                     :
                                     <div>
                                         <Button
-                                            className="task-add-fbtn" size="lg"
-                                            variant="success"
-                                            onClick={() => addTask()}
-                                            ><BsPlusSquare className="tf-icon"/>
+                                            type="submit"
+                                            className="task-add-fbtn"
+                                            size="lg"
+                                            variant="outline-success"
+                                            onClick={(e) => addTask(e)}
+                                            ><BsPlus className="tf-icon"/>
                                         </Button>
                                     </div>
                                 }

@@ -88,3 +88,7 @@
 .text {
     font-size: 6px;
 }
+
+.no-validate:valid {
+    
+}
