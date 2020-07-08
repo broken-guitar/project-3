@@ -85,6 +85,15 @@
     display: none;
 }
 
+.fav-wrapper {
+  margin-top: 80px;
+  width: 100vw;
+}
+
+.resource-container {
+  width: 100vw
+}
+
 
 /* below 430 px width */
 @media screen and (max-width: 430px) {
