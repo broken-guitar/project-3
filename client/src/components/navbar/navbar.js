@@ -62,9 +62,8 @@ export default function navbar(props) {
             <Button
               className="mr-3 task-button"
               bsPrefix="button"
-              onClick={() => props.showTaskBar()}
-            >
-              Tasks
+              onClick={() => props.handleShowTaskBar()}
+            >Tasks
               <div className="nav-item task">
                 <FaTasks />
               </div>

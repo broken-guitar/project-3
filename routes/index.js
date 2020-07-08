@@ -9,7 +9,7 @@ const userRoutes = require("./user");
 //  matches "/loginPage"
 router.use("/loginPage", loginRoutes);
 
-// USER ROUTES
+// USER & TASK ROUTES
 // matches "/API"
 router.use("/API", userRoutes);
 
@@ -17,6 +17,7 @@ router.use("/API", userRoutes);
 
 //  matches "/"
 router.use("/", resourceRoutes);
+
 
 // If no API routes are hit, send the React app
 router.use(function (req, res) {

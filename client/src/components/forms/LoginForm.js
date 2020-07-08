@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Form, Button, Modal } from "react-bootstrap";
 import Alert from "../alerts/loginAlert";
-import "./style.css"
+import "./style.css";
 
 
 // import Image from "react-bootstrap/Image";
 // import "./style.css";
 
 export default function LoginForm(props) {
+    
+    const [wasOpen, setWasOpen] = useState(false);
+
+    // useEffect runs whenever the function component state updates;
+    // using it here to reset the LoginForm when register modal exits
+    useEffect(() => {
+        // console.log("useEffect -> loginForm updated!", props.showRegister, wasOpen);
+        if (props.showRegister) {
+            setWasOpen(true);
+        }
+        if (wasOpen && !props.showRegister) {
+            // console.log("should reset login form");
+            setWasOpen(false);
+            props.resetLoginForm(true);
+        }
+        
+    });
 
     return (
         <div>
@@ -64,8 +81,9 @@ export default function LoginForm(props) {
                
                 </Card.Body>
                 <div className="px-2">
-                <Alert show={props.showAlert} variant="danger" dismissible="false"
-                    header="Oops!" message={props.alertMessage} />
+                {!props.showRegister ? <Alert show={props.showAlert} variant="danger" dismissible="false"
+                    header="Oops!" message={props.alertMessage} /> : null}
+                
                 </div>
             </Card>
             </Col>

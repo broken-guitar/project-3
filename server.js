@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const routes = require("./routes");
 const cookieParser = require("cookie-parser");
-require("dotenv").config();
-
 // Define middleware here
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -36,9 +34,20 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
+
+
+
+
+
+
+
+
+
+
 
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated

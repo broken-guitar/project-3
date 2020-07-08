@@ -38,7 +38,8 @@ module.exports = {
           } else if (isMatch) {
             // using express' res.cookie() to send a browser cookie containing user _id
             res.cookie("id", user._id);
-            res.send("User log in attempted");
+            // res.send("User log in attempted");
+            res.json(user);
 
             console.log("\tUser authenticated!");
           } else if (!isMatch) {

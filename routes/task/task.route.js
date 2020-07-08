@@ -1,8 +1,16 @@
 const router = require("express").Router();
-const resourceController = require("../../controllers/resourceController");
+const taskController = require("../../controllers/taskController");
 
-// get all user's tasks; matches "/task/:userId"
-router.route("/:userId").get(taskController.findAll);
+// get all user's tasks; matches "/API/task/"
+router.route("/:userId").get(taskController.findUsersTasks);
 
-// get task by id; matches "task/:taskId"
-router.route("/:taskId").get(taskController.findById);
+// add new task; matches matches "API/task/"
+router.route("/").post(taskController.addTask);
+
+// matches "API/task/:taskId"
+router.route("/:taskId").put(taskController.updateTask);
+
+// matches "API/task/:taskId"
+router.route("/:taskId").delete(taskController.deleteTask);
+
+module.exports = router;

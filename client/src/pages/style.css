@@ -68,13 +68,21 @@
 }
 
 .taskbar-container {
-  position: fixed;
-  float: left;
-  height: 100%;
-  right: 0;
-  z-index: 100;
-  background: rgba(243, 115, 115, 0.568);
-  transition: width 0.61s ease-out;
+    position: fixed;
+    float: left;
+    height: 100%;
+    right: 0;
+    z-index: 100;
+    background: rgba(243, 115, 115, 0.568);
+    transition: width 0.61s ease-out;
+    overflow-y: scroll;
+    box-sizing: content-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.taskbar-container::-webkit-scrollbar {
+    display: none;
 }
 
 .fav-wrapper {
