@@ -29,6 +29,7 @@ This site will make it easier to share and organize resources company-wide that 
 - [MongoDB](https://www.mongodb.com/) - a noSQL database
 - [mongoose](https://www.npmjs.com/package/mongoose) - node library and ORM (object related modeling) language for CRUD actions with a Mongo database
 - [bcrypt](https://www.npmjs.com/package/bcrypt) and [cookie-parser](https://www.npmjs.com/package/cookie-parser) and [mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator) and [js-cookie](https://www.npmjs.com/package/js-cookie)- node libraries for implementing login credentials and verification and parsing user cookies
+- [nodemailer](https://www.npmjs.com/package/nodemailer) - a node library for "easy as cake" email sending.
 - [dotenv](https://www.npmjs.com/package/dotenv) - node library for handling environment variables
 - [nodemon](https://www.npmjs.com/package/nodemon) - node library for efficient updating and browser testing
 - [express](https://www.npmjs.com/package/express) - a node library for initiating servers and setting up routes
