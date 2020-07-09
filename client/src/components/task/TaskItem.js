@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Card, InputGroup } from "react-bootstrap";
+import React from "react";
+import { Card } from "react-bootstrap";
 import useLongPress from "../../utils/useLongPress";
 import { BsCheckBox, BsBell, BsFileText } from "react-icons/bs";
 
@@ -20,7 +20,7 @@ export default function TaskItem(props) {
 
     const onLongPress = () => {
         console.log('longpress is triggered');
-        props.handleOpeningTask(props.task)
+        props.handleOpeningTask(props.task);
     };
 
     const onClick = () => {
@@ -40,7 +40,6 @@ export default function TaskItem(props) {
             border="secondary"
             onDoubleClick={() => props.handleOpeningTask(props.task)}
             data-id={props.task._id}
-            onPress={() => props.handleOpeningTask(props.task)}
             {...longPressEvent}
 
         > 
