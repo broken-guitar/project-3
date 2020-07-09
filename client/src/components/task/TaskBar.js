@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Card } from "react-bootstrap";
 import { BsX, BsPlus } from "react-icons/bs";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
@@ -123,12 +122,10 @@ export default class TaskBar extends Component {
                 </div>
                
                 <div className="tasklist-container">
-                    
                     {this.state.usersTasks.map(task => (
                         <TaskItem key={task._id} task={task} handleOpeningTask={this.handleOpeningTask}/>
                         
                     ))}
-
                 </div>
                 
                 

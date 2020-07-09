@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Card, Row, Col, Modal, Form, Button } from "react-bootstrap";
-import { BsPlusSquare, BsPlus, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
+import React, { useState, useRef } from "react";
+import { Modal, Form, Button } from "react-bootstrap";
+import { BsPlus, BsPencilSquare, BsTrash, BsCheck } from "react-icons/bs";
 import DateTime from "react-datetime";
 import { API } from "../../utils/taskAPI";
 import "./style.css";
